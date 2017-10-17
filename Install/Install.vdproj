@@ -15,7 +15,7 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_B0BCCEE99D6E635C97CC978C5D270C9A"
+        "MsmKey" = "8:_9AA222834CE1717D945B02FE749ED1E0"
         "OwnerKey" = "8:_CB76C579B380448E977CCC005120A943"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -28,18 +28,6 @@
         "Entry"
         {
         "MsmKey" = "8:_D6A928BE13E34C59A54DD6E083619A8C"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DF5DBE1ED3754B579DDE58425D6FA416"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E73450D509B44761956D5335E717BD96"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -58,7 +46,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B0BCCEE99D6E635C97CC978C5D270C9A"
+        "OwnerKey" = "8:_9AA222834CE1717D945B02FE749ED1E0"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -166,14 +154,14 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B0BCCEE99D6E635C97CC978C5D270C9A"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9AA222834CE1717D945B02FE749ED1E0"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:HartIPConnect, Version=1.0.5.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_B0BCCEE99D6E635C97CC978C5D270C9A"
+                    "_9AA222834CE1717D945B02FE749ED1E0"
                     {
                     "Name" = "8:HartIPConnect.dll"
                     "Attributes" = "3:512"
@@ -201,46 +189,6 @@
             {
             "SourcePath" = "8:..\\HartIPClient\\HartIpClient.ico"
             "TargetName" = "8:HartIpClient.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_7C2B4145F0774B83B2A5DE98ED9DA127"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DF5DBE1ED3754B579DDE58425D6FA416"
-            {
-            "SourcePath" = "8:..\\README.html"
-            "TargetName" = "8:README.html"
-            "Tag" = "8:"
-            "Folder" = "8:_7C2B4145F0774B83B2A5DE98ED9DA127"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E73450D509B44761956D5335E717BD96"
-            {
-            "SourcePath" = "8:..\\LICENSE.html"
-            "TargetName" = "8:LICENSE.html"
             "Tag" = "8:"
             "Folder" = "8:_7C2B4145F0774B83B2A5DE98ED9DA127"
             "Condition" = "8:"
