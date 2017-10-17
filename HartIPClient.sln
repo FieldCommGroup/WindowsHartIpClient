@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HartIPClient", "HartIPClient\HartIPClient.csproj", "{EC760ABA-D731-457A-AE68-CD2811232C93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HartIPConnect", "HartIPConnect\HartIPConnect.csproj", "{2DA9642C-531D-42E5-A8AD-E9D45165E464}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Install", "Install\Install.vdproj", "{F197EE6C-156E-4117-8047-5C5FB96BDB4F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC760ABA-D731-457A-AE68-CD2811232C93}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{EC760ABA-D731-457A-AE68-CD2811232C93}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{EC760ABA-D731-457A-AE68-CD2811232C93}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{EC760ABA-D731-457A-AE68-CD2811232C93}.Debug|x86.ActiveCfg = Debug|x86
+		{EC760ABA-D731-457A-AE68-CD2811232C93}.Debug|x86.Build.0 = Debug|x86
+		{EC760ABA-D731-457A-AE68-CD2811232C93}.Release|Any CPU.ActiveCfg = Release|x86
+		{EC760ABA-D731-457A-AE68-CD2811232C93}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{EC760ABA-D731-457A-AE68-CD2811232C93}.Release|Mixed Platforms.Build.0 = Release|x86
+		{EC760ABA-D731-457A-AE68-CD2811232C93}.Release|x86.ActiveCfg = Release|x86
+		{EC760ABA-D731-457A-AE68-CD2811232C93}.Release|x86.Build.0 = Release|x86
+		{2DA9642C-531D-42E5-A8AD-E9D45165E464}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DA9642C-531D-42E5-A8AD-E9D45165E464}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DA9642C-531D-42E5-A8AD-E9D45165E464}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2DA9642C-531D-42E5-A8AD-E9D45165E464}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2DA9642C-531D-42E5-A8AD-E9D45165E464}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2DA9642C-531D-42E5-A8AD-E9D45165E464}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DA9642C-531D-42E5-A8AD-E9D45165E464}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DA9642C-531D-42E5-A8AD-E9D45165E464}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2DA9642C-531D-42E5-A8AD-E9D45165E464}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2DA9642C-531D-42E5-A8AD-E9D45165E464}.Release|x86.ActiveCfg = Release|Any CPU
+		{2DA9642C-531D-42E5-A8AD-E9D45165E464}.Release|x86.Build.0 = Release|Any CPU
+		{F197EE6C-156E-4117-8047-5C5FB96BDB4F}.Debug|Any CPU.ActiveCfg = Debug
+		{F197EE6C-156E-4117-8047-5C5FB96BDB4F}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{F197EE6C-156E-4117-8047-5C5FB96BDB4F}.Debug|x86.ActiveCfg = Debug
+		{F197EE6C-156E-4117-8047-5C5FB96BDB4F}.Release|Any CPU.ActiveCfg = Release
+		{F197EE6C-156E-4117-8047-5C5FB96BDB4F}.Release|Mixed Platforms.ActiveCfg = Release
+		{F197EE6C-156E-4117-8047-5C5FB96BDB4F}.Release|x86.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
