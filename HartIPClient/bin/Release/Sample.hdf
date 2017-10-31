@@ -1,0 +1,1566 @@
+[_Version]
+Name = HART Commands Version 3
+
+[000]
+Name = Read Unique Identifier
+Output0 = Response code, U8
+Output1 = Device Status Byte, HEX:1
+Output2 = Expansion Code, U8
+Output3 = Expanded Device Type, U16
+Output4 = # Request Preambles, U8
+Output5 = Universal Comand Revision Level, U8
+Output6 = Device Revision Level, U8
+Output7 = Software Revision, U8
+Output8 = Hardware Revision Level / Physical Signaling Code, U8
+Output9 = Flags, HEX:1
+Output10 = Device ID, U24
+Output11 = Minimum # Response Preambles, U8
+Output12 = Max # of device variables, U8
+Output13 = Configuration Change Counter, U16
+Output14 = Extended Field Device Status, HEX:1
+Output15 = Manufacturer's ID, U16
+Output16 = Private Label Distributor, U16
+Output17 = Device Profile, U8
+
+[001]
+Name = Read Primary Variable
+Output0 = Response code, U8
+Output1 = Status Byte, HEX:1
+Output2 = PV Units Code, U8
+Output3 = PV, FL
+
+[002]
+Name = Read Primary Variable Current and Percent of Range
+Output0 = Response code, U8
+Output1 = Status Byte, HEX:1
+Output2 = PV Current, FL
+Output3 = PV % of Range, FL
+
+[003]
+Name = Read All Dynamic Variables & Primary Variable Current
+Output0 = Response code, U8
+Output1 = Status Byte, HEX:1
+Output2 = PV Current, FL
+Output3 = PV Units Code, U8
+Output4 = PV, FL
+Output5 = SV Units Code, U8
+Output6 = SV, FL
+Output7 = TV Units Code, U8
+Output8 = TV, FL
+Output9 = QV Units Code, U8
+Output10 = QV, FL
+
+[006]
+Name = Write Polling Address
+Input0 = Polling Address, U8, 0
+Input1 = Loop Current Mode, U8, 0
+Output0 = Response code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Polling Address, U8
+Output3 = Loop Current Mode, U8
+
+[007]
+Name = Read Loop Config
+Output0 = Response code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Polling Address, U8
+Output3 = Loop Current Mode, U8
+
+[008]
+Name = Read Dynamic Variable Classification
+Output0 = Response code, U8
+Output1 = Status Byte, HEX:1
+Output2 = PV Classification, U8
+Output3 = SV Classification, U8
+Output4 = TV Classification, U8
+Output5 = QV Classification, U8
+
+[009]
+Name = Read Device Variable with Status (1 slot)
+Input0 = Slot0 Variable Code, U8, 0
+Output0 = Response code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Extended Device Status, U8
+Output3 = Slot0 Var Code, U8
+Output4 = Slot0 Var Classification, U8
+Output5 = Slot0 Var Units, U8
+Output6 = Slot0 Var Value, FL
+Output7 = Slot0 Var Status, HEX:1
+Output8 = Slot0 Time Stamp, T24
+
+[011]
+Name = Identify Transmitter With Tag
+Input0 = Tag, PA:6
+Output0 = Response code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Expansion Code, U8
+Output3 = Expanded Device Type, U16
+Output4 = # Request Preambles, U8
+Output5 = Universal Comand Revision Level, U8
+Output6 = Transmitter HART Revision Level, U8
+Output7 = Software Revision, U8
+Output8 = Hardware Revision Level / Physical Signaling Code, U8
+Output9 = Flags, U8
+Output10 = Device ID, U24
+Output11 = Minimum # Response Preambles, U8
+Output12 = Max # of device variables, U8
+Output13 = Configuration Change Counter, U16
+Output14 = Extended Field Device Status, HEX:1
+Output15 = Manufacturer's ID, U16
+Output16 = Private Label Distributor, U16
+Output17 = Device Profile, U8
+
+[012]
+Name = Read Message
+Output0 = Response code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Message, PA:24
+
+[013]
+Name = Read Tag, Descriptor, and Date
+Output0 = Response code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Tag, PA:6
+Output3 = Descriptor, PA:12
+Output4 = Day, U8
+Output5 = Month, U8
+Output6 = Year - 1900, U8
+
+[014]
+Name = Read Primary Variable Sensor Information
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = PV Sensor Serial Number, U24
+Output3 = PV Sensor Limit / Minimum Span Units Code, U8
+Output4 = PV Upper Sensor Limit, FL
+Output5 = PV Lower Sensor Limit, FL
+Output6 = PV Minimum Sensor Span, FL
+
+[015]
+Name = Read Primary Variable Output Information
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Analog Alarm Direction, U8
+Output3 = PV Transfer Function Code, U8
+Output4 = PV Range Units Code, U8
+Output5 = PV Upper Range Value, FL
+Output6 = PV Lower Range Value, FL
+Output7 = PV Damping Value, FL
+Output8 = Write Protect Code, U8
+Output9 = Reserved, U8
+Output10 = PV Analog Channel Flags, U8
+
+[016]
+Name = Read Final Assembly Number
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Final Assembly Number, U24
+
+[017]
+Name = Write Message
+Input0 = Message, PA:24
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Message, PA:24
+
+[018]
+Name = Write Tag, Descriptor & Date
+Input0 = Tag, PA:6
+Input1 = Descriptor, PA:12
+Input2 = Day, U8
+Input3 = Month, U8
+Input4 = Year, U8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Tag, PA:6
+Output3 = Descriptor, PA:12
+Output4 = Day, U8
+Output5 = Month, U8
+Output6 = Year, U8
+
+[019]
+Name = Write Final Assembly Number
+Input0 = Final Assembly Number, U24
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Final Assembly Number, U24
+
+[020]
+Name = Read Long Tag
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Long Tag, ASCII:32
+
+[021]
+Name = Identify Transmitter With Long Tag
+Input0 = Long Tag, ASCII:32
+Output0 = Response code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Expansion Code, U8
+Output3 = Expanded Device Type, U16
+Output4 = # Request Preambles, U8
+Output5 = Universal Comand Revision Level, U8
+Output6 = Transmitter HART Revision Level, U8
+Output7 = Software Revision, U8
+Output8 = Hardware Revision Level / Physical Signaling Code, U8
+Output9 = Flags, U8
+Output10 = Device ID, U24
+Output11 = Minimum # Response Preambles, U8
+Output12 = Max # of device variables, U8
+Output13 = Configuration Change Counter, U16
+Output14 = Extended Field Device Status, HEX:1
+Output15 = Manufacturer's ID, U16
+Output16 = Private Label Distributor, U16
+Output17 = Device Profile, U8
+
+[022]
+Name = Write Long Tag
+Input0 = Long Tag, ASCII:32
+Output0 = Response code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Long Tag, ASCII:32
+
+[033]
+Name = Read Transmitter Variables (1 slot)
+Input0 = Slot #0 Xmtr Var Code, U8, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Slot #0 Xmtr Var Code, U8
+Output3 = Slot #0 Xmtr Var Unit, U8
+Output4 = Slot #0 Xmtr Var Value, FL
+
+[034]
+Name = Write Primary Variable Damping Value
+Input0 = PV Damping Value, FL
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = PV Damping Value, FL
+
+[035]
+Name = Write Primary Variable Range Values
+Input0 = PV Range Units, U8
+Input1 = PV Upper Range Value, FL
+Input2 = PV Lower Range Value, FL
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = PV Range Units, U8
+Output3 = PV Upper Range Value, FL
+Output4 = PV Lower Range Value, FL
+
+[036]
+Name = Set Primary Variable Span
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+
+[037]
+Name = Set Primary Variable Zero
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+
+[038]
+Name = Reset Configuration Changed Flag
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Config Change Counter, U16
+
+[040]
+Name = Enter/Exit Fixed Loop Mode
+Input0 = Fixed Loop Value, FL
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Fixed Loop Value, FL
+
+[041]
+Name = Perform Self Test
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+
+[042]
+Name = Perform Master Reset
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+
+[043]
+Name = Set PV Zero
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+
+[044]
+Name = Write Primary Variable Units
+Input0 = PV Units Code, U8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = PV Units Code, U8
+
+[045]
+Name = Trim Loop Zero
+Input0 = Measured Loop Value, FL
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Measured Loop Value, FL
+
+[046]
+Name = Trim Loop Gain
+Input0 = Measured Loop Value, FL
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Measured Loop Value, FL
+
+[047]
+Name = Write Primary Variable Transfer Function
+Input0 = PV Transfer Function Code, U8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = PV Transfer Function Code, U8
+
+[048]
+Name = Read Additional Transmitter Status
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Device Specific Status 0, HEX:1
+Output3 = Device Specific Status 1, HEX:1
+Output4 = Device Specific Status 2, HEX:1
+Output5 = Device Specific Status 3, HEX:1
+Output6 = Device Specific Status 4, HEX:1
+Output7 = Device Specific Status 5, HEX:1
+Output8 = Extended Status, HEX:1
+Output9 = Device Operating Mode, U8
+Output10 = Standard Status 0, HEX:1
+Output11 = Standard Status 1, HEX:1
+Output12 = Analog Saturated Status, HEX:1
+Output13 = Standard Status 2, HEX:1
+Output14 = Standard Status 3, HEX:1
+Output15 = Analog Fixed Status, HEX:1
+Output16 = Device Specific Status 6, HEX:1
+Output17 = Device Specific Status 7, HEX:1
+Output18 = Device Specific Status 8, HEX:1
+Output19 = Device Specific Status 9, HEX:1
+Output20 = Device Specific Status 10, HEX:1
+Output21 = Device Specific Status 11, HEX:1
+Output22 = Device Specific Status 12, HEX:1
+Output23 = Device Specific Status 13, HEX:1
+Output24 = Device Specific Status 14, HEX:1
+Output25 = Device Specific Status 15, HEX:1
+Output26 = Device Specific Status 16, HEX:1
+
+[049]
+Name = Write Primary Variable Sensor Serial Number
+Input0 = Sensor Serial Number, U24
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Sensor Serial Number, U24
+
+[050]
+Name = Read Dynamic Variable Assignments
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = PV Variable Code, U8
+Output3 = SV Variable Code, U8
+Output4 = TV Variable Code, U8
+Output5 = QV Variable Code, U8
+
+[051]
+Name = Write Dynamic Variable Assignments 
+Input0 = PV Variable Code, U8
+Input1 = SV Variable Code, U8
+Input2 = TV Variable Code, U8
+Input3 = QV Variable Code, U8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = PV Variable Code, U8
+Output3 = SV Variable Code, U8
+Output4 = TV Variable Code, U8
+Output5 = QV Variable Code, U8
+
+[052]
+Name = Set Device Variable Zero
+Input0 = Transmitter Variable Code, U8, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Transmitter Variable Code, U8
+
+[053]
+Name = Write Transmitter Variable Units
+Input0 = Transmitter Variable Code, U8, 0
+Input1 = Transmitter Variable Unit Code, U8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Transmitter Variable Code, U8
+Output3 = Transmitter Variable Unit Code, U8
+
+[054]
+Name = Read Transmitter Variable Information
+Input0 = Transmitter Variable Code, U8, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Transmitter Variable Code, U8
+Output3 = Sensor Serial Number, U24
+Output4 = Limits / Span Units, U8
+Output5 = Xmtr Var - Upper Sensor Limit, FL
+Output6 = Xmtr Var - Lower Sensor Limit, FL
+Output7 = Xmtr Var - Damping, FL
+Output8 = Xmtr Var - Min Span, FL
+Output9 = Xmtr Var - Classifier, U8
+Output10 = Xmtr Var - Family, U8
+Output11 = Xmtr Var Acquisition Period, T24
+Output12 = Xmtr Var Properties, HEX:1
+
+[055]
+Name = Write Device Variable Damping Value
+Input0 = Transmitter Variable Code, U8, 0
+Input1 = Damping Value, FL
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Transmitter Variable Code, U8
+Output3 = Damping Value, FL
+
+[056]
+Name = Write Transmitter Variable Sensor Serial Number
+Input0 = Transmitter Variable Code, U8, 0
+Input1 = Sensor Serial Number, U24
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Transmitter Variable Code, U8
+Output3 = Sensor Serial Number, U24
+
+[059]
+Name = Write # Response Preambles
+Input0 = # Response Preambs, U8, 5
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = # Response Preambs, U8
+
+[071]
+Name = Lock Device
+Input0 = Lock Code, U8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Lock Code, U8
+
+[072]
+Name = Squawk
+Input0 = Squawk Control Code, U8, 2
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Squawk Control Code, U8
+
+[073]
+Name = Find Device
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+
+[074]
+Name = Read I/O System Capabilities
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Max I/O Cards, U8
+Output3 = Max Channels Per Card, U8
+Output4 = Max Sub-Dev Per Channel, U8
+Output5 = Number of sub-dev detected, U16
+Output6 = Max DRs , U8
+Output7 = Master Mode, U8
+Output8 = Retry Count to sub-dev, U8
+
+[075]
+Name = Poll Subdevice
+Input0 = IO Card, U8, 0
+Input1 = Channel, U8, 0
+Input2 = Poll Address, U8
+Output0 = Response code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Expansion Code, U8
+Output3 = Expanded Device Type, U16
+Output4 = # Request Preambles, U8
+Output5 = Universal Comand Revision Level, U8
+Output6 = Transmitter HART Revision Level, U8
+Output7 = Software Revision, U8
+Output8 = Hardware Revision Level / Physical Signaling Code, U8
+Output9 = Flags, U8
+Output10 = Device ID, U24
+Output11 = Minimum # Response Preambles, U8
+Output12 = Max # of device variables, U8
+Output13 = Configuration Change Counter, U16
+Output14 = Extended Field Device Status, HEX:1
+Output15 = Manufacturer's ID, U16
+Output16 = Private Label Distributor, U16
+Output17 = Device Profile, U8
+
+[076]
+Name = Read Lock Device Status
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Lock Status, HEX:1
+
+[077]
+Name = Send CMD to SubDevice
+Input0 = IO Card, U8, 0
+Input1 = Channel, U8, 0
+Input2 = # Response Preambs, U8, 5
+Input3 = Delimiter, HEX:1, &H82
+Input4 = MFG, HEX:1, &H26
+Input5 = DEV TYPE, HEX:1, &H4F
+Input6 = UniqueID, HEX:3, &H000000
+Input7 = Command, U8
+Input8 = Byte Count, U8
+Input9 = Data, HEX:10
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = IO Card, U8
+Output3 = Channel, U8
+Output4 = Delimiter, HEX:1
+Output5 = MFG, HEX:1
+Output6 = DEV TYPE, HEX:1
+Output7 = UniqueID, HEX:3
+Output8 = Command, U8
+Output9 = Byte Count, U8
+Output10 = Data, HEX:10
+
+[078]
+Name = Read Aggregated Commands
+Input0 = # Commands, U8, 3
+Input1 = Cmd Number 1, U16
+Input2 = byte Cnt 1, U8, 0
+Input3 = Cmd Number 2, U16
+Input4 = byte Cnt 2, U8, 0
+Input5 = Cmd Number 3, U16
+Input6 = byte Cnt 3, U8, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Extended Device Status, HEX:1
+Output3 = # Commands, U8
+Output4 = Cmd Number 1, U16
+Output5 = byte Cnt 1, U8
+
+[079]
+Name = Write Device Variable
+Input0 = Transmitter Variable Code, U8, 0
+Input1 = Transmitter Variable Mode, U8, 1
+Input2 = Transmitter Variable Units, U8
+Input3 = Transmitter Variable Value, FL
+Input4 = Transmitter Variable Status, U8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Transmitter Variable Code, U8
+Output3 = Transmitter Variable Mode, U8
+Output4 = Transmitter Variable Units, U8
+Output5 = Transmitter Variable Value, FL
+Output6 = Transmitter Variable Status, U8
+
+[080]
+Name = Read Transmitter Variable Trim Points
+Input0 = Transmitter Variable Code, U8, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Transmitter Variable Code, U8
+Output3 = Xmtr Var - Trim Units, U8
+Output4 = Xmtr Var - Lower Trim Point, FL
+Output5 = Xmtr Var - Upper Trim Point, FL
+
+[081]
+Name = Read Transmitter Variable Trim Guidelines
+Input0 = Transmitter Variable Code, U8, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Transmitter Variable Code, U8
+Output3 = Xmtr Var - Trim Points Supported, U8
+Output4 = Xmtr Var - Trim Units, U8
+Output5 = Xmtr Var - Minimum Lower Value, FL
+Output6 = Xmtr Var - Maximum Lower Value, FL
+Output7 = Xmtr Var - Minimum Upper Value, FL
+Output8 = Xmtr Var - Maximum Upper Value, FL
+Output9 = Xmtr Var - Minimum Differential, FL
+
+[082]
+Name = Write Transmitter Variable Trim Point
+Input0 = Transmitter Variable Code, U8, 0
+Input1 = Xmtr Var - Trim Point Code, U8, 1
+Input2 = Xmtr Var - Trim Units, U8, 139
+Input3 = Xmtr Var - Trim Value, FL, 0.0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Transmitter Variable Code, U8
+Output3 = Xmtr Var - Trim Point Code, U8
+Output4 = Xmtr Var - Trim Units, U8
+Output5 = Xmtr Var - Trim Value, FL
+
+[083]		
+Name = Reset Transmitter Variable Trim
+Input0 = Xmtr Var Code, U8, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Xmtr Var Code, U8
+
+[084]
+Name = Read Sub-Device Identity Summary
+Input0 = Sub-Device Index, U16
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Sub-Device Index, U16
+Output3 = I/O Card, U8
+Output4 = Channel, U8
+Output5 = Mfg ID, U16
+Output6 = Expanded Device Type Code, U16
+Output7 = Device ID, U24 
+Output8 = Universal command revision, U8
+Output9 = Long Tag, ASCII:32
+
+[085]
+Name = Read I/O Channel Statistics
+Input0 = IO Card, U8, 0
+Input1 = Channel, U8, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = IO Card, U8
+Output3 = Channel, U8
+Output4 = Count of STX messages sent, U16
+Output5 = Count of ACK messages received, U16
+Output6 = Count of OSTX messages received, U16
+Output7 = Count of OACK messages received, U16 
+Output8 = Count of BACK messages received, U16
+
+[086]
+Name = Read Subdevice Statistics
+Input0 = Subdevice Index, U16
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Subdevice Index, U16
+Output3 = Count of STX messages sent, U16
+Output4 = Count of ACK messages received, U16
+Output5 = Count of BACK messages received, U16
+
+[087]
+Name = Write IO System Master Mode
+Input0 = Master Mode (0=2nd 1=primary), U8, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Master Mode, U8
+
+[088]
+Name = Write IO System Retry Count
+Input0 = Retry Count, U8, 3
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Retry Count, U8
+
+[089]
+Name = Set Real-Time Clock
+Input0 = Time set mode, U8
+Input1 = Day, U8, 1
+Input2 = Month, U8, 1
+Input3 = Year - 1900, U8, 107
+Input4 = Time, T24, 13:00:00
+Input5 = Zero Padding, HEX:2, 0x0000
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Time set mode, U8
+Output3 = Day, U8
+Output4 = Month, U8
+Output5 = Year - 1900, U8
+Output6 = Time, T24
+
+[090]
+Name = Read Real-Time Clock
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Day, U8
+Output3 = Month, U8
+Output4 = Year - 1900, U8
+Output5 = Time, TIME_12
+Output6 = Day last set, U8
+Output7 = Month last set, U8
+Output8 = Year - 1900 last set, U8
+Output9 = Time last set, TIME_12
+Output10 = RTC Flags, HEX:1
+
+[091]
+Name = Read Trend Configuration
+Input0 = Trend Number, U8, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Trend Number, U8
+Output3 = Number Trends Supported, U8
+Output4 = Trend Control (0-off 1-single 2-filter), U8
+Output5 = Device Var Code, U8
+Output6 = Sample Period, T24
+
+[092]
+Name = Write Trend Configuration
+Input0 = Trend Number, U8, 0
+Input1 = Trend Control (0-off 1-single 2-filter), U8
+Input2 = Device Var Code, U8
+Input3 = Sample Period, T24, 0:01:00
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Trend Number, U8
+Output3 = Trend Control (0-off 1-single 2-filter), U8
+Output4 = Device Var Code, U8
+Output5 = Sample Period, T24
+
+[093]
+Name = Read Trend Data
+Input0 = Trend Number, U8, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Trend Number, U8
+Output3 = Device Var Code, U8
+Output4 = Device Var Class, U8
+Output5 = Device Var Units, U8
+Output6 = Day, U8
+Output7 = Month, U8
+Output8 = Year - 1900, U8
+Output9 = Time, TIME_12
+Output10 = Sample Period, T24
+Output11 = Sample 0 (Newest), F32
+Output12 = Sample 0 Status, HEX:1
+Output13 = Sample 1, F32
+Output14 = Sample 1 Status, HEX:1
+Output15 = Sample 2, F32
+Output16 = Sample 2 Status, HEX:1
+Output17 = Sample 3, F32
+Output18 = Sample 3 Status, HEX:1
+Output19 = Sample 4, F32
+Output20 = Sample 4 Status, HEX:1
+Output21 = Sample 5, F32
+Output22 = Sample 5 Status, HEX:1
+Output23 = Sample 6, F32
+Output24 = Sample 6 Status, HEX:1
+Output25 = Sample 7, F32
+Output26 = Sample 7 Status, HEX:1
+Output27 = Sample 8, F32
+Output28 = Sample 8 Status, HEX:1
+Output29 = Sample 9, F32
+Output30 = Sample 9 Status, HEX:1
+Output31 = Sample 10, F32
+Output32 = Sample 10 Status, HEX:1
+Output33 = Sample 11, F32
+Output34 = Sample 11 Status, HEX:1
+
+[094]
+Name = Read I/O System Communication Statistics
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Messages received, U32
+Output3 = Messages Returned, U32
+Output4 = Messages Forwarded to I/O, U32
+Output5 = Messages Received from I/O, U32
+
+[095]
+Name = Read Device Communication Statistics
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Count of STX received by adapter, U16
+Output3 = Count of ACK messages sent by adapter, U16
+Output4 = Count of BACK messages sent by adapter, U16
+
+[101]
+Name = Read Sub-device to Burst Message Map
+Input0 = Burst Message, U8, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Burst Message, U8
+Output3 = Sub-Device Index, U16
+
+[102]
+Name = Write Sub-device to Burst Message Map
+Input0 = Burst Message, U8, 1
+Input1 = Sub-Device Index, U16, 0 
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Burst Message, U8
+Output3 = Sub-Device Index, U16
+
+[103]
+Name = Write Burst Period
+Input0 = Burst Message, U8, 0
+Input1 = Update Period, T24, 0:01:00
+Input2 = Max Update Period, T24, 0:01:00
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Burst Message, U8
+Output3 = Update Period, T24
+Output4 = Max Update Period, T24
+
+[104]
+Name = Write Burst Trigger
+Input0 = Burst Message, U8, 0
+Input1 = Burst Trigger Mode (0-cont 1-win 2-ris 3-fall 4-chng), U8
+Input2 = Variable Classification, U8
+Input3 = Unit Code, U8
+Input4 = Trigger Level, FL
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Burst Message, U8
+Output3 = Burst Trigger Mode, U8
+Output4 = Variable Classification, U8
+Output5 = Unit Code, U8
+Output6 = Trigger Level, FL
+
+[105]
+Name = Read Burst Mode Configuration
+Input0 = Burst Message, U8, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Burst Mode Control, U8
+Output3 = Burst Command Number, U8
+Output4 = Burst Variable Slot0, U8
+Output5 = Burst Variable Slot1, U8
+Output6 = Burst Variable Slot2, U8
+Output7 = Burst Variable Slot3, U8
+Output8 = Burst Variable Slot4, U8
+Output9 = Burst Variable Slot5, U8
+Output10 = Burst Variable Slot6, U8
+Output11 = Burst Variable Slot7, U8
+Output12 = Burst Message, U8
+Output13 = Total # of Burst Messages, U8
+Output14 = Extended Command Number, U16
+Output15 = Update Time, T24
+Output16 = Max Update Time, T24
+Output17 = Trigger Mode (0-cont 1-win 2-ris 3-fall 4-chng), U8
+Output18 = Trigger Var Class, U8
+Output19 = Trigger Units, U8
+Output20 = Trigger Level, FL
+
+[106]
+Name = Flush Delayed Responses
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+
+[107]
+Name = Write Burst Device Variables
+Input0 = Burst Variable Slot0, U8
+Input1 = Burst Variable Slot1, U8
+Input2 = Burst Variable Slot2, U8
+Input3 = Burst Variable Slot3, U8
+Input4 = Burst Variable Slot4, U8
+Input5 = Burst Variable Slot5, U8
+Input6 = Burst Variable Slot6, U8
+Input7 = Burst Variable Slot7, U8
+Input8 = Burst Message, U8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Burst Variable Slot0, U8
+Output3 = Burst Variable Slot1, U8
+Output4 = Burst Variable Slot2, U8
+Output5 = Burst Variable Slot3, U8
+Output6 = Burst Variable Slot4, U8
+Output7 = Burst Variable Slot5, U8
+Output8 = Burst Variable Slot6, U8
+Output9 = Burst Variable Slot7, U8
+Output10 = Burst Message, U8
+
+[108]
+Name = Write Burst Mode Command Number
+Input0 = Burst Mode command #, U16, 9
+Input1 = Burst Message, U8, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Burst Mode command #, U16
+Output3 = Burst Message, U8
+
+[109]
+Name = Burst Mode Control
+Input0 = Burst Mode control, U8
+Input1 = Burst Message, U8, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Burst Mode control, U8
+Output3 = Burst Message, U8
+
+[115]
+Name = Read Event Notification Summary
+Input0 = Event Number, U8, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Event Number, U8
+Output3 = Num Of Events Supported, U8
+Output4 = Event Status (MSB) & Mode (LSB), HEX:1
+Output5 = Event Triggered Time, T24
+Output6 = Retry Time, T24
+Output7 = Max Time, T24
+Output8 = Debounce Interval, T24
+Output9 = Event Notification Mask, HEX:25
+
+
+[116]
+Name = Write Event Mask
+Input0 = Event Number, U8, 0
+Input1 = Event Mask, HEX:25, &H00000000000000000000000000000000000000000000000000
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Event Number, U8
+Output3 = Event Mask, HEX:25
+
+[117]
+Name = Write Event Timing
+Input0 = Event Number, U8, 0
+Input1 = Retry Time, T24, 00:02:00
+Input2 = Max Update Time, T24, 00:15:00
+Input3 = Debounce Interval, T24, 00:01:00
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Event Number, U8
+Output3 = Retry Time, T24
+Output4 = Max Update Time, T24
+Output5 = Debounce Interval, T24
+
+[118]
+Name = Write Event Control
+Input0 = Event Number, U8, 0
+Input1 = Event Control, U8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Event Number, U8
+Output3 = Event Control, U8
+
+[119]
+Name = See Event to Acknowledge
+Input0 = Event Number, U8, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Event Number, U8
+Output3 = Event Time, T24
+Output4 = CCF Counter, U16
+Output5 = Dev Status Mask, HEX:1
+Output6 = Device Specific Status 0, HEX:1
+Output7 = Device Specific Status 1, HEX:1
+Output8 = Device Specific Status 2, HEX:1
+Output9 = Device Specific Status 3, HEX:1
+Output10 = Device Specific Status 4, HEX:1
+Output11 = Device Specific Status 5, HEX:1
+Output12 = Extended Status, HEX:1
+Output13 = Device Operating Mode, U8
+Output14 = Standard Status 0, HEX:1
+Output15 = Standard Status 1, HEX:1
+Output16 = Analog Saturated Status, HEX:1
+Output17 = Standard Status 2, HEX:1
+Output18 = Standard Status 3, HEX:1
+Output15 = Analog Fixed Status, HEX:1
+Output16 = Device Specific Status 6, HEX:1
+Output17 = Device Specific Status 7, HEX:1
+Output18 = Device Specific Status 8, HEX:1
+Output19 = Device Specific Status 9, HEX:1
+Output20 = Device Specific Status 10, HEX:1
+Output21 = Device Specific Status 11, HEX:1
+Output22 = Device Specific Status 12, HEX:1
+Output23 = Device Specific Status 13, HEX:1
+Output24 = Device Specific Status 14, HEX:1
+Output25 = Device Specific Status 15, HEX:1
+Output26 = Device Specific Status 16, HEX:1
+
+[64384]
+Name = Read Discrete Device Capabilities
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Number of Discrete Vars, U16
+Output3 = DLEU Support, U8
+Output4 = Number of Reg Blocks, U8
+
+[64385]
+Name = Read Discrete Variable Properties
+Input0 = Discrete Var, U16, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Discrete Var, U16
+Output3 = Var Flags, HEX:1
+Output4 = Var Classification, U8
+Output5 = Mapping Index, U8
+Output6 = Fault Mode, U8
+Output7 = Fault Value, U16
+Output8 = Fault Time, T24
+Output9 = Discrete Readback Index, U16
+
+[64386]
+Name = Read Discrete State
+Input0 = 1st Discrete Var, U16, 0
+Input1 = Num Discrete Vars, U8, 1
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = 1st Discrete Var, U16
+Output3 = Num Discrete Vars, U8
+Output4 = Extended Dev Status, HEX:1
+Output5 = Time Stamp, TIME_12
+Output6 = Reset Latch State, HEX:2
+Output7 = Reset Latch State Status, HEX:1
+
+[64387]
+Name = Write Discrete State
+Input0 = 1st Discrete Var, U16, 0
+Input1 = Num Discrete Vars, U8, 1
+Input2 = Reset Latch State, HEX:2, &H0000
+Input3 = Reset Latch State Status, HEX:1, &HC0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = 1st Discrete Var, U16
+Output3 = Num Discrete Vars, U8
+Output4 = Reset Latch State, HEX:2
+Output5 = Reset Latch State Status, HEX:1
+
+[64388]
+Name = Simulate Discrete Variables
+Input0 = Discrete Var, U16, 0
+Input1 = Simulate Mode, U8, 1
+Input2 = Simulated Value, HEX:2, &H0000
+Input3 = Simulated Status, HEX:1, &HC0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Discrete Var, U16
+Output3 = Simulate Mode, U8
+Output4 = Simulated Value, HEX:2
+Output5 = Simulated Status, HEX:1
+
+[64394]
+Name = Read Discrete Burst Variables
+Input0 = Burst Message, U8, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Burst Message, U8
+Output3 = First Discrete Var, U16
+Output4 = Number of Discrete Vars, U8
+
+[64395]
+Name = Write Burst Discrete Variables
+Input0 = Burst Message, U8, 0
+Input1 = 1st Discrete Var, U16, 0
+Input2 = Num Discrete Vars, U8, 1
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Burst Message, U8
+Output3 = 1st Discrete Var, U16
+Output4 = Num Discrete Vars, U8
+
+
+[532]
+Name = Read Client Subscription Summary
+Input0 = Target Field Device Unique ID, U40
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Target Field Device Unique ID, U40
+Output3 = Client Subscription Flags, U16
+
+[533]
+Name = Write Client Subscription Flags
+Input0 = Target Field Device Unique ID, U40
+Input1 = Client Subscription Flags, U16
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Target Field Device Unique ID, U40
+Output3 = Client Subscription Flags, U16
+
+[768]
+Name = Write Join Key
+Input0 = Join Key 1 of 4, U32, &H00000000
+Input1 = Join Key 2 of 4, U32, &H00000000
+Input2 = Join Key 3 of 4, U32, &H00000000
+Input3 = Join Key 4 of 4, U32, &H00000000
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Join Key 1 of 4, HEX:4
+Output3 = Join Key 2 of 4, HEX:4
+Output4 = Join Key 3 of 4, HEX:4
+Output5 = Join Key 4 of 4, HEX:4
+
+[769]
+Name = Read Join Status
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Wireless Mode, U8
+Output3 = Join Status, HEX:2
+Output4 = # Available Neighbors, U8
+Output5 = # Ads Heard, U8
+Output6 = # Join Attempts, U8
+Output7 = Join Retry Time, T24
+Output8 = Network Search Time, T24
+
+[770]
+Name = Request Active Advertising
+Input0 = Shed Time, T24, 1:00:00
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Shed Time, T24
+Output3 = Advertising Period, T24
+Output4 = # Neighbors advtising (besides this device), U8
+
+[771]
+Name = Force Join
+Input0 = Join Mode, U8, 0
+Input1 = Join Shed Time, T24, 1:00:00
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Join Mode, U8
+Output3 = JoinShed Time, T24
+Output4 = Max Join Retries, U8
+
+[772]
+Name = Read Join Mode Configuration
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Join Mode, U8
+Output3 = JoinShed Time, T24
+Output4 = Max Join Retries, U8
+
+[773]
+Name = Write Mesh Network ID
+Input0 = New Network ID, U16
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = New Network ID, U16
+Output3 = Current Network ID, U16
+
+[774]
+Name = Read Mesh Network ID
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = New Network ID, U16
+Output3 = Current Network ID, U16
+
+[777]
+Name = Read Wireless Device Info
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Wi Capabilities(MSB 4-7)Power Source(LSB 0-3), HEX:1
+Output3 = Peak Packets per Second, FL
+Output4 = Duration (at peak) till Power Drain, T24
+Output5 = Time to Recover from Power Drain, T24
+Output6 = RSL threshold for good connection, S8
+Output7 = Minimum Keep-Alive time, T24
+Output8 = Max Neighbors, U16
+Output9 = Max Packet Buffers, U16
+
+[778]
+Name = Read Battery Life
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Battery Life (days), U16
+
+[779]
+Name = Report Device Health
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Packets Generated, U16
+Output3 = Packets Terminated, U16
+Output4 = Data-Link Layer MIC failured, U8
+Output5 = Network Layer (Session) failures, U8
+Output6 = Power Status, HEX:1
+Output7 = Number of CRC Errors, U8
+Output8 = Number of Nonce Counter Errors, U8
+Output9 = Max packet queue length since last report, U8
+Output10 = Avg packet queue length over time, FL
+Output11 = Avg Latency all packets since join, T24
+Output12 = Latency Variance since join, T24
+Output13 = Number of Timely packets recvd, U32
+Output14 = Number of Late/Lost packets recvd, U32
+Output15 = Number of Unknown session packets, U8
+
+[780]
+Name = Report Neighbor Health
+Input0 = Table Index, U8
+Input1 = Number Entries, U8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Table Index, U8
+Output3 = Number Entries, U8
+Output4 = Total Number of Neighbors, U8
+Output5 = Neighbor 1-Nickname, U16
+Output6 = Neighbor 1-Flags,HEX:1
+Output7 = Neighbor 1-Mean RSL,U8
+Output8 = Neighbor 1-# packets Tx to Neighbor, U16
+Output9 = Neighbor 1-# failed packets to neighbor, U16
+Output10 = Neighbor 1-# packets Rx from Neighbor, U16
+Output11 = Neighbor 2-Nickname, U16
+Output12 = Neighbor 2-Flags,HEX:1
+Output13 = Neighbor 2-Mean RSL,U8
+Output14 = Neighbor 2-# packets Tx to Neighbor, U16
+Output15 = Neighbor 2-# failed packets to neighbor, U16
+Output16 = Neighbor 2-# packets Rx from Neighbor, U16
+Output17 = Neighbor 3-Nickname, U16
+Output18 = Neighbor 3-Flags,HEX:1
+Output19 = Neighbor 3-Mean RSL,U8
+Output20 = Neighbor 3-# packets Tx to Neighbor, U16
+Output21 = Neighbor 3-# failed packets to neighbor, U16
+Output22 = Neighbor 3-# packets Rx from Neighbor, U16
+Output23 = Neighbor 4-Nickname, U16
+Output24 = Neighbor 4-Flags,HEX:1
+Output25 = Neighbor 4-Mean RSL,U8
+Output26 = Neighbor 4-# packets Tx to Neighbor, U16
+Output27 = Neighbor 4-# failed packets to neighbor, U16
+Output28 = Neighbor 4-# packets Rx from Neighbor, U16
+Output29 = Neighbor 5-Nickname, U16
+Output30 = Neighbor 5-Flags,HEX:1
+Output31 = Neighbor 5-Mean RSL,U8
+Output32 = Neighbor 5-# packets Tx to Neighbor, U16
+Output33 = Neighbor 5-# failed packets to neighbor, U16
+Output34 = Neighbor 5-# packets Rx from Neighbor, U16
+Output35 = Neighbor 6-Nickname, U16
+Output36 = Neighbor 6-Flags,HEX:1
+Output37 = Neighbor 6-Mean RSL,U8
+Output38 = Neighbor 6-# packets Tx to Neighbor, U16
+Output39 = Neighbor 6-# failed packets to neighbor, U16
+Output40 = Neighbor 6-# packets Rx from Neighbor, U16
+Output41 = Neighbor 7-Nickname, U16
+Output42 = Neighbor 7-Flags,HEX:1
+Output43 = Neighbor 7-Mean RSL,U8
+Output44 = Neighbor 7-# packets Tx to Neighbor, U16
+Output45 = Neighbor 7-# failed packets to neighbor, U16
+Output46 = Neighbor 7-# packets Rx from Neighbor, U16
+Output47 = Neighbor 8-Nickname, U16
+Output48 = Neighbor 8-Flags,HEX:1
+Output49 = Neighbor 8-Mean RSL,U8
+Output50 = Neighbor 8-# packets Tx to Neighbor, U16
+Output51 = Neighbor 8-# failed packets to neighbor, U16
+Output52 = Neighbor 8-# packets Rx from Neighbor, U16
+
+[781]
+Name = Read Device Nickname
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Nickname, U16
+
+[782]
+Name = Read Session Entries
+Input0 = Session Index, U8, 0
+Input1 = Number Entries To Read, U8, 1
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Session Index, U8
+Output3 = Number Entries To Read, U8
+Output4 = Total number sessions configured, U8
+Output5 = Session Type, U8
+Output6 = Peer nickname, U16
+Output7 = Peer Unique ID, HEX:5
+Output8 = Peer device nonce, U32
+Output9 = Device Nonce Counter, U32
+
+[783]
+Name = Read Superframe
+Input0 = Superframe Index, U8
+Input1 = Reserved, U8, 1
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Superframe Index, U8
+Output3 = Reserved (must be 1), U8
+Output4 = # Superframes configured, U8
+Output5 = Superframe ID, U8
+Output6 = Number slots in this superframe, U16
+Output7 = Superframe flags, HEX:1
+
+[784]
+Name = Read Link
+Input0 = Link Index, U16
+Input1 = Reserved, U8, 1
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Link Index, U16
+Output3 = Reserved (must be 1), U8
+Output4 = # Links configured, U16
+Output5 = Superframe ID, U8
+Output6 = Slot Number for this link, U16
+Output7 = Channel Offset for this link, U8
+Output8 = Neighbor Nickname for this link, U16
+Output9 = Link Options, HEX:1
+Output10 = Link Type, U8
+
+[785]
+Name = Read Graph List
+Input0 = Graph List Index, U8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Graph List Index, U8
+Output3 = # Graphs configured, U8
+Output4 = Graph ID, U16
+Output5 = # Neighbors for this graph, U8
+Output6 = Neighbor 1-Nickname, U16
+Output7 = Neighbor 2-Nickname, U16
+Output8 = Neighbor 3-Nickname, U16
+Output9 = Neighbor 4-Nickname, U16
+Output10 = Neighbor 5-Nickname, U16
+Output11 = Neighbor 6-Nickname, U16
+Output12 = Neighbor 7-Nickname, U16
+Output13 = Neighbor 8-Nickname, U16
+
+[787]
+Name = Report Neighbor Signal Levels
+Input0 = Neighbor Table Index, U8
+Input1 = Number of Entries to Read, U8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Neighbor Table Index, U8
+Output3 = Number of Entries to Read, U8
+Output4 = Total # Neighbors in Table, U8
+Output5 = Neighbor 1-Nickname, U16
+Output6 = Neighbor 1-RSL (dB), U8
+Output7 = Neighbor 2-Nickname, U16
+Output8 = Neighbor 2-RSL (dB), U8
+Output9 = Neighbor 3-Nickname, U16
+Output10 = Neighbor 3-RSL (dB), U8
+Output11 = Neighbor 4-Nickname, U16
+Output12 = Neighbor 4-RSL (dB), U8
+Output13 = Neighbor 5-Nickname, U16
+Output14 = Neighbor 5-RSL (dB), U8
+Output15 = Neighbor 6-Nickname, U16
+Output16 = Neighbor 6-RSL (dB), U8
+Output17 = Neighbor 7-Nickname, U16
+Output18 = Neighbor 7-RSL (dB), U8
+Output19 = Neighbor 8-Nickname, U16
+Output20 = Neighbor 8-RSL (dB), U8
+
+[788]
+Name = Alarm Source Route Failed
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Nickname of neighbor with path failure, U16
+
+[789]
+Name = Alarm Source Route Failed
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Nickname of unreachable neighbor, U16
+Output3 = Network-layer MIC from failed NPDU, U32
+
+[790]
+Name = Alarm Graph Route Failed
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Graph ID of failed route, U16
+
+[791]
+Name = Alarm Transport Layer Failed
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Nickname of unreachable peer, U16
+
+[793]
+Name = Write UTC
+Input0 = Day, U8, 31
+Input1 = Month, U8, 1
+Input2 = Year-1900, U8, 117
+Input3 = Time Of Day, T12, 12:00:00 PM
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Day, U8
+Output3 = Month, U8
+Output4 = Year, U8
+Output5 = Time Of Day, T12
+
+[794]
+Name = Read UTC
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Day, U8
+Output3 = Month, U8
+Output4 = Year, U8
+Output5 = Time Of Day, T12
+
+[796]
+Name = Read Timer Interval
+Input0 = Timer type, U8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Timer type, U8
+Output3 = Interval (ms), U32
+
+[797]
+Name = Write Radio Power Output
+Input0 = Output Power (dBm), S8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Output Power (dBm), S8
+
+[798]
+Name = Read Radio Power Output
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Output Power (dBm), S8
+
+[800]
+Name = Read Timetable
+Input0 = Timetable Index, U8
+Input1 = Reserved, U8, 1
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Timetable Index, U8
+Output3 = Reserved (must be 1), U8
+Output4 = # Timetables configured, U8
+Output5 = Timetable ID, U8
+Output6 = Timetable Request Flags, HEX:1
+Output7 = Timetable App Domain, U8
+Output8 = Peer requested for timetable, U16
+Output9 = Period (or latency), T24
+Output10 = Route ID, U8
+
+[802]
+Name = Read Route List
+Input0 = Route Index, U8
+Input1 = Reserved, U8, 1
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Route Index, U8
+Output3 = Reserved (must be 1), U8
+Output4 = Number of routes currently configured, U8
+Output5 = Number of Routes remaining unconfigured, U8
+Output6 = Route ID, U8
+Output7 = Destination Nickname, U16
+Output8 = Graph ID, U16
+Output9 = Period (or latency), T24
+Output10 = Source-Route Attached (1=Attached 0=None), U8
+
+[804]
+Name = Read Radio CCA Mode
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = CCA Mode, U8
+
+[805]
+Name = Write Radio CCA Mode
+Input0 = CCA Mode, U8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = CCA Mode, U8
+
+[806]
+Name = Read Handheld Superframe Status
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Superframe ID, U8
+Output3 = # Slots in Superframe, U16
+Output4 = Superframe Flags, HEX:1
+
+[807]
+Name = Request Handheld Superframe Mode
+Input0 = Superframe ID, U8
+Input1 = Superframe Flags, HEX:1
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Superframe ID, U8
+Output3 = Superframe Flags, HEX:1
+
+[808]
+Name = Read Packet Time-to-Live
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = TTL, U8
+
+[809]
+Name = Write Packet Time-to-Live
+Input0 = TTL, U8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = TTL, U8
+
+[810]
+Name = Read Join Priority
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Join Priority, U8
+
+[811]
+Name = Write Join Priority
+Input0 = Join Priority, U8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Join Priority, U8
+
+[812]
+Name = Read Packet Receive Priority
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Packet Receive Priority, U8
+
+[813]
+Name = Write Packet Receive Priority
+Input0 = Packet Receive Priority, U8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Packet Receive Priority, U8
+
+[819]
+Name = Read Back-Off Exponent
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Maximum Back-Off Exponent, U8
+
+[820]
+Name = Write Back-Off Exponent
+Input0 = Maximum Back-Off Exponent, U8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Maximum Back-Off Exponent, U8
+
+[821]
+Name = Write Network Access Mode
+Input0 = Network Access Mode, U8
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Network Access Mode, U8
+
+[822]
+Name = Read Network Access Mode
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Network Access Mode, U8
+
+[832]
+Name = Read Device Identity using Unique ID
+Input0 = Unique ID of the device, U40
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Unique ID of the device, U40
+Output3 = Nickname, U16
+Output4 = Long Tag, ASCII:32
+
+[840]
+Name = Read Device Statistics
+Input0 = Unique ID, HEX:5
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Unique ID, HEX:5
+Output3 = # Graphs Configured, U16
+Output4 = # Superframes Configured, U16
+Output5 = # Links Configured, U16
+Output6 = # of Neighbors, U8
+Output7 = Average Latency, T24
+Output8 = # of Joins, U16
+Output9 = Date of Last Join, HEX:3
+Output10 = Time of Last Join, T12
+Output11 = # Packets Generated, U32
+Output12 = # of Packets Terminated, U32
+Output13 = # DLL MIC Fails, U32
+Output14 = # NL MIC Fails, U32
+Output15 = # CRC Errors, U32
+Output16 = # Unicast Nonce Missed, U32
+Output17 = STD Deviation Latency, T24
+Output18 = Avg Comm. Latency, T24
+Output19 = STD Deviation Latency, T24
+Output20 = Percent Availability, FL
+Output21 = Percent Availability, FL
+Output22 = Max buffer Queue Length, U16
+Output23 = AVG buffer Queue Length, FL
+Output24 = Wireless Connection / Health, HEX:1
+Output25 = # Bad Session Packets, U8
+
+[973]
+Name = Write Service
+Input0 = Service ID, U8, 0
+Input1 = Req Flags, U8, 0
+Input2 = AppDomain, U8, 0
+Input3 = Nickname, U16, 0
+Input4 = Time, T24, 0:01:00
+Input5 = Route ID, U8, 0
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Service ID, U8
+Output3 = Req Flags, U8
+Output4 = AppDomain, U8
+Output5 = Nickname, U16
+Output6 = Time, T24
+Output7 = Route ID, U8
+Output8 = Remaining, U8
+
+[64512]
+Name = Read Wireless Module Revision
+Output0 = Response Code, U8
+Output1 = Status Byte, HEX:1
+Output2 = Device Type, U16
+Output3 = Manufacturer, U16
+Output4 = Device Revision, U8
+Output5 = Software Revision, U8
+Output6 = Hardware Revision, U8

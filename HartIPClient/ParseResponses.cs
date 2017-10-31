@@ -302,7 +302,7 @@ namespace FieldCommGroup.HartIPClient
             int nSize = Convert.ToInt32(Val[1]);
             for (int i = 0; i < nSize; i++)
             {
-              Value += String.Format("{0:X2}", Data[nIndex + i]);
+              Value += String.Format("0x{0:X2}", Data[nIndex + i]);
             }
             nIndex += nSize;
           }
