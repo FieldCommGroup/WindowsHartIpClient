@@ -25,10 +25,18 @@ These instructions describe how to build, deploy and use the client.
 2. Visual Studio 2015 or later.
 ```
 
+### Pre-built Installer
+
+You may avoid building an installer with  Visual Studio by using the pre-built setup program available in this project folder:
+```
+Install/Release
+```
+
+
+
 ### Installing
 
 Development environment
-
 ```
 Install Visual Studio 2015
 ```
