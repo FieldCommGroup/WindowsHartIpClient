@@ -44,12 +44,12 @@ namespace FieldCommGroup.HartIPConnect
     /// <summary>
     /// Session Inactivity Close Time, milliseconds
     /// </summary>
-    public const uint INACTIVITY_CLOSE_TIME = 6*600000;
+    public const uint INACTIVITY_CLOSE_TIME = 600000;
     
-    /// <summary>
-    /// delay Retry
-    /// </summary>
-    public const uint DR_DELAYRETRY = 1000;
+        /// <summary>
+        /// delay Retry
+        /// </summary>
+        public const uint DR_DELAYRETRY = 1000;
 
     /// <summary>
     /// DrDelayBase Max

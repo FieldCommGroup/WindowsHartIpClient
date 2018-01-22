@@ -195,11 +195,11 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(194, 23);
+            this.label5.Location = new System.Drawing.Point(239, 23);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(193, 13);
+            this.label5.Size = new System.Drawing.Size(134, 13);
             this.label5.TabIndex = 3;
-            this.label5.Text = "Session Timeout (seconds of inactivity):";
+            this.label5.Text = "Socket Timeout (seconds):";
             // 
             // NetConnect_Form
             // 
