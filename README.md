@@ -75,7 +75,7 @@ Select one of the device names from the pull-down menu.  To send the "Identity" 
 06/16/2017 11:15:30:485, Rx: Message Header: Ver: 1, MsgType: 1, MsgId: 3, MsgStatus: 0x00, TranId: 13, ByteCount: 33, Data: 86 A6 4E 0B 15 38 00 18 00 D0 FE 26 4E 05 07 04 01 0E 0C 0B 15 38 05 02 00 0F D0 00 26 00 26 84 69 
 ```
 
-To see messages parsed for easier readability, click the Parse HART Responses button, which toggles the parsing on and off.  It will show a File/Open dialog.  Select the Sample.hdf file that ships with this Client to use its instructions to disassemble the HART response data.
+To see messages parsed for easier readability, click the Parse HART Responses button, which toggles the parsing on and off.  It will show a File/Open dialog.  Select the Sample.hdf file to disassemble the HART response data.
 
 Now click the Send button again.  The Client responds:
 ```
