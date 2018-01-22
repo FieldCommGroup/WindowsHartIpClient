@@ -1,4 +1,4 @@
-﻿# HART-IP Client
+﻿# Windows HART-IP Client
 
 With an installed base of over 40 million devices, the HART Communication Protocol is the leading protocol for smart process automation field devices.  HART-IP enables the communication of native binary HART data across the Internet allowing access to HART devices.  This complete HART IP Client example simplifies the development of applications using HART-IP to access and utilize HART field devices.
 HART-IP Client is a C# Windows application that uses UDP/TCP to connect to a HART device using the HART-IP protocol.  Devices include: 

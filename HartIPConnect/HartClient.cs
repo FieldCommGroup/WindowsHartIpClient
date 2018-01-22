@@ -414,18 +414,42 @@ namespace FieldCommGroup.HartIPConnect
 
           return bSuccess;
       }
+        /// <summary>
+        /// Disconnect from HART Device that is in the network 
+        /// </summary>
+         /// <returns>bool true if it is success.</returns>
+        /// <remarks>     
+         /// <para>It will initiate session with the network HART device if it is
+        /// successful connected to that Device.</para>
+        /// </remarks>
+        public bool Disconnect()
+        {
+            bool bSuccess = false;
+            lock (SyncRoot)
+            {
+                bSuccess = m_HartIPConn.Disconnect();              
+                    
+                if (m_HartIPConn != null)
+                {
+                    // close the existing connection
+                    Close();
+                }
+            }
+ 
+            return bSuccess;
+        }
 
-      /// <summary>
-      /// Build a HartIP Request using the specified request command, request message,
-      /// device type, and device id. It will have frame, device address, command, byte count, 
-      /// data, and checksum bytes in the returned HartIPRequest.Command.
-      /// </summary>
-      /// <param name="usReqCmd">ushort Request command</param>
-      /// <param name="ReqMsg">String Request message in Hex string</param>
-      /// <param name="usDeviceType">ushort Device Type</param>
-      /// <param name="nDeviceId">uint Device ID</param>
-      /// <returns><see cref="HartIPRequest"/></returns>
-      public HartIPRequest BuildHartIPRequest(ushort usReqCmd, String ReqMsg, ushort usDeviceType,
+        /// <summary>
+        /// Build a HartIP Request using the specified request command, request message,
+        /// device type, and device id. It will have frame, device address, command, byte count, 
+        /// data, and checksum bytes in the returned HartIPRequest.Command.
+        /// </summary>
+        /// <param name="usReqCmd">ushort Request command</param>
+        /// <param name="ReqMsg">String Request message in Hex string</param>
+        /// <param name="usDeviceType">ushort Device Type</param>
+        /// <param name="nDeviceId">uint Device ID</param>
+        /// <returns><see cref="HartIPRequest"/></returns>
+        public HartIPRequest BuildHartIPRequest(ushort usReqCmd, String ReqMsg, ushort usDeviceType,
           uint nDeviceId)
       {
           String Msg;

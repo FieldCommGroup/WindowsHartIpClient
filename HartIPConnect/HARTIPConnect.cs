@@ -423,13 +423,78 @@ namespace FieldCommGroup.HartIPConnect
         return bSuccess;
     }
 
-    /// <summary>
-    /// Send a Hart-IP Request
-    /// </summary>
-    /// <param name="Request"><see cref="HartIPRequest"></see></param>
-    /// <para>see the HartIPRequest.Command for HART specification references.</para>
-    /// <returns>bool true if the request is sent success.</returns>
-    private bool SendHartIPRequest(HartIPRequest Request)
+        /// <summary>
+        /// Close session with the network HART-IP device.
+        /// </summary> 
+        /// <returns>bool</returns>
+        private bool CloseSession()
+        {
+            bool bSuccess = false;
+            HartIPResponse Response = null;
+
+            do
+            {
+                // create close session request
+                HartIPRequest Request = HartIPRequest.CloseSession(TransactionId);
+                if (!SendHartIPRequest(Request))
+                {
+                    LogMsg.Instance.Log("Error, sending CloseSession request failure.", true);
+                    Close();
+                    break;
+                }
+
+                try
+                {
+                    Response = GetResponse();
+                }
+                catch (SocketException se)
+                {
+                    m_Error = String.Format("CloseSession SocketException: ErrorCode:{0}. {1}.",
+                        se.ErrorCode, se.Message);
+                    LogMsg.Instance.Log("Error, " + m_Error, true);
+                    Close();
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    m_Error = String.Format("CloseSession Exception: {0}", ex.Message);
+                    LogMsg.Instance.Log("Error, " + m_Error, true);
+                    Close();
+                    break;
+                }
+
+                if (Response == null)
+                {
+                    m_Error = "CloseSession failed getting response.";
+                    LogMsg.Instance.Log("Error, " + m_Error, true);
+                    Close();
+                    break;
+                }
+                else if (!Response.IsValidResponse)
+                {
+                    m_Error = "CloseSession received an invalid response Msg Type.";
+                    LogMsg.Instance.Log("Error, " + m_Error, true);
+                    LogMsg.Instance.Log(Response.ToString());
+                    Close();
+                    break;
+                }
+
+                LogMsg.Instance.Log(Response.ToString());
+                bSuccess = (Response.Status == HARTIPMessage.RSP_SUCCESS ||
+                    Response.Status == HARTIPMessage.RSP_SET_TO_NEAREST_POSSIBLE_VALUE) ? true : false;
+
+            } while (false); /* ONCE */
+
+            return bSuccess;
+        }
+
+        /// <summary>
+        /// Send a Hart-IP Request
+        /// </summary>
+        /// <param name="Request"><see cref="HartIPRequest"></see></param>
+        /// <para>see the HartIPRequest.Command for HART specification references.</para>
+        /// <returns>bool true if the request is sent success.</returns>
+        private bool SendHartIPRequest(HartIPRequest Request)
     {
         bool bSuccess = false;
         lock (SyncRoot)
@@ -685,23 +750,42 @@ namespace FieldCommGroup.HartIPConnect
         }
     }
 
-    /// <summary>
-    /// Send a Hart-IP Request  
-    /// </summary>
-    /// <param name="Command">byte[] request Command byte array
-    /// <para>Array should have frame, device address, command, byte count, 
-    /// data, and checksum bytes.</para>
-    /// <para>device address is the device type and device id 5 bytes with expanded type mask</para>
-    /// <para>Example: Send command 20 to a device that has device address 2658 3B86A3, 
-    /// Command byte[] should have: 82 A6 58 3B 86 A3 14 00 76</para>   
-    /// <remarks>See HART specification 081r8.2.pdf section 5.1, 5.2, and 5.3 for frame, 
-    /// address, expansion, data, and checksum bytes information.
-    /// </remarks>  
-    /// </param>
-    /// <param name="usByteCount">ushort the specified Command array byte count</param> 
-    /// <param name="MsgRsp"><see cref="MsgResponse"></see></param>
-    /// <returns>bool if it is success</returns>    
-    public bool SendHartRequest(byte[] Command, ushort usByteCount, MsgResponse MsgRsp)
+        /// <summary>
+        /// Disconnect from a HART-IP session
+        /// </summary>
+        /// <returns>bool true if disconnects successfully.</returns>
+        /// <remarks>It will close an open session with the network HART-IP device</remarks>
+        public bool Disconnect()
+        {
+            lock (SyncRoot)
+            {
+                if (m_bConnected)
+                {
+                    CloseSession();
+                    m_bConnected = false;
+                }
+
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Send a Hart-IP Request  
+        /// </summary>
+        /// <param name="Command">byte[] request Command byte array
+        /// <para>Array should have frame, device address, command, byte count, 
+        /// data, and checksum bytes.</para>
+        /// <para>device address is the device type and device id 5 bytes with expanded type mask</para>
+        /// <para>Example: Send command 20 to a device that has device address 2658 3B86A3, 
+        /// Command byte[] should have: 82 A6 58 3B 86 A3 14 00 76</para>   
+        /// <remarks>See HART specification 081r8.2.pdf section 5.1, 5.2, and 5.3 for frame, 
+        /// address, expansion, data, and checksum bytes information.
+        /// </remarks>  
+        /// </param>
+        /// <param name="usByteCount">ushort the specified Command array byte count</param> 
+        /// <param name="MsgRsp"><see cref="MsgResponse"></see></param>
+        /// <returns>bool if it is success</returns>    
+        public bool SendHartRequest(byte[] Command, ushort usByteCount, MsgResponse MsgRsp)
     {
         HartIPRequest Req = HartIPRequest.HartCommandRequest(TransactionId, Command, usByteCount);
         return SendHartRequest(Req, MsgRsp);

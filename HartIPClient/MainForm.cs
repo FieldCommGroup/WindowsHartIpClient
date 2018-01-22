@@ -522,7 +522,9 @@ namespace FieldCommGroup.HartIPClient
           do
           {
             try
-            {              
+            {
+              Disconnect();
+
               // stop parsing responses
               StopParsingResponses();              
               if (m_InactivityCloseTimer != null)
@@ -555,8 +557,10 @@ namespace FieldCommGroup.HartIPClient
         {
           lock (SyncRoot)
           {
-            // Disable the inactivity close timer
-            if ((m_InactivityCloseTimer != null) && m_InactivityCloseTimer.Enabled)
+           m_HartClient.Disconnect();
+
+           // Disable the inactivity close timer
+           if ((m_InactivityCloseTimer != null) && m_InactivityCloseTimer.Enabled)
               m_InactivityCloseTimer.Enabled = false;
 
             // Close the network connection            
