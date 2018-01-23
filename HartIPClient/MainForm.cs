@@ -724,7 +724,7 @@ namespace FieldCommGroup.HartIPClient
             {             
                 HartIPResponse Rsp = m_HartClient.SendHartRequest(Req);
 
-                if ((Rsp == null) && (Rsp.Command == 77))
+                if ((Rsp.Command == 77))
                 { // Command 77: "Send Command to Sub-Device"
                     Rsp.Unwrap77(); // unwrap any response that was tunneled
                 }
