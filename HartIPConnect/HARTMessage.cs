@@ -736,9 +736,30 @@ namespace FieldCommGroup.HartIPConnect
 
 
         /// <summary>
-        /// The Message Status
-        /// </summary>
-        public byte Status
+        /// Check if the Response code is is an error code
+        /// </summary>    
+        public bool IsErrorResponse()
+        {
+            int c = this.m_cRspcode;
+
+            bool iserr = (
+                (1 <= c && c<= 7) ||
+                (16 <= c && c <= 23) ||
+                (32 <= c && c <= 64) || 
+                (9 <= c && c <= 13) || 
+                (15 == c) ||
+                (28 == c) || 
+                (29 == c) ||
+                (65 <= c && c <= 95)
+                );
+
+            return iserr;
+    }
+
+    /// <summary>
+    /// The Message Status
+    /// </summary>
+    public byte Status
     {
       get { return ((MsgHeader != null) ? MsgHeader.Status : (byte)0); }
     }
