@@ -108,7 +108,7 @@ namespace FieldCommGroup.HartIPClient
 
               m_InactivityCloseTimer.Enabled = false;
               if (m_HartClient.IsConnected)
-              {
+              { //TODO keep alive here
                 long lNow = DateTime.Now.Ticks;
                 long lLastActiveTime = m_HartClient.LastActivityTime;
                 long lElapsed = (lNow - lLastActiveTime) / 10000;
@@ -812,7 +812,23 @@ namespace FieldCommGroup.HartIPClient
                     Logger.Log(Msg);
                     PublishedMsg_Tb.Text += Msg + "\r\n\r\n";
                     PublishedMsg_Tb.SelectionStart = PublishedMsg_Tb.Text.Length;
-                    PublishedMsg_Tb.ScrollToCaret();                    
+                    PublishedMsg_Tb.ScrollToCaret(); 
+                    
+                    if (m_bParsingRsps)
+                    {
+                        try
+                        {
+                            Msg = m_ParseRsps.ParseResponse(Rsp);
+                        }
+                        catch (Exception e)
+                        {
+                            Msg = e.Message;
+                        }
+                        Logger.Log(Msg);
+                        PublishedMsg_Tb.Text += Msg + "\r\n\r\n";
+                        PublishedMsg_Tb.SelectionStart = PublishedMsg_Tb.Text.Length;
+                        PublishedMsg_Tb.ScrollToCaret();
+                    }
                 }
             }
         }

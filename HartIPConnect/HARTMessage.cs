@@ -638,8 +638,8 @@ namespace FieldCommGroup.HartIPConnect
                 m_HartCmd[j] = inBuffer.ReadByte(); 
             }
             
-            // if the message is the ACK type
-            if (MsgType == HARTIPMessage.HART_ACK)
+            // if the message is the ACK or BACK (notify) type
+            if (MsgType == HARTIPMessage.HART_ACK || MsgType == HARTIPMessage.HART_PUBLISH_NOTIFY)
             {
                 // Check if response is initiate session
                 if (MsgHeader.MsgId == MessageId.SESSION_INITIATE)
