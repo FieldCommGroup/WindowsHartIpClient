@@ -423,78 +423,13 @@ namespace FieldCommGroup.HartIPConnect
         return bSuccess;
     }
 
-        /// <summary>
-        /// Close session with the network HART-IP device.
-        /// </summary> 
-        /// <returns>bool</returns>
-        private bool CloseSession()
-        {
-            bool bSuccess = false;
-            HartIPResponse Response = null;
-
-            do
-            {
-                // create close session request
-                HartIPRequest Request = HartIPRequest.CloseSession(TransactionId);
-                if (!SendHartIPRequest(Request))
-                {
-                    LogMsg.Instance.Log("Error, sending CloseSession request failure.", true);
-                    Close();
-                    break;
-                }
-
-                try
-                {
-                    Response = GetResponse();
-                }
-                catch (SocketException se)
-                {
-                    m_Error = String.Format("CloseSession SocketException: ErrorCode:{0}. {1}.",
-                        se.ErrorCode, se.Message);
-                    LogMsg.Instance.Log("Error, " + m_Error, true);
-                    Close();
-                    break;
-                }
-                catch (Exception ex)
-                {
-                    m_Error = String.Format("CloseSession Exception: {0}", ex.Message);
-                    LogMsg.Instance.Log("Error, " + m_Error, true);
-                    Close();
-                    break;
-                }
-
-                if (Response == null)
-                {
-                    m_Error = "CloseSession failed getting response.";
-                    LogMsg.Instance.Log("Error, " + m_Error, true);
-                    Close();
-                    break;
-                }
-                else if (!Response.IsValidResponse)
-                {
-                    m_Error = "CloseSession received an invalid response Msg Type.";
-                    LogMsg.Instance.Log("Error, " + m_Error, true);
-                    LogMsg.Instance.Log(Response.ToString());
-                    Close();
-                    break;
-                }
-
-                LogMsg.Instance.Log(Response.ToString());
-                bSuccess = (Response.Status == HARTIPMessage.RSP_SUCCESS ||
-                    Response.Status == HARTIPMessage.RSP_SET_TO_NEAREST_POSSIBLE_VALUE) ? true : false;
-
-            } while (false); /* ONCE */
-
-            return bSuccess;
-        }
-
-        /// <summary>
-        /// Send a Hart-IP Request
-        /// </summary>
-        /// <param name="Request"><see cref="HartIPRequest"></see></param>
-        /// <para>see the HartIPRequest.Command for HART specification references.</para>
-        /// <returns>bool true if the request is sent success.</returns>
-        private bool SendHartIPRequest(HartIPRequest Request)
+    /// <summary>
+    /// Send a Hart-IP Request
+    /// </summary>
+    /// <param name="Request"><see cref="HartIPRequest"></see></param>
+    /// <para>see the HartIPRequest.Command for HART specification references.</para>
+    /// <returns>bool true if the request is sent success.</returns>
+    private bool SendHartIPRequest(HartIPRequest Request)
     {
         bool bSuccess = false;
         lock (SyncRoot)
@@ -750,42 +685,23 @@ namespace FieldCommGroup.HartIPConnect
         }
     }
 
-        /// <summary>
-        /// Disconnect from a HART-IP session
-        /// </summary>
-        /// <returns>bool true if disconnects successfully.</returns>
-        /// <remarks>It will close an open session with the network HART-IP device</remarks>
-        public bool Disconnect()
-        {
-            lock (SyncRoot)
-            {
-                if (m_bConnected)
-                {
-                    CloseSession();
-                    m_bConnected = false;
-                }
-
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// Send a Hart-IP Request  
-        /// </summary>
-        /// <param name="Command">byte[] request Command byte array
-        /// <para>Array should have frame, device address, command, byte count, 
-        /// data, and checksum bytes.</para>
-        /// <para>device address is the device type and device id 5 bytes with expanded type mask</para>
-        /// <para>Example: Send command 20 to a device that has device address 2658 3B86A3, 
-        /// Command byte[] should have: 82 A6 58 3B 86 A3 14 00 76</para>   
-        /// <remarks>See HART specification 081r8.2.pdf section 5.1, 5.2, and 5.3 for frame, 
-        /// address, expansion, data, and checksum bytes information.
-        /// </remarks>  
-        /// </param>
-        /// <param name="usByteCount">ushort the specified Command array byte count</param> 
-        /// <param name="MsgRsp"><see cref="MsgResponse"></see></param>
-        /// <returns>bool if it is success</returns>    
-        public bool SendHartRequest(byte[] Command, ushort usByteCount, MsgResponse MsgRsp)
+    /// <summary>
+    /// Send a Hart-IP Request  
+    /// </summary>
+    /// <param name="Command">byte[] request Command byte array
+    /// <para>Array should have frame, device address, command, byte count, 
+    /// data, and checksum bytes.</para>
+    /// <para>device address is the device type and device id 5 bytes with expanded type mask</para>
+    /// <para>Example: Send command 20 to a device that has device address 2658 3B86A3, 
+    /// Command byte[] should have: 82 A6 58 3B 86 A3 14 00 76</para>   
+    /// <remarks>See HART specification 081r8.2.pdf section 5.1, 5.2, and 5.3 for frame, 
+    /// address, expansion, data, and checksum bytes information.
+    /// </remarks>  
+    /// </param>
+    /// <param name="usByteCount">ushort the specified Command array byte count</param> 
+    /// <param name="MsgRsp"><see cref="MsgResponse"></see></param>
+    /// <returns>bool if it is success</returns>    
+    public bool SendHartRequest(byte[] Command, ushort usByteCount, MsgResponse MsgRsp)
     {
         HartIPRequest Req = HartIPRequest.HartCommandRequest(TransactionId, Command, usByteCount);
         return SendHartRequest(Req, MsgRsp);
@@ -869,7 +785,7 @@ namespace FieldCommGroup.HartIPConnect
     public bool Reconnect()
     {
         if (m_strHost.Length == 0)
-            throw new ArgumentException("Reconnect Error: Host IP is emtpy.");
+            throw new ArgumentException("Reconnect Error: Host IP is empty.");
 
         if (m_nPort == 0)
             throw new ArgumentException("Reconnect Error: Uninitialize Port value.");
@@ -881,6 +797,71 @@ namespace FieldCommGroup.HartIPConnect
             m_InactivityCloseTime);
     }
 
-  }
 
+        /// <summary>
+        /// Create a HART Close Session Request, send it to the Gateway,
+        /// and close the socket.
+        /// </summary>
+        /// <param name="Result"><see cref="HARTMsgResult">HARTMsgResult</see></param>
+        public void CloseSession(HARTMsgResult Result)
+        {
+            HartIPRequest Req = null;
+
+            do
+            {
+                Req = HartIPRequest.CloseSession(TransactionId);
+                MsgResponse MsgRsp = new MsgResponse(HARTIPConnect.USE_SOCKET_TIMEOUT_DEFAULT);
+                if (SendHartRequest(Req, MsgRsp))
+                {
+                    try
+                    {
+                        if (!MsgRsp.ResponseMsg.IsValidResponse)
+                        {
+                            Result.AddMessage("Close Session failed. Receive an invalid response msg type.", false, true);
+                            break;
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+                else
+                {
+                    Result.AddMessage("Failed sending Session Close Command to Gateway.", false, true);
+                    break;
+                }
+            } while (false); /* ONCE */
+
+            Close();
+            Result.AddMessage("Closed the HPort socket.", false, true);
+        }
+
+        /// <summary>
+        /// Send KeepAlive message to the Gateway
+        /// </summary>
+        /// <param name="Result">HARTMsgResult</param>
+        public void SendKeepAlive(HARTMsgResult Result)
+        {
+            HartIPRequest Req = null;
+
+            do
+            {
+                Req = HartIPRequest.KeepAlive(TransactionId);
+                MsgResponse MsgRsp = new MsgResponse(HARTIPConnect.USE_SOCKET_TIMEOUT_DEFAULT);
+                if (SendHartRequest(Req, MsgRsp))
+                {
+                    if (!MsgRsp.ResponseMsg.IsValidResponse)
+                    {
+                        Result.AddMessage("Send KeepAlive failed. Receive an invalid response msg type.", false, true);
+                        break;
+                    }
+                }
+                else
+                {
+                    Result.AddMessage("Failed sending KeepAlive request to Gateway.", false, true);
+                    break;
+                }
+             } while (false); /* ONCE */
+        }
+    }
 }

@@ -414,29 +414,38 @@ namespace FieldCommGroup.HartIPConnect
 
           return bSuccess;
       }
+
         /// <summary>
-        /// Disconnect from HART Device that is in the network 
+        /// Disconnect - end HART-IP session
         /// </summary>
-         /// <returns>bool true if it is success.</returns>
-        /// <remarks>     
-         /// <para>It will initiate session with the network HART device if it is
-        /// successful connected to that Device.</para>
-        /// </remarks>
-        public bool Disconnect()
+        public void Disconnect()
         {
-            bool bSuccess = false;
+            HARTMsgResult Result = new HARTMsgResult();
+            m_HartIPConn.CloseSession(Result);
+        }
+
+        /// <summary>
+        /// Send KeepAlive message
+        /// </summary>
+        public void KeepAlive()
+        {
             lock (SyncRoot)
             {
-                bSuccess = m_HartIPConn.Disconnect();              
-                    
-                if (m_HartIPConn != null)
+                if (m_HartIPConn.IsConnected)
                 {
-                    // close the existing connection
-                    Close();
+                    HARTMsgResult Result = new HARTMsgResult();
+                    try
+                    {
+                        m_HartIPConn.SendKeepAlive(Result);
+                    }
+                    catch (Exception e)
+                    {
+                        Result.AddMessage(e.Message, false, true);
+                        m_Error = "KeepAlive: " + e.Message;
+                        Logger.Log("Error, " + m_Error, true);
+                    }
                 }
             }
- 
-            return bSuccess;
         }
 
         /// <summary>
@@ -450,7 +459,7 @@ namespace FieldCommGroup.HartIPConnect
         /// <param name="nDeviceId">uint Device ID</param>
         /// <returns><see cref="HartIPRequest"/></returns>
         public HartIPRequest BuildHartIPRequest(ushort usReqCmd, String ReqMsg, ushort usDeviceType,
-          uint nDeviceId)
+        uint nDeviceId)
       {
           String Msg;
           HartIPRequest HRequest = null;
@@ -1078,9 +1087,12 @@ namespace FieldCommGroup.HartIPConnect
       /// method after this to discover devices again.</remarks>
       public bool ReconnectNetwork()
       {
-          bool bSuccess = false;
-          do
-          {
+            bool bSuccess = false;
+
+            Disconnect();
+
+            do
+            {
               lock (SyncRoot)
               {
                   if (m_HartIPConn == null)

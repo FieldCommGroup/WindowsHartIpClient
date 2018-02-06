@@ -46,10 +46,15 @@ namespace FieldCommGroup.HartIPConnect
     /// </summary>
     public const uint INACTIVITY_CLOSE_TIME = 600000;
     
-        /// <summary>
-        /// delay Retry
-        /// </summary>
-        public const uint DR_DELAYRETRY = 1000;
+    /// <summary>
+    /// KeepAlive timer interval, milliseconds
+    /// </summary>
+    public const uint INACTIVITY_KEEPALIVE = 540000;
+
+    /// <summary>
+    /// delay Retry
+    /// </summary>
+    public const uint DR_DELAYRETRY = 1000;
 
     /// <summary>
     /// DrDelayBase Max

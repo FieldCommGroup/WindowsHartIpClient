@@ -38,7 +38,7 @@ namespace FieldCommGroup.HartIPClient
         private LogMsg Logger = LogMsg.Instance;
         private ParseResponses m_ParseRsps = null;
 
-        private int m_nCheckInactivityInterval = 60000;
+        private int m_nCheckInactivityInterval = 1000;  // check inactivity every second
         private bool m_bParsingRsps = false;     
 
         private System.Timers.Timer m_InactivityCloseTimer;
@@ -108,7 +108,7 @@ namespace FieldCommGroup.HartIPClient
 
               m_InactivityCloseTimer.Enabled = false;
               if (m_HartClient.IsConnected)
-              { //TODO keep alive here
+              {
                 long lNow = DateTime.Now.Ticks;
                 long lLastActiveTime = m_HartClient.LastActivityTime;
                 long lElapsed = (lNow - lLastActiveTime) / 10000;
@@ -119,8 +119,13 @@ namespace FieldCommGroup.HartIPClient
                       true);
                   Disconnect();
                 }
+                else if (lElapsed >= HARTIPMessage.INACTIVITY_KEEPALIVE)
+                {
+                    KeepAlive();
+                    m_InactivityCloseTimer.Enabled = true;
+                }
                 else
-                  m_InactivityCloseTimer.Enabled = true;
+                    m_InactivityCloseTimer.Enabled = true;
               }
             }
           } while (false); /* ONCE */
@@ -540,7 +545,7 @@ namespace FieldCommGroup.HartIPClient
               if (DeviceList_cb.Items.Count > 0)
                 DeviceList_cb.Items.Clear();
 
-              // disconnect the connection
+              // close the connection
               m_HartClient.Close();
             }
             catch (Exception)
@@ -550,6 +555,20 @@ namespace FieldCommGroup.HartIPClient
           } while (false); /* ONCE */
         }
 
+        /// <summary>
+        /// Disconnect the connection
+        /// </summary>
+        private void KeepAlive()
+        {
+            lock (SyncRoot)
+            {
+                m_HartClient.KeepAlive();
+                OutputMsg_lb.Text += String.Format("{0} Keep alive.\r\n\r\n", HartUtil.GetTimeStamp());
+                OutputMsg_lb.SelectionStart = OutputMsg_lb.Text.Length;
+                OutputMsg_lb.ScrollToCaret();
+            }
+        }
+         
         /// <summary>
         /// Disconnect the connection
         /// </summary>

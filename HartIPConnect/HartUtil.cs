@@ -313,13 +313,79 @@ namespace FieldCommGroup.HartIPConnect
       DateTime dt = DateTime.Now;
       return dt.ToString("MM/dd/yyyy HH:mm:ss:fff", DateTimeFormatInfo.InvariantInfo);
     }
-  } 
+  }
 
-  /// <summary>
-  /// DeviceData class contains device name, universal
-  /// revision, device type, and device id information.
-  /// </summary>
-  public class DeviceData
+
+    /// <summary>
+    /// HARTMsgResult class contains 
+    /// request, response message,
+    /// and errors strings.
+    /// </summary>
+    public class HARTMsgResult
+    {
+        string m_Request = string.Empty;
+        string m_Response = string.Empty;
+        byte m_Status = HARTIPMessage.RSP_COMM_ERROR;
+
+        /// <summary>
+        /// Request message strings
+        /// </summary>
+        public string RequestMsg
+        {
+            get { return m_Request; }
+        }
+        /// <summary>
+        /// Response message strings
+        /// </summary>
+        public string ResponseMsg
+        {
+            get { return m_Response; }
+        }
+        /// <summary>
+        /// Command result message status
+        /// </summary>
+        public byte Status
+        {
+            get { return m_Status; }
+            set { m_Status = value; }
+        }
+
+        /// <summary>
+        /// Add a request or response message string
+        /// </summary>
+        /// <param name="Msg">string a message to add</param>
+        /// <param name="bRequest">bool true is added to request message</param>
+        /// <param name="bAddTimeStamp">bool true is added a timestamp in front of the specified string</param>
+        public void AddMessage(string Msg, bool bRequest, bool bAddTimeStamp)
+        {
+            string Output = string.Empty;
+            if (bAddTimeStamp)
+                Output = string.Format("{0} {1}", HartUtil.GetTimeStamp(), Msg);
+            else
+                Output = Msg;
+
+            if (bRequest)
+            {
+                if (m_Request.Length > 0)
+                    m_Request += "\r\n";
+
+                m_Request += Output;
+            }
+            else
+            {
+                if (m_Response.Length > 0)
+                    m_Response += "\r\n";
+
+                m_Response += Output;
+            }
+        }
+    }
+
+    /// <summary>
+    /// DeviceData class contains device name, universal
+    /// revision, device type, and device id information.
+    /// </summary>
+    public class DeviceData
   {
     String m_Name;
     byte   m_cUnivRev;
