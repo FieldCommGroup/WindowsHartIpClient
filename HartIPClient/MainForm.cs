@@ -737,31 +737,33 @@ namespace FieldCommGroup.HartIPClient
 
             // build the request
             Req = m_HartClient.BuildHartIPRequest(usReqCmd, ReqData, usDeviceType, nDeviceId);
-            
+
             if (Req != null)
-            {             
+            {
                 HartIPResponse Rsp = m_HartClient.SendHartRequest(Req);
 
-                if ((Rsp.Command == 77))
-                { // Command 77: "Send Command to Sub-Device"
-                    Rsp.Unwrap77(); // unwrap any response that was tunneled
-                }
-
-                OutputMsg_lb.Text += (Req.ToString() + "\r\n\r\n");
-                if (Rsp != null)
+                if (Rsp == null)
                 {
+                        if (m_HartClient.LastError.Length > 0)
+                        {
+                            Msg = m_HartClient.LastError;
+                            LogMessage(Msg, true);
+                            break;
+                        }
+                    }
+                else
+                {
+                    if ((Rsp.Command == 77))
+                    { // Command 77: "Send Command to Sub-Device"
+                        Rsp.Unwrap77(); // unwrap any response that was tunneled
+                    }
+
+                    OutputMsg_lb.Text += (Req.ToString() + "\r\n\r\n");
                     OutputMsg_lb.Text += (Rsp.ToString() + "\r\n\r\n");
-                }
-                else if ((Rsp == null) && (m_HartClient.LastError.Length > 0))
-                {
-                    Msg = m_HartClient.LastError;
-                    LogMessage(Msg, true);
-                    break;
-                }
 
-                // Parse the response to readable strings
-                if ((Rsp != null) && m_bParsingRsps)
-                {
+                    // Parse the response to readable strings
+                    if (m_bParsingRsps)
+                    {
                         try
                         {
                             Msg = m_ParseRsps.ParseResponse(Rsp);
@@ -776,8 +778,9 @@ namespace FieldCommGroup.HartIPClient
                         }
                     }
                 }
-           
-          } while (false); /* ONCE */
+            } // if (Req != null)
+
+           } while (false); /* ONCE */
 
           return Msg;
         }
