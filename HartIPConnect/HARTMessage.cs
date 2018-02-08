@@ -41,15 +41,10 @@ namespace FieldCommGroup.HartIPConnect
     /// </summary>
     public const int MAX_LONG_TAG_LENGTH = 32;
 
-    /// <summary>
-    /// Session Inactivity Close Time, milliseconds
-    /// </summary>
-    public const uint INACTIVITY_CLOSE_TIME = 600000;
-    
-    /// <summary>
-    /// KeepAlive timer interval, milliseconds
-    /// </summary>
-    public const uint INACTIVITY_KEEPALIVE = 540000;
+        /// <summary>
+        /// Session Inactivity Close Time, milliseconds
+        /// </summary>
+        public const uint INACTIVITY_CLOSE_TIME = 600000;
 
     /// <summary>
     /// delay Retry

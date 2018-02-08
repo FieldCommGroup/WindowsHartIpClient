@@ -463,7 +463,13 @@ namespace FieldCommGroup.HartIPConnect
     /// </summary>    
     private void ReceiveMsg()
     {
-        while (!m_bStopped)
+        bool stoploop;
+        lock(SyncRoot)
+        {
+            stoploop = m_bStopped;
+        }
+
+        while (!stoploop)
         {
             try
             {                

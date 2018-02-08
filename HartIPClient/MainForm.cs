@@ -95,40 +95,39 @@ namespace FieldCommGroup.HartIPClient
         /// This method prevents concurrently calls.
         /// </summary>
         private void UpdateInactivity()
-        {          
-          if ((m_InactivityCloseTimer == null) || !m_InactivityCloseTimer.Enabled)
-            return;
+        {
+             if ((m_InactivityCloseTimer == null) || !m_InactivityCloseTimer.Enabled)
+                return;
 
-          do
-          {
-            lock (SyncRoot)
-            {
-              if (m_InactivityCloseTimer == null)
-                break;
-
-              m_InactivityCloseTimer.Enabled = false;
-              if (m_HartClient.IsConnected)
+              do
               {
-                long lNow = DateTime.Now.Ticks;
-                long lLastActiveTime = m_HartClient.LastActivityTime;
-                long lElapsed = (lNow - lLastActiveTime) / 10000;
-                if (lElapsed >= HARTIPMessage.INACTIVITY_CLOSE_TIME)
+                lock (SyncRoot)
                 {
-                  // Disconnect the connection
-                  LogMessage("Elapsed the Session Inactivity Close Time without activity. Closing the connection.",
-                      true);
-                  Disconnect();
+                  if (m_HartClient.IsConnected)
+                  {
+                    long lNow = DateTime.Now.Ticks;
+                    long lLastActiveTime = m_HartClient.LastActivityTime;
+                    long lElapsed = (lNow - lLastActiveTime) / 10000;
+                
+                    if (lElapsed >= 0.9 * HARTIPMessage.INACTIVITY_CLOSE_TIME)
+                    {
+                        // Disconnect the connection
+                        LogMessage("Elapsed the Session Inactivity Close Time without activity. Closing the connection.",
+                          true);
+                        Disconnect(); // disables m_InactivityCloseTimer
+                    }
+                    else if (lElapsed >= 0.8 * HARTIPMessage.INACTIVITY_CLOSE_TIME)
+                    {
+                        if (checkBoxKeepAlive.Checked)
+                        {
+                            KeepAlive();
+                        }
+                    }
+                    //else nothing
+
+                   } //if (m_HartClient.IsConnected)
                 }
-                else if (lElapsed >= HARTIPMessage.INACTIVITY_KEEPALIVE)
-                {
-                    KeepAlive();
-                    m_InactivityCloseTimer.Enabled = true;
-                }
-                else
-                    m_InactivityCloseTimer.Enabled = true;
-              }
-            }
-          } while (false); /* ONCE */
+              } while (false); /* ONCE */
         }
       
         /// <summary>

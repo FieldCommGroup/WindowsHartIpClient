@@ -58,6 +58,7 @@
             this.GetDeviceList_btn = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.PublishedMsg_Tb = new System.Windows.Forms.RichTextBox();
+            this.checkBoxKeepAlive = new System.Windows.Forms.CheckBox();
             this.MenuToolStrip.SuspendLayout();
             this.StatusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -343,11 +344,24 @@
             this.PublishedMsg_Tb.TabStop = false;
             this.PublishedMsg_Tb.Text = "";
             // 
+            // checkBoxKeepAlive
+            // 
+            this.checkBoxKeepAlive.AutoSize = true;
+            this.checkBoxKeepAlive.Checked = true;
+            this.checkBoxKeepAlive.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxKeepAlive.Location = new System.Drawing.Point(264, 143);
+            this.checkBoxKeepAlive.Name = "checkBoxKeepAlive";
+            this.checkBoxKeepAlive.Size = new System.Drawing.Size(161, 17);
+            this.checkBoxKeepAlive.TabIndex = 25;
+            this.checkBoxKeepAlive.Text = "Enable keep-alive messages";
+            this.checkBoxKeepAlive.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(987, 599);
+            this.Controls.Add(this.checkBoxKeepAlive);
             this.Controls.Add(this.PublishedMsg_Tb);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.GetDeviceList_btn);
@@ -408,6 +422,7 @@
         private System.Windows.Forms.Button GetDeviceList_btn;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.RichTextBox PublishedMsg_Tb;
+        private System.Windows.Forms.CheckBox checkBoxKeepAlive;
     }
 }
 
