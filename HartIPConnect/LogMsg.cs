@@ -118,14 +118,13 @@ namespace FieldCommGroup.HartIPConnect
       lock (SyncRoot)
       {
         m_strFileName = strFileName;
-        AddTimeStampInFileName();
         m_bLogToFile = true;
       }     
     }
 
     public string GetCurrentLogFile()
     {
-            return m_strTimeStampFileName;
+            return m_strFileName;
     }
 
     /// <summary>
@@ -202,7 +201,7 @@ namespace FieldCommGroup.HartIPConnect
               AddTimeStampInFileName();
               m_Count = 0;
             }
-            WriteMsgToFile(m_strTimeStampFileName, strOutput, bAddEmptyLine);
+            WriteMsgToFile(m_strFileName, strOutput, bAddEmptyLine);
             m_Count++;
           }
           else
