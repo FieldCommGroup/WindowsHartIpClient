@@ -505,7 +505,7 @@ namespace FieldCommGroup.HartIPClient
                                                            HDevices[i].DeviceType,
                                                            HDevices[i].DeviceId,
                                                            HDevices[i].UniversalRev));
-                    if (HDevices[i].IsBridgeDevice && DeviceList_cb.SelectedIndex == -1)
+                    if (DeviceList_cb.SelectedIndex == -1)
                         // the first encountered is the root bridge device
                         DeviceList_cb.SelectedIndex = i;
                 }
