@@ -500,12 +500,12 @@ namespace FieldCommGroup.HartIPClient
 
                 for (int i = 0; i < HDevices.Length; i++)
                 {
-                    // Store the device type, device id, uviversal rev values in item
+                    // Store the device type, device id, universal rev values in item
                     DeviceList_cb.Items.Add(new DeviceData(HDevices[i].Name,
                                                            HDevices[i].DeviceType,
                                                            HDevices[i].DeviceId,
                                                            HDevices[i].UniversalRev));
-                    if (DeviceList_cb.SelectedIndex == -1)
+                    if  (DeviceList_cb.SelectedIndex == -1  )
                         // the first encountered is the root bridge device
                         DeviceList_cb.SelectedIndex = i;
                 }
