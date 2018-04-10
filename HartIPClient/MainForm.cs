@@ -810,6 +810,75 @@ namespace FieldCommGroup.HartIPClient
             return Msg;
         }
 
+        /// <summary>
+        /// Read the request command and data and send a request command.
+        /// </summary>
+        /// <param name="usDeviceType">ushort</param>
+        /// <param name="nDeviceId">uint</param>
+        private String SubscribePublishedMessages(ushort usDeviceType, uint nDeviceId, bool onoff)
+        {
+            String Msg = String.Empty;
+            HartIPRequest Req = null;
+
+            do
+            {
+                ushort usReqCmd = 533;
+                String ReqData = "0000000000";  // broadcast address
+                if (onoff)
+                    ReqData += "ffff";  // subscription on
+                else
+                    ReqData += "0000";  // off
+
+                // build the request
+                Req = m_HartClient.BuildHartIPRequest(usReqCmd, ReqData, usDeviceType, nDeviceId);
+
+                if (Req != null)
+                {
+                    HartIPResponse Rsp = m_HartClient.SendHartRequest(Req);
+
+                    if (Rsp == null)
+                    {
+                        if (m_HartClient.LastError.Length > 0)
+                        {
+                            Msg = m_HartClient.LastError;
+                            LogMessage(Msg, true);
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if ((Rsp.Command == 77))
+                        { // Command 77: "Send Command to Sub-Device"
+                            Rsp.Unwrap77(); // unwrap any response that was tunneled
+                        }
+
+                        OutputMsg_lb.Text += (Req.ToString() + "\r\n\r\n");
+                        OutputMsg_lb.Text += (Rsp.ToString() + "\r\n\r\n");
+
+                        // Parse the response to readable strings
+                        if (m_bParsingRsps)
+                        {
+                            try
+                            {
+                                Msg = m_ParseRsps.ParseResponse(Rsp);
+                                LogMessage(Msg);
+                                LogMessage("");
+
+                                Msg = String.Empty;
+                            }
+                            catch (Exception e)
+                            {
+                                LogMessage(e.Message, true);
+                            }
+                        }
+                    }
+                } // if (Req != null)
+
+            } while (false); /* ONCE */
+
+            return Msg;
+        }
+
         public static string GetUniqueFilename(string fullPath)
         {
             if (!Path.IsPathRooted(fullPath))
@@ -941,6 +1010,29 @@ namespace FieldCommGroup.HartIPClient
             }
         }
 
+        private void checkBoxSubscribeAll_CheckedChanged(object sender, EventArgs e)
+        {
+            // Get the selected item's device type and device id
+            ushort usDeviceType = ((DeviceData)DeviceList_cb.SelectedItem).DeviceType;
+            uint nDeviceId = ((DeviceData)DeviceList_cb.SelectedItem).DeviceId;
+
+            // Clear text in output messages control
+            OutputMsg_lb.Text = String.Empty;
+
+            EnableAll(false);
+            bool showme = checkBoxSubscribeAll.Checked;
+            if (showme)
+            {
+                PublishedMsg_Tb.Clear();
+            }
+            this.Cursor = Cursors.WaitCursor;
+            String Msg = SubscribePublishedMessages(usDeviceType, nDeviceId, showme);
+            this.Cursor = Cursors.Default;
+            EnableAll(true);
+
+            if (Msg.Length > 0)
+                OutputMsg_lb.Text = Msg;
+        }
     }
 
     /// <summary>

@@ -59,6 +59,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.PublishedMsg_Tb = new System.Windows.Forms.RichTextBox();
             this.checkBoxKeepAlive = new System.Windows.Forms.CheckBox();
+            this.checkBoxSubscribeAll = new System.Windows.Forms.CheckBox();
             this.MenuToolStrip.SuspendLayout();
             this.StatusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -328,7 +329,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(571, 88);
+            this.label5.Location = new System.Drawing.Point(827, 87);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(111, 13);
             this.label5.TabIndex = 23;
@@ -356,11 +357,23 @@
             this.checkBoxKeepAlive.Text = "Enable keep-alive messages";
             this.checkBoxKeepAlive.UseVisualStyleBackColor = true;
             // 
+            // checkBoxSubscribeAll
+            // 
+            this.checkBoxSubscribeAll.AutoSize = true;
+            this.checkBoxSubscribeAll.Location = new System.Drawing.Point(574, 84);
+            this.checkBoxSubscribeAll.Name = "checkBoxSubscribeAll";
+            this.checkBoxSubscribeAll.Size = new System.Drawing.Size(203, 17);
+            this.checkBoxSubscribeAll.TabIndex = 26;
+            this.checkBoxSubscribeAll.Text = "Subscribe to All Published Commands";
+            this.checkBoxSubscribeAll.UseVisualStyleBackColor = true;
+            this.checkBoxSubscribeAll.CheckedChanged += new System.EventHandler(this.checkBoxSubscribeAll_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(987, 599);
+            this.Controls.Add(this.checkBoxSubscribeAll);
             this.Controls.Add(this.checkBoxKeepAlive);
             this.Controls.Add(this.PublishedMsg_Tb);
             this.Controls.Add(this.label5);
@@ -423,6 +436,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.RichTextBox PublishedMsg_Tb;
         private System.Windows.Forms.CheckBox checkBoxKeepAlive;
+        private System.Windows.Forms.CheckBox checkBoxSubscribeAll;
     }
 }
 
