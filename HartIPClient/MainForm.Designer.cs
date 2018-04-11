@@ -360,6 +360,7 @@
             // checkBoxSubscribeAll
             // 
             this.checkBoxSubscribeAll.AutoSize = true;
+            this.checkBoxSubscribeAll.Enabled = false;
             this.checkBoxSubscribeAll.Location = new System.Drawing.Point(574, 84);
             this.checkBoxSubscribeAll.Name = "checkBoxSubscribeAll";
             this.checkBoxSubscribeAll.Size = new System.Drawing.Size(203, 17);

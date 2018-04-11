@@ -203,6 +203,8 @@ namespace FieldCommGroup.HartIPClient
 
                 if (bSuccess)
                 {
+                    checkBoxSubscribeAll.Enabled = true;
+
                     // set the dr values
                     m_HartClient.DrRetryDelay = nDrRetryDelayBase;
                     m_HartClient.DrRetreis = nDrRetries;
@@ -241,6 +243,8 @@ namespace FieldCommGroup.HartIPClient
             }
             else
             {
+                checkBoxSubscribeAll.Checked = false;
+                checkBoxSubscribeAll.Enabled = false;
                 // Disconnect the connection
                 Disconnect();
             }

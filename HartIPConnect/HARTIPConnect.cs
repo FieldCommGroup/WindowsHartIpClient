@@ -353,6 +353,7 @@ namespace FieldCommGroup.HartIPConnect
             if (m_RspMsgReader != null)
             {
                 m_RspMsgReader.Join(WAIT_INTERVAL);
+                m_RspMsgReader.Abort();
                 m_RspMsgReader = null;
             }
         }
