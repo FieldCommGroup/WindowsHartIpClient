@@ -57,9 +57,9 @@
             this.SendCmdToAll_btn = new System.Windows.Forms.Button();
             this.GetDeviceList_btn = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.PublishedMsg_Tb = new System.Windows.Forms.RichTextBox();
             this.checkBoxKeepAlive = new System.Windows.Forms.CheckBox();
             this.checkBoxSubscribeAll = new System.Windows.Forms.CheckBox();
+            this.PublishedMsg_Lb = new System.Windows.Forms.ListBox();
             this.MenuToolStrip.SuspendLayout();
             this.StatusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -261,6 +261,8 @@
             // 
             // OutputMsg_lb
             // 
+            this.OutputMsg_lb.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.OutputMsg_lb.Location = new System.Drawing.Point(10, 169);
             this.OutputMsg_lb.Name = "OutputMsg_lb";
             this.OutputMsg_lb.ReadOnly = true;
@@ -329,21 +331,11 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(827, 87);
+            this.label5.Location = new System.Drawing.Point(571, 147);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(111, 13);
             this.label5.TabIndex = 23;
             this.label5.Text = "Published Commands:";
-            // 
-            // PublishedMsg_Tb
-            // 
-            this.PublishedMsg_Tb.Location = new System.Drawing.Point(574, 107);
-            this.PublishedMsg_Tb.Name = "PublishedMsg_Tb";
-            this.PublishedMsg_Tb.ReadOnly = true;
-            this.PublishedMsg_Tb.Size = new System.Drawing.Size(401, 457);
-            this.PublishedMsg_Tb.TabIndex = 24;
-            this.PublishedMsg_Tb.TabStop = false;
-            this.PublishedMsg_Tb.Text = "";
             // 
             // checkBoxKeepAlive
             // 
@@ -361,7 +353,7 @@
             // 
             this.checkBoxSubscribeAll.AutoSize = true;
             this.checkBoxSubscribeAll.Enabled = false;
-            this.checkBoxSubscribeAll.Location = new System.Drawing.Point(574, 84);
+            this.checkBoxSubscribeAll.Location = new System.Drawing.Point(763, 146);
             this.checkBoxSubscribeAll.Name = "checkBoxSubscribeAll";
             this.checkBoxSubscribeAll.Size = new System.Drawing.Size(203, 17);
             this.checkBoxSubscribeAll.TabIndex = 26;
@@ -369,14 +361,26 @@
             this.checkBoxSubscribeAll.UseVisualStyleBackColor = true;
             this.checkBoxSubscribeAll.CheckedChanged += new System.EventHandler(this.checkBoxSubscribeAll_CheckedChanged);
             // 
+            // PublishedMsg_Lb
+            // 
+            this.PublishedMsg_Lb.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PublishedMsg_Lb.FormattingEnabled = true;
+            this.PublishedMsg_Lb.Location = new System.Drawing.Point(574, 169);
+            this.PublishedMsg_Lb.Name = "PublishedMsg_Lb";
+            this.PublishedMsg_Lb.ScrollAlwaysVisible = true;
+            this.PublishedMsg_Lb.Size = new System.Drawing.Size(401, 394);
+            this.PublishedMsg_Lb.TabIndex = 27;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(987, 599);
+            this.Controls.Add(this.PublishedMsg_Lb);
             this.Controls.Add(this.checkBoxSubscribeAll);
             this.Controls.Add(this.checkBoxKeepAlive);
-            this.Controls.Add(this.PublishedMsg_Tb);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.GetDeviceList_btn);
             this.Controls.Add(this.SendCmdToAll_btn);
@@ -435,9 +439,9 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.Button GetDeviceList_btn;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.RichTextBox PublishedMsg_Tb;
         private System.Windows.Forms.CheckBox checkBoxKeepAlive;
         private System.Windows.Forms.CheckBox checkBoxSubscribeAll;
+        private System.Windows.Forms.ListBox PublishedMsg_Lb;
     }
 }
 

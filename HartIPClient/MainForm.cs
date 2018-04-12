@@ -55,7 +55,7 @@ namespace FieldCommGroup.HartIPClient
         {
             InitializeComponent();
             DevUnivRev_lb.Text = String.Empty;
-            PublishedMsg_Tb.Text = String.Empty;
+            PublishedMsg_Lb.Items.Clear();
             this.AcceptButton = SendCmd_btn;
         }
 
@@ -163,7 +163,7 @@ namespace FieldCommGroup.HartIPClient
                 byte cPollingAddr = 0;
 
                 OutputMsg_lb.Text = String.Empty;
-                PublishedMsg_Tb.Text = String.Empty;
+                PublishedMsg_Lb.Items.Clear();
 
                 // Use want to connect to HART-IP device, bring up the connect form.            
                 NetConnect_Form connectForm = new NetConnect_Form(HARTIPMessage.DR_DELAYRETRY, HARTIPMessage.DR_RETRIES);
@@ -236,6 +236,9 @@ namespace FieldCommGroup.HartIPClient
                             m_InactivityCloseTimer.Enabled = true;
 
                         m_HartClient.SubscribePublishedCmdNotify(new EventHandler<HartIPResponseArg>(this.HandlePublishedCmd));
+
+                        SubscribeAll(false); // send command 533 to unsubscribe, lest publishing was left on
+                        OutputMsg_lb.Text = String.Empty;
                     }
                 }
                 else
@@ -948,6 +951,31 @@ namespace FieldCommGroup.HartIPClient
                 new Object[] { RspArg.Response });
         }
 
+        private void ScrollPublishedMsg(string msg)
+        {
+            int MAXCOUNT = 5000;
+
+            PublishedMsg_Lb.BeginUpdate();
+
+            PublishedMsg_Lb.Items.Add("");
+
+            char[] sep = { '\n' };
+            string[] lines = msg.Split(sep);
+            foreach (string s in lines)
+            {
+                PublishedMsg_Lb.Items.Add(s);
+            }
+
+            while (PublishedMsg_Lb.Items.Count > MAXCOUNT)
+            {
+                PublishedMsg_Lb.Items.Remove(PublishedMsg_Lb.Items[0]);
+            }
+
+            PublishedMsg_Lb.TopIndex = PublishedMsg_Lb.Items.Count - 1;
+
+            PublishedMsg_Lb.EndUpdate();
+        }
+
         private void DislpayPublishedMsg(HartIPResponse Rsp)
         {
             if (Rsp != null)
@@ -961,9 +989,7 @@ namespace FieldCommGroup.HartIPClient
                 {
                     String Msg = Rsp.ToString();
                     Logger.Log(Msg);
-                    PublishedMsg_Tb.Text += Msg + "\r\n\r\n";
-                    PublishedMsg_Tb.SelectionStart = PublishedMsg_Tb.Text.Length;
-                    PublishedMsg_Tb.ScrollToCaret();
+                    ScrollPublishedMsg(Msg);
 
                     if (m_bParsingRsps)
                     {
@@ -976,9 +1002,7 @@ namespace FieldCommGroup.HartIPClient
                             Msg = e.Message;
                         }
                         Logger.Log(Msg);
-                        PublishedMsg_Tb.Text += Msg + "\r\n\r\n";
-                        PublishedMsg_Tb.SelectionStart = PublishedMsg_Tb.Text.Length;
-                        PublishedMsg_Tb.ScrollToCaret();
+                        ScrollPublishedMsg(Msg);
                     }
                 }
             }
@@ -1014,7 +1038,7 @@ namespace FieldCommGroup.HartIPClient
             }
         }
 
-        private void checkBoxSubscribeAll_CheckedChanged(object sender, EventArgs e)
+        private void SubscribeAll(bool onoff)
         {
             // Get the selected item's device type and device id
             ushort usDeviceType = ((DeviceData)DeviceList_cb.SelectedItem).DeviceType;
@@ -1024,18 +1048,22 @@ namespace FieldCommGroup.HartIPClient
             OutputMsg_lb.Text = String.Empty;
 
             EnableAll(false);
-            bool showme = checkBoxSubscribeAll.Checked;
-            if (showme)
+            if (onoff)
             {
-                PublishedMsg_Tb.Clear();
+                PublishedMsg_Lb.Items.Clear();
             }
             this.Cursor = Cursors.WaitCursor;
-            String Msg = SubscribePublishedMessages(usDeviceType, nDeviceId, showme);
+            String Msg = SubscribePublishedMessages(usDeviceType, nDeviceId, onoff);
             this.Cursor = Cursors.Default;
             EnableAll(true);
 
             if (Msg.Length > 0)
                 OutputMsg_lb.Text = Msg;
+        }
+
+        private void checkBoxSubscribeAll_CheckedChanged(object sender, EventArgs e)
+        {
+            SubscribeAll(checkBoxSubscribeAll.Checked);
         }
     }
 

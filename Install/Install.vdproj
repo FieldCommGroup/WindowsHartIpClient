@@ -158,7 +158,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:HartIpClient, Version=1.0.11.0, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:HartIpClient, Version=1.0.16.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_85EFD401A8DF4B53BF1577AE9C56CF62"
@@ -334,15 +334,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:HART-IP Client"
-        "ProductCode" = "8:{2616865E-6C3B-4206-B923-89162928ACBF}"
-        "PackageCode" = "8:{2B5BCF3D-6C13-41E5-A108-3ED60661CE9F}"
+        "ProductCode" = "8:{44C364A3-E9C1-45C3-B5F2-6837540C52C0}"
+        "PackageCode" = "8:{4CCC52B3-3FEA-4A99-8137-8406ADFD610F}"
         "UpgradeCode" = "8:{3A91AB3E-DA55-488F-B5E3-DF3F22DEE090}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.15"
+        "ProductVersion" = "8:1.0.16"
         "Manufacturer" = "8:FieldComm Group"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
