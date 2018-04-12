@@ -30,6 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.MenuToolStrip = new System.Windows.Forms.ToolStrip();
             this.ToolBarImageList = new System.Windows.Forms.ImageList(this.components);
             this.NetConnectBtn = new System.Windows.Forms.ToolStripButton();
@@ -60,8 +63,16 @@
             this.checkBoxKeepAlive = new System.Windows.Forms.CheckBox();
             this.checkBoxSubscribeAll = new System.Windows.Forms.CheckBox();
             this.PublishedMsg_Lb = new System.Windows.Forms.ListBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabMessages = new System.Windows.Forms.TabPage();
+            this.tabChart = new System.Windows.Forms.TabPage();
+            this.chartCmd9 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.MenuToolStrip.SuspendLayout();
             this.StatusStrip.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabMessages.SuspendLayout();
+            this.tabChart.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartCmd9)).BeginInit();
             this.SuspendLayout();
             // 
             // MenuToolStrip
@@ -367,18 +378,76 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PublishedMsg_Lb.FormattingEnabled = true;
-            this.PublishedMsg_Lb.Location = new System.Drawing.Point(574, 169);
+            this.PublishedMsg_Lb.Location = new System.Drawing.Point(3, 0);
             this.PublishedMsg_Lb.Name = "PublishedMsg_Lb";
             this.PublishedMsg_Lb.ScrollAlwaysVisible = true;
-            this.PublishedMsg_Lb.Size = new System.Drawing.Size(401, 394);
+            this.PublishedMsg_Lb.Size = new System.Drawing.Size(384, 368);
             this.PublishedMsg_Lb.TabIndex = 27;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tabMessages);
+            this.tabControl1.Controls.Add(this.tabChart);
+            this.tabControl1.Location = new System.Drawing.Point(574, 170);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(401, 394);
+            this.tabControl1.TabIndex = 28;
+            // 
+            // tabMessages
+            // 
+            this.tabMessages.Controls.Add(this.PublishedMsg_Lb);
+            this.tabMessages.Location = new System.Drawing.Point(4, 22);
+            this.tabMessages.Name = "tabMessages";
+            this.tabMessages.Padding = new System.Windows.Forms.Padding(3);
+            this.tabMessages.Size = new System.Drawing.Size(393, 368);
+            this.tabMessages.TabIndex = 0;
+            this.tabMessages.Text = "Messages";
+            this.tabMessages.UseVisualStyleBackColor = true;
+            // 
+            // tabChart
+            // 
+            this.tabChart.Controls.Add(this.chartCmd9);
+            this.tabChart.Location = new System.Drawing.Point(4, 22);
+            this.tabChart.Name = "tabChart";
+            this.tabChart.Padding = new System.Windows.Forms.Padding(3);
+            this.tabChart.Size = new System.Drawing.Size(393, 368);
+            this.tabChart.TabIndex = 1;
+            this.tabChart.Text = "Chart";
+            this.tabChart.UseVisualStyleBackColor = true;
+            // 
+            // chartCmd9
+            // 
+            this.chartCmd9.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea1.Name = "ChartArea1";
+            this.chartCmd9.ChartAreas.Add(chartArea1);
+            this.chartCmd9.Location = new System.Drawing.Point(7, 7);
+            this.chartCmd9.Name = "chartCmd9";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
+            series1.Name = "Slot0";
+            this.chartCmd9.Series.Add(series1);
+            this.chartCmd9.Size = new System.Drawing.Size(380, 358);
+            this.chartCmd9.TabIndex = 0;
+            this.chartCmd9.Text = "chart1";
+            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title1.Name = "Title1";
+            title1.Text = "Command 9 Slot 0 Data";
+            title1.ToolTip = "This chart will display floating point values retreived from published command 9 " +
+    "responses.";
+            this.chartCmd9.Titles.Add(title1);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(987, 599);
-            this.Controls.Add(this.PublishedMsg_Lb);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.checkBoxSubscribeAll);
             this.Controls.Add(this.checkBoxKeepAlive);
             this.Controls.Add(this.label5);
@@ -405,6 +474,10 @@
             this.MenuToolStrip.PerformLayout();
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabMessages.ResumeLayout(false);
+            this.tabChart.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartCmd9)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -442,6 +515,10 @@
         private System.Windows.Forms.CheckBox checkBoxKeepAlive;
         private System.Windows.Forms.CheckBox checkBoxSubscribeAll;
         private System.Windows.Forms.ListBox PublishedMsg_Lb;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabMessages;
+        private System.Windows.Forms.TabPage tabChart;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartCmd9;
     }
 }
 

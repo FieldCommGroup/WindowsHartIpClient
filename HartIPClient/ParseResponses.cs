@@ -555,5 +555,23 @@ namespace FieldCommGroup.HartIPClient
       return Outs;
     }
 
-  }
+
+        /// <summary>
+        /// Parse a float from a big-endian array of bytes
+        /// <param name="data">HartIPResponse, an array of bytes</param>
+        /// <param name="pos">0-based index of the float field in the array, </param>
+        /// <returns>String</returns>
+        /// </summary>
+        public static double ParseFloat(byte[] data, int pos)
+        {
+            byte[] arr = new byte[4];
+            for (int i = 0, j = 3; i < 4; i++, j--)
+            {
+                arr[i] = data[pos + j];
+            }
+            float fl = BitConverter.ToSingle(arr, 0);
+            double d = fl;
+            return d;
+        }
+    }
 }

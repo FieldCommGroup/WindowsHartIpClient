@@ -51,6 +51,11 @@ namespace FieldCommGroup.HartIPClient
         // persistent application settings
         AppSettings m_Settings = new AppSettings();
 
+        // published data memory, command 9, slot 0
+        // NOTE: assuming that all command 9's observed are from the same device
+        double minValue, maxValue, rangeValue; // observed range
+ 
+
         public MainForm()
         {
             InitializeComponent();
@@ -154,6 +159,7 @@ namespace FieldCommGroup.HartIPClient
             if (NetConnectBtn.Checked)
             {
                 bool bSuccess = false;
+
                 String IpAddr = String.Empty;
                 uint nPort = 0;
                 uint nConnection = 0;
@@ -976,6 +982,24 @@ namespace FieldCommGroup.HartIPClient
             PublishedMsg_Lb.EndUpdate();
         }
 
+        private double MaxAxis(double ymax)
+        {
+            // assuming ymax always >= 0 and ymin always == 0
+                                                // 23.5
+            double exp = Math.Floor(Math.Log10(ymax));      // 1
+            double pow = Math.Pow(10, exp);     // 10
+            double norm = ymax / pow;           // 2.35
+            double y = 0;
+            if (0 <= norm && norm <= 1) y = 1;
+            else if (norm <= 2) y = 2;
+            else if (norm <= 5) y = 5;
+            else y = 10;                        // shouldn't be here!
+
+            double result = y * pow;
+
+            return result;
+        }
+
         private void DislpayPublishedMsg(HartIPResponse Rsp)
         {
             if (Rsp != null)
@@ -990,6 +1014,29 @@ namespace FieldCommGroup.HartIPClient
                     String Msg = Rsp.ToString();
                     Logger.Log(Msg);
                     ScrollPublishedMsg(Msg);
+
+                    // Display slot 0 data for command 9
+                    if (Rsp.Command == 9 && Rsp.ResponseCode == 0 && Rsp.ByteCount > 10)
+                    {
+                        // Command 9 response, slot 0 value begins at byte 4
+                        double val = ParseResponses.ParseFloat(Rsp.Data, 4);
+
+                        // chart scaling;
+                        minValue = Math.Min(minValue, val);
+                        maxValue = Math.Max(maxValue, val);
+                        rangeValue = Math.Max(maxValue - minValue, rangeValue);
+                        chartCmd9.ChartAreas[0].AxisY.Maximum = MaxAxis(rangeValue);
+
+                        // plot new point
+                        chartCmd9.Series[0].Points.AddY(val);
+
+                        // retain only last bit of data
+                        int MaxPointsDisplayed = 200;
+                        while (chartCmd9.Series[0].Points.Count > MaxPointsDisplayed)
+                        {
+                            chartCmd9.Series[0].Points.RemoveAt(0);
+                        }
+                    }
 
                     if (m_bParsingRsps)
                     {
@@ -1051,6 +1098,12 @@ namespace FieldCommGroup.HartIPClient
             if (onoff)
             {
                 PublishedMsg_Lb.Items.Clear();
+
+                // published command chart range
+                minValue = 0;
+                maxValue = 0;
+                rangeValue = 0;
+                chartCmd9.Series[0].Points.Clear();
             }
             this.Cursor = Cursors.WaitCursor;
             String Msg = SubscribePublishedMessages(usDeviceType, nDeviceId, onoff);
