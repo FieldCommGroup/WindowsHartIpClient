@@ -409,6 +409,11 @@ namespace FieldCommGroup.HartIPConnect
 
                   bSuccess = m_HartIPConn.Connect(Server, (int)nPort, nTimeout,
                       HARTIPMessage.INACTIVITY_CLOSE_TIME);
+
+                  if (!bSuccess)
+                  {
+                        m_Error = m_HartIPConn.LastError;
+                  }
               }
           } while (false); /* ONCE */
 

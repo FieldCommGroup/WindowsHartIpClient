@@ -140,7 +140,8 @@ namespace FieldCommGroup.HartIPConnect
       private uint m_InactivityCloseTime = 0;
       private bool m_bStopped = true;
       private Thread m_RspMsgReader;
-      private List<MsgRequest> m_Requests = new List<MsgRequest>();    
+      private List<MsgRequest> m_Requests = new List<MsgRequest>();
+      private Dictionary<int, string> m_SessionInitStatusCodes = new Dictionary<int, string>();
 
       /// <summary>
       /// SyncRoot
@@ -406,7 +407,18 @@ namespace FieldCommGroup.HartIPConnect
                 Close();
                 break;
             }
-            else if (!Response.IsValidResponse)
+            else if (0 != Response.ResponseCode)
+            {
+                    m_Error = "InitSession received an error response code: " +
+                        Response.ResponseCode.ToString() + "  " +
+                        GetSessionInitStatusCode(Response.ResponseCode);
+
+                    LogMsg.Instance.Log("Error, " + m_Error, true);
+                    LogMsg.Instance.Log(Response.ToString());
+                    Close();
+                    break;
+                }
+             else if (!Response.IsValidResponse)
             {
                 m_Error = "InitSession received an invalid response Msg Type.";
                 LogMsg.Instance.Log("Error, " + m_Error, true);
@@ -870,5 +882,28 @@ namespace FieldCommGroup.HartIPConnect
                 }
              } while (false); /* ONCE */
         }
+
+        private string GetSessionInitStatusCode(int ResponseCode)
+        {
+            string s = "Undefined";
+            if (m_SessionInitStatusCodes.Count == 0)
+            {
+                m_SessionInitStatusCodes.Add(0,   "Success No error occurred");
+                m_SessionInitStatusCodes.Add(2,   "Invalid Selection(Invalid Master Type)");
+                m_SessionInitStatusCodes.Add(5,   "Too Few Data Bytes Received");
+                m_SessionInitStatusCodes.Add(6,   "Device Specific Command Error");
+                m_SessionInitStatusCodes.Add(8,   "Set to Nearest Possible Value(Inactivity timer value)");
+                m_SessionInitStatusCodes.Add(14,  "Version not supported");
+                m_SessionInitStatusCodes.Add(15,  "All available sessions in use");
+                m_SessionInitStatusCodes.Add(16,  "Session already established");
+            }
+
+            if (m_SessionInitStatusCodes.ContainsKey(ResponseCode))
+            {
+                s = m_SessionInitStatusCodes[ResponseCode];
+            }
+            return s;
+         }
+
     }
 }

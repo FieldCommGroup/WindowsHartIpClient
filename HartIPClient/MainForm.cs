@@ -248,7 +248,12 @@ namespace FieldCommGroup.HartIPClient
                     }
                 }
                 else
+                {
                     NetConnectBtn.Checked = false;
+                    MessageBox.Show(m_HartClient.LastError, "Connect to HART-IP device Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                }
             }
             else
             {
