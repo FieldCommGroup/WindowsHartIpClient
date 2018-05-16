@@ -565,13 +565,24 @@ namespace FieldCommGroup.HartIPClient
         public static double ParseFloat(byte[] data, int pos)
         {
             byte[] arr = new byte[4];
-            for (int i = 0, j = 3; i < 4; i++, j--)
+            int i, j;
+            float fl;
+            double d;
+            if (data.Length < pos + 4)
             {
-                arr[i] = data[pos + j];
+                // buffer too short
+                return 0;
             }
-            float fl = BitConverter.ToSingle(arr, 0);
-            double d = fl;
-            return d;
+            else
+            {
+                for (i = 0, j = 3; i < 4; i++, j--)
+                {
+                    arr[i] = data[pos + j];
+                }
+                fl = BitConverter.ToSingle(arr, 0);
+                d = fl;
+                return d;
+            }
         }
     }
 }

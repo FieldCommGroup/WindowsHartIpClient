@@ -1021,7 +1021,7 @@ namespace FieldCommGroup.HartIPClient
                     ScrollPublishedMsg(Msg);
 
                     // Display slot 0 data for command 9
-                    if (Rsp.Command == 9 && Rsp.ResponseCode == 0 && Rsp.ByteCount > 10)
+                    if (Rsp.Command == 9 && Rsp.ResponseCode == 0 && Rsp.DataCount >= 9)
                     {
                         // Command 9 response, slot 0 value begins at byte 4
                         double val = ParseResponses.ParseFloat(Rsp.Data, 4);
