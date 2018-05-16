@@ -158,7 +158,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:HartIpClient, Version=1.0.16.0, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:HartIpClient, Version=1.0.17.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_85EFD401A8DF4B53BF1577AE9C56CF62"
@@ -192,11 +192,6 @@
             "AssemblyAsmDisplayName" = "8:HartIPConnect, Version=1.0.5.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_D696498A4CED578C7DAB4E8569DD98DD"
-                    {
-                    "Name" = "8:HartIPConnect.DLL"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:HartIPConnect.DLL"
             "TargetName" = "8:"
@@ -334,15 +329,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:HART-IP Client"
-        "ProductCode" = "8:{42AC62C3-1D90-48E0-9790-9B538144815F}"
-        "PackageCode" = "8:{4569F51C-607A-442B-B433-83F76970F905}"
+        "ProductCode" = "8:{2B3AF41A-9352-4661-B9F5-502C7853F80F}"
+        "PackageCode" = "8:{44530F31-ABD4-4F06-9AB5-A70555D000EF}"
         "UpgradeCode" = "8:{3A91AB3E-DA55-488F-B5E3-DF3F22DEE090}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.17"
+        "ProductVersion" = "8:1.0.18"
         "Manufacturer" = "8:FieldComm Group"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
