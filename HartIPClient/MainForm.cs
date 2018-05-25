@@ -1092,10 +1092,6 @@ namespace FieldCommGroup.HartIPClient
 
         private void SubscribeAll(bool onoff)
         {
-            // Get the selected item's device type and device id
-            ushort usDeviceType = ((DeviceData)DeviceList_cb.SelectedItem).DeviceType;
-            uint nDeviceId = ((DeviceData)DeviceList_cb.SelectedItem).DeviceId;
-
             // Clear text in output messages control
             OutputMsg_lb.Text = String.Empty;
 
@@ -1104,20 +1100,32 @@ namespace FieldCommGroup.HartIPClient
             {
                 PublishedMsg_Lb.Items.Clear();
 
-                // published command chart range
-                minValue = 0;
-                maxValue = 0;
-                rangeValue = 0;
-                chartCmd9.Series[0].Points.Clear();
+                try
+                {
+                    // published command chart range
+                    minValue = 0;
+                    maxValue = 0;
+                    rangeValue = 0;
+                    chartCmd9.Series[0].Points.Clear();
+                }
+                catch { }
             }
-            this.Cursor = Cursors.WaitCursor;
-            String Msg = SubscribePublishedMessages(usDeviceType, nDeviceId, onoff);
-            this.Cursor = Cursors.Default;
-            EnableAll(true);
 
-            if (Msg.Length > 0)
-                OutputMsg_lb.Text = Msg;
-        }
+            // Get the selected item's device type and device id
+            if (DeviceList_cb.SelectedItem != null)
+            {
+                ushort usDeviceType = ((DeviceData)DeviceList_cb.SelectedItem).DeviceType;
+                uint nDeviceId = ((DeviceData)DeviceList_cb.SelectedItem).DeviceId;
+
+                this.Cursor = Cursors.WaitCursor;
+                String Msg = SubscribePublishedMessages(usDeviceType, nDeviceId, onoff);
+                this.Cursor = Cursors.Default;
+
+                if (Msg != null && Msg.Length > 0)
+                    OutputMsg_lb.Text = Msg;
+            }
+            EnableAll(true);        
+         }
 
         private void checkBoxSubscribeAll_CheckedChanged(object sender, EventArgs e)
         {
