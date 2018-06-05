@@ -629,6 +629,7 @@ namespace FieldCommGroup.HartIPConnect
 
               if ((Rsp != null) &&
                   ((Rsp.ResponseCode == HARTIPMessage.RSP_DR_INITIATE) ||
+                  (Rsp.ResponseCode == HARTIPMessage.RSP_DR_CONFLICT) ||
                   (Rsp.ResponseCode == HARTIPMessage.RSP_DR_RUNNING) ||
                   (Rsp.ResponseCode == HARTIPMessage.RSP_DEVICE_BUSY)))
               {
@@ -713,6 +714,7 @@ namespace FieldCommGroup.HartIPConnect
               // check if it need retries
               if ((ReqTask.HartIPRsp != null) &&
                   ((ReqTask.HartIPRsp.ResponseCode == HARTIPMessage.RSP_DR_INITIATE) ||
+                   (ReqTask.HartIPRsp.ResponseCode == HARTIPMessage.RSP_DR_CONFLICT) ||
                    (ReqTask.HartIPRsp.ResponseCode == HARTIPMessage.RSP_DR_RUNNING) ||
                    (ReqTask.HartIPRsp.ResponseCode == HARTIPMessage.RSP_DEVICE_BUSY)))
               {                                 

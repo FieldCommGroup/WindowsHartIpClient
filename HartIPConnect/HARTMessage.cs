@@ -143,6 +143,11 @@ namespace FieldCommGroup.HartIPConnect
     /// </summary>
     public const byte RSP_DR_DEAD = 35;
 
+    /// <summary>
+    /// HART response delayed response conflict 
+    /// </summary>
+    public const byte RSP_DR_CONFLICT = 36;
+
         /// <summary>
         /// Command not implemented
         /// </summary>

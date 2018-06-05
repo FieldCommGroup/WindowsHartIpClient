@@ -269,6 +269,8 @@ namespace FieldCommGroup.HartIPConnect
         cType = HARTIPMessage.RSP_CMD_NOT_IMPLEMENTED;
       else if (cCode == HARTIPMessage.RSP_DR_INITIATE)
         cType = HARTIPMessage.RSP_DR_INITIATE;
+      else if (cCode == HARTIPMessage.RSP_DR_CONFLICT)
+        cType = HARTIPMessage.RSP_DR_CONFLICT;
       else if (cCode == HARTIPMessage.RSP_DR_RUNNING)
         cType = HARTIPMessage.RSP_DR_RUNNING;
       else if (cCode == HARTIPMessage.RSP_DR_DEAD)
