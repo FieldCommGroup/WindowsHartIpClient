@@ -53,8 +53,9 @@ namespace FieldCommGroup.HartIPClient
 
         // published data memory, command 9, slot 0
         // NOTE: assuming that all command 9's observed are from the same device
-        double minValue, maxValue, rangeValue; // observed range
- 
+        double minYValue, maxYValue, rangeValue; // observed range
+
+        private static DateTime t0 = DateTime.Now;
 
         public MainForm()
         {
@@ -1007,6 +1008,7 @@ namespace FieldCommGroup.HartIPClient
 
         private void DislpayPublishedMsg(HartIPResponse Rsp)
         {
+
             if (Rsp != null)
             {
                 if (Rsp.Command == 77)
@@ -1023,17 +1025,21 @@ namespace FieldCommGroup.HartIPClient
                     // Display slot 0 data for command 9
                     if (Rsp.Command == 9 && Rsp.ResponseCode == 0 && Rsp.DataCount >= 9)
                     {
+                        // use system clock to get seconds
+                        TimeSpan dt = DateTime.Now - t0;
+                        double secs = dt.TotalSeconds; // + dt.Milliseconds / 1000.0;
+
                         // Command 9 response, slot 0 value begins at byte 4
                         double val = ParseResponses.ParseFloat(Rsp.Data, 4);
 
-                        // chart scaling;
-                        minValue = Math.Min(minValue, val);
-                        maxValue = Math.Max(maxValue, val);
-                        rangeValue = Math.Max(maxValue - minValue, rangeValue);
+                        // chart Y scale;
+                        minYValue = Math.Min(minYValue, val);
+                        maxYValue = Math.Max(maxYValue, val);
+                        rangeValue = Math.Max(maxYValue - minYValue, rangeValue);
                         chartCmd9.ChartAreas[0].AxisY.Maximum = MaxAxis(rangeValue);
 
                         // plot new point
-                        chartCmd9.Series[0].Points.AddY(val);
+                        chartCmd9.Series[0].Points.AddXY(secs, val);
 
                         // retain only last bit of data
                         int MaxPointsDisplayed = 200;
@@ -1041,6 +1047,11 @@ namespace FieldCommGroup.HartIPClient
                         {
                             chartCmd9.Series[0].Points.RemoveAt(0);
                         }
+
+                        // chart X scale                        
+                        chartCmd9.ChartAreas[0].AxisX.Minimum = /*Math.Floor(*/ chartCmd9.Series[0].Points.FindMinByValue("X").XValue /*)*/;
+                        chartCmd9.ChartAreas[0].AxisX.Maximum = /*Math.Ceiling(*/ chartCmd9.Series[0].Points.FindMaxByValue("X").XValue /*)*/;
+
                     }
 
                     if (m_bParsingRsps)
@@ -1098,16 +1109,24 @@ namespace FieldCommGroup.HartIPClient
             EnableAll(false);
             if (onoff)
             {
+
+
                 PublishedMsg_Lb.Items.Clear();
 
                 try
                 {
-                    // published command chart range
-                    minValue = 0;
-                    maxValue = 0;
+                    // published command chart Y range
+                    minYValue = 0;
+                    maxYValue = 0;
                     rangeValue = 0;
                     chartCmd9.Series[0].Points.Clear();
-                }
+
+                    t0 = DateTime.Now;  // calculate times from this moment
+
+                    // set these chart style items once
+                    chartCmd9.ChartAreas[0].AxisX.LabelStyle.Format = "{#}";
+                    chartCmd9.ChartAreas[0].AxisX.Interval = 1.0;
+                    chartCmd9.ChartAreas[0].AxisX.LabelStyle.IsEndLabelVisible = false;                }
                 catch { }
             }
 
