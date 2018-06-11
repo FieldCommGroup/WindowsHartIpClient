@@ -54,8 +54,18 @@ namespace FieldCommGroup.HartIPClient
         // published data memory, command 9, slot 0
         // NOTE: assuming that all command 9's observed are from the same device
         double minYValue, maxYValue, rangeValue; // observed range
+        double averageTimeInterval = .1;    // seconds between published data, averaged with exponential moving average
 
-        private static DateTime t0 = DateTime.Now;
+        private static DateTime t0 = DateTime.Now;  // use for calculating elapsed time for published messages
+
+        // User may poll a device continuously with command&data
+        private bool KeepPolling = false;           // set false to terminate polling thread
+        private Thread PollingThread = null;         // thread terminates itself
+        ushort usPollingDeviceType;
+        uint nPollingDeviceId;
+        ushort usReqCmd;
+        string strReqData;
+
 
         public MainForm()
         {
@@ -211,6 +221,7 @@ namespace FieldCommGroup.HartIPClient
                 if (bSuccess)
                 {
                     checkBoxSubscribeAll.Enabled = true;
+                    checkBoxPoll.Enabled = true;
 
                     // set the dr values
                     m_HartClient.DrRetryDelay = nDrRetryDelayBase;
@@ -260,6 +271,10 @@ namespace FieldCommGroup.HartIPClient
             {
                 checkBoxSubscribeAll.Checked = false;
                 checkBoxSubscribeAll.Enabled = false;
+
+                checkBoxPoll.Checked = false;
+                checkBoxPoll.Enabled = false;                
+                
                 // Disconnect the connection
                 Disconnect();
             }
@@ -726,6 +741,47 @@ namespace FieldCommGroup.HartIPClient
             OutputMsg_lb.Text += (Msg + "\r\n\r\n");
         }
 
+        ushort GetReqCmd()
+        {
+            ushort usReqCmd;
+
+            String ReqCmd = ReqCmd_tb.Text.Trim();
+            if (ReqCmd.Length == 0)
+            {
+                throw new Exception("Request Command cannot be empty.");
+            }
+
+            try
+            {
+                System.Globalization.NumberStyles ns = System.Globalization.NumberStyles.Integer;
+                usReqCmd = UInt16.Parse(ReqCmd_tb.Text, ns);
+            }
+            catch
+            {
+                throw new Exception("Invalid Request Command.");
+            }
+
+            if ((uint)(usReqCmd) > 65536)
+            {
+                throw new Exception("Invalid Request Command > 65536.");
+            }
+
+            return usReqCmd;
+        }
+
+        string GetReqData()
+        {
+            // Remove all the whitespace in request data
+            String ReqData = ReqData_tb.Text.Replace(" ", "");
+
+            if ((ReqData.Length > 0) && (ReqData.Length % 2) != 0)
+            {
+                throw new Exception("Multiple contiguous bytes must define an even number of hex digits.");
+            }
+
+            return ReqData;
+        }
+
         /// <summary>
         /// Read the request command and data and send a request command.
         /// </summary>
@@ -739,42 +795,26 @@ namespace FieldCommGroup.HartIPClient
             do
             {
                 ushort usReqCmd;
-                int nDataLen;
+                string ReqData;
 
-                String ReqCmd = ReqCmd_tb.Text.Trim();
-                if (ReqCmd.Length == 0)
+                try
                 {
-                    Msg = "Request Command cannot be empty.";
+                    usReqCmd = GetReqCmd();
+                }
+                catch (Exception ex)
+                {
+                    Msg = ex.Message;
                     ReqCmd_tb.Focus();
                     break;
                 }
 
                 try
                 {
-                    System.Globalization.NumberStyles ns = System.Globalization.NumberStyles.Integer;
-                    usReqCmd = UInt16.Parse(ReqCmd_tb.Text, ns);
+                    ReqData = GetReqData();
                 }
-                catch
+                catch (Exception ex)
                 {
-                    Msg = "Invalid Request Command.";
-                    ReqCmd_tb.Focus();
-                    break;
-                }
-
-                if ((uint)(usReqCmd) > 65536)
-                {
-                    Msg = "Invalid Request Command.";
-                    ReqCmd_tb.Focus();
-                    break;
-                }
-
-                // Remove all the whitespaces in request data
-                String ReqData = ReqData_tb.Text.Replace(" ", "");
-                nDataLen = ReqData.Length;
-
-                if ((nDataLen > 0) && (nDataLen % 2) != 0)
-                {
-                    Msg = "Multiple contiguous bytes must define an even number of hex digits.";
+                    Msg = ex.Message;
                     ReqData_tb.Focus();
                     break;
                 }
@@ -1008,7 +1048,6 @@ namespace FieldCommGroup.HartIPClient
 
         private void DislpayPublishedMsg(HartIPResponse Rsp)
         {
-
             if (Rsp != null)
             {
                 if (Rsp.Command == 77)
@@ -1040,6 +1079,22 @@ namespace FieldCommGroup.HartIPClient
 
                         // plot new point
                         chartCmd9.Series[0].Points.AddXY(secs, val);
+
+                        double biginterval = 10.0;
+                        int n = chartCmd9.Series[0].Points.Count;
+                        if (n > 1)
+                        {
+                            double diff = chartCmd9.Series[0].Points[n - 1].XValue - chartCmd9.Series[0].Points[n - 2].XValue;
+                            diff = Math.Abs(diff);
+                            averageTimeInterval = (0.2 * diff) + (0.8 * averageTimeInterval);
+                            if (averageTimeInterval > .2)
+                            {
+                                if (chartCmd9.ChartAreas[0].AxisX.Interval < biginterval)
+                                {   // adjust tick interval for slower polling updates
+                                    chartCmd9.ChartAreas[0].AxisX.Interval = biginterval;
+                                }
+                            }
+                        }
 
                         // retain only last bit of data
                         int MaxPointsDisplayed = 200;
@@ -1109,25 +1164,13 @@ namespace FieldCommGroup.HartIPClient
             EnableAll(false);
             if (onoff)
             {
-
-
+                checkBoxPoll.Enabled = false;   // only one of subscribe + poll can be checked at once
                 PublishedMsg_Lb.Items.Clear();
-
-                try
-                {
-                    // published command chart Y range
-                    minYValue = 0;
-                    maxYValue = 0;
-                    rangeValue = 0;
-                    chartCmd9.Series[0].Points.Clear();
-
-                    t0 = DateTime.Now;  // calculate times from this moment
-
-                    // set these chart style items once
-                    chartCmd9.ChartAreas[0].AxisX.LabelStyle.Format = "{#}";
-                    chartCmd9.ChartAreas[0].AxisX.Interval = 1.0;
-                    chartCmd9.ChartAreas[0].AxisX.LabelStyle.IsEndLabelVisible = false;                }
-                catch { }
+                InitializeChart();
+            }
+            else
+            {
+                checkBoxPoll.Enabled = true;   // only one of subscribe + poll can be checked at once
             }
 
             // Get the selected item's device type and device id
@@ -1137,6 +1180,7 @@ namespace FieldCommGroup.HartIPClient
                 uint nDeviceId = ((DeviceData)DeviceList_cb.SelectedItem).DeviceId;
 
                 this.Cursor = Cursors.WaitCursor;
+                // send command 533 to subscribe/un-subscribe to published messages
                 String Msg = SubscribePublishedMessages(usDeviceType, nDeviceId, onoff);
                 this.Cursor = Cursors.Default;
 
@@ -1149,6 +1193,159 @@ namespace FieldCommGroup.HartIPClient
         private void checkBoxSubscribeAll_CheckedChanged(object sender, EventArgs e)
         {
             SubscribeAll(checkBoxSubscribeAll.Checked);
+        }
+
+        private void checkBoxPoll_CheckedChanged(object sender, EventArgs e)
+        {
+            PollContinuously(checkBoxPoll.Checked);
+        }
+
+        private void PollContinuously(bool onoff)
+        {
+            // Clear text in output messages control
+            OutputMsg_lb.Text = String.Empty;
+
+            EnableAll(false);
+            if (onoff)
+            {
+                do // once
+                {
+	                if (DeviceList_cb.SelectedItem == null)
+	                {
+                        // no device selected
+                        MessageBox.Show("Please select a device to be polled.");
+                        checkBoxPoll.Checked = false;
+                        break;
+                    }
+	                usPollingDeviceType = ((DeviceData)DeviceList_cb.SelectedItem).DeviceType;
+	                nPollingDeviceId = ((DeviceData)DeviceList_cb.SelectedItem).DeviceId;
+	
+	                try
+	                {
+	                    usReqCmd = GetReqCmd();
+	                }
+	                catch (Exception ex)
+	                {
+	                    MessageBox.Show(ex.Message);
+	                    ReqCmd_tb.Focus();
+                        checkBoxPoll.Checked = false;
+                        break;
+	                }
+	
+	                try
+	                {
+	                    strReqData = GetReqData();
+	                }
+	                catch (Exception ex)
+	                {
+	                    MessageBox.Show(ex.Message);
+	                    ReqData_tb.Focus();
+                        checkBoxPoll.Checked = false;
+                        break;
+	                }
+	
+	                checkBoxSubscribeAll.Enabled = false;   // only one of subscribe + poll can be checked at once
+	
+	                PublishedMsg_Lb.Items.Clear();
+
+                    InitializeChart();
+                    
+	                KeepPolling = true;
+	                PollingThread = new Thread(PollingMethod);
+                    PollingThread.Start();
+
+                } while (false);    // once
+            } //  if (onoff)
+            else
+            { 
+                KeepPolling = false;    // tells thread to die
+                if (PollingThread.IsAlive)
+                {
+                    PollingThread.Join();   // wait for thread to terminate
+                }
+
+                checkBoxSubscribeAll.Enabled = true;   // only one of subscribe + poll can be checked at once
+            }
+
+            EnableAll(true);
+        }
+
+        //  Poll on a dedicated thread, terminate when KeepPolling turns false
+        void PollingMethod()
+        {
+            while (true)
+            {
+                do
+                {
+                    Thread.Sleep(10);   // ms
+
+                    // build the request
+                    HartIPRequest Req = m_HartClient.BuildHartIPRequest(usReqCmd, strReqData, usPollingDeviceType, nPollingDeviceId);
+                    if (Req == null)
+                    {
+                        MessageBox.Show("Cannot build a valid HART request.");
+                        KeepPolling = false;
+                        break;
+                    }
+
+                    // send/receive
+                    HartIPResponse Rsp = m_HartClient.SendHartRequest(Req);
+
+                    // no response returned
+                    if (Rsp == null)
+                    {
+                        if (m_HartClient.LastError.Length > 0)
+                        {
+                            MessageBox.Show(m_HartClient.LastError);
+                        }
+                        KeepPolling = false;
+                        break;
+                    }
+
+                    // error response returned
+                    if (Rsp.IsErrorResponse())
+                    {
+                        MessageBox.Show("An error response has terminated continuous polling.");
+                        KeepPolling = false;
+                        break;
+                    }
+
+                    // no errors - show result on the main GUI thread
+                    this.BeginInvoke(new HandlerPublishedMsg(DislpayPublishedMsg),
+                        new Object[] { Rsp });
+
+                } while (false); /* ONCE */
+
+                // check polling exit condition
+                if (KeepPolling == false)
+                {
+                    break;
+                }
+            }
+
+            return; // thread is dead
+        }
+
+        private void InitializeChart()
+        {
+            try
+            {
+                // published command chart Y range
+                minYValue = 0;
+                maxYValue = 0;
+                rangeValue = 0;
+                chartCmd9.Series[0].Points.Clear();
+
+                t0 = DateTime.Now;  // calculate times from this moment
+
+                // set these chart style items once
+                chartCmd9.ChartAreas[0].AxisX.LabelStyle.Format = "{#}";
+                chartCmd9.ChartAreas[0].AxisX.Interval = 1.0;
+                chartCmd9.ChartAreas[0].AxisX.LabelStyle.IsEndLabelVisible = false;
+
+                averageTimeInterval = 0.1;  // time between published messages, smoothed
+            }
+            catch { }
         }
     }
 

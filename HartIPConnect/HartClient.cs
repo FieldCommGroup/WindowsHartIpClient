@@ -170,7 +170,7 @@ namespace FieldCommGroup.HartIPConnect
         /// </summary>
         /// <param name="HandleEvent">EventHandler <see cref="HartIPResponseArg"/> event callback</param>
         /// <returns>bool true if it is success.</returns>
-        /// <remarks> This will not send the wireless HART 219 command to the connected HART-IP device.
+        /// <remarks> This will not send the wireless HART 533 command to the connected HART-IP device.
         /// Client wants to enable the Burst Through Mode in the HART 219 command needs to send one.
         /// After client sent the HART 219 'Write Burst Through Mode' to enable the Burst Through Mode
         /// command to HIPDevice and the it received a broadcast published command from the network, 

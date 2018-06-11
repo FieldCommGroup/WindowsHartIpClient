@@ -49,7 +49,7 @@ namespace FieldCommGroup.HartIPConnect
     /// <summary>
     /// delay Retry
     /// </summary>
-    public const uint DR_DELAYRETRY = 1000;
+    public const uint DR_DELAYRETRY = 20;   // was 1000
 
     /// <summary>
     /// DrDelayBase Max
@@ -59,11 +59,11 @@ namespace FieldCommGroup.HartIPConnect
     /// <summary>
     /// DrDelayBase Min
     /// </summary>
-    public const uint DrDelayBaseMin = 500;
+    public const uint DrDelayBaseMin = 10;  // was 500
     /// <summary>
     /// Number of Delay retries
     /// </summary>
-    public const uint DR_RETRIES = 10;
+    public const uint DR_RETRIES = 100;     // was 10
 
     /// <summary>
     /// HART command Response Code

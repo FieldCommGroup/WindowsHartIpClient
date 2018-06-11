@@ -67,6 +67,7 @@
             this.tabMessages = new System.Windows.Forms.TabPage();
             this.tabChart = new System.Windows.Forms.TabPage();
             this.chartCmd9 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.checkBoxPoll = new System.Windows.Forms.CheckBox();
             this.MenuToolStrip.SuspendLayout();
             this.StatusStrip.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -364,7 +365,7 @@
             // 
             this.checkBoxSubscribeAll.AutoSize = true;
             this.checkBoxSubscribeAll.Enabled = false;
-            this.checkBoxSubscribeAll.Location = new System.Drawing.Point(763, 146);
+            this.checkBoxSubscribeAll.Location = new System.Drawing.Point(759, 146);
             this.checkBoxSubscribeAll.Name = "checkBoxSubscribeAll";
             this.checkBoxSubscribeAll.Size = new System.Drawing.Size(203, 17);
             this.checkBoxSubscribeAll.TabIndex = 26;
@@ -442,11 +443,24 @@
     "responses.";
             this.chartCmd9.Titles.Add(title1);
             // 
+            // checkBoxPoll
+            // 
+            this.checkBoxPoll.AutoSize = true;
+            this.checkBoxPoll.Enabled = false;
+            this.checkBoxPoll.Location = new System.Drawing.Point(759, 166);
+            this.checkBoxPoll.Name = "checkBoxPoll";
+            this.checkBoxPoll.Size = new System.Drawing.Size(106, 17);
+            this.checkBoxPoll.TabIndex = 29;
+            this.checkBoxPoll.Text = "Poll Continuously";
+            this.checkBoxPoll.UseVisualStyleBackColor = true;
+            this.checkBoxPoll.CheckedChanged += new System.EventHandler(this.checkBoxPoll_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(987, 599);
+            this.Controls.Add(this.checkBoxPoll);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.checkBoxSubscribeAll);
             this.Controls.Add(this.checkBoxKeepAlive);
@@ -519,6 +533,7 @@
         private System.Windows.Forms.TabPage tabMessages;
         private System.Windows.Forms.TabPage tabChart;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartCmd9;
+        private System.Windows.Forms.CheckBox checkBoxPoll;
     }
 }
 
