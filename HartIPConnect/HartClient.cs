@@ -247,8 +247,7 @@ namespace FieldCommGroup.HartIPConnect
                  for (int i = 0; i < HDevices.Length; i++)
                  {
                      // find the network HART device
-                     if (HDevices[i].IsWirelessHIPDevice || (HDevices[i].Profile == DeviceProfile.IOSYSTEM) ||
-                         (HDevices[i].FlagAssignment == DeviceFlagAssignment.PROTOCOL_BRIDGE_DEVICE))
+                     if (HDevices[i].IsBridgeDevice)
                      {
                          Dev = HDevices[i];
                          break;
