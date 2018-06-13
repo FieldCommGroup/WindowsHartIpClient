@@ -41,15 +41,15 @@ namespace FieldCommGroup.HartIPConnect
     /// </summary>
     public const int MAX_LONG_TAG_LENGTH = 32;
 
-    /// <summary>
-    /// Session Inactivity Close Time, milliseconds
-    /// </summary>
-    public const uint INACTIVITY_CLOSE_TIME = 6*600000;
-    
+        /// <summary>
+        /// Session Inactivity Close Time, milliseconds
+        /// </summary>
+        public const uint INACTIVITY_CLOSE_TIME = 600000;
+
     /// <summary>
     /// delay Retry
     /// </summary>
-    public const uint DR_DELAYRETRY = 1000;
+    public const uint DR_DELAYRETRY = 20;   // was 1000
 
     /// <summary>
     /// DrDelayBase Max
@@ -59,11 +59,11 @@ namespace FieldCommGroup.HartIPConnect
     /// <summary>
     /// DrDelayBase Min
     /// </summary>
-    public const uint DrDelayBaseMin = 500;
+    public const uint DrDelayBaseMin = 10;  // was 500
     /// <summary>
     /// Number of Delay retries
     /// </summary>
-    public const uint DR_RETRIES = 10;
+    public const uint DR_RETRIES = 100;     // was 10
 
     /// <summary>
     /// HART command Response Code
@@ -142,6 +142,11 @@ namespace FieldCommGroup.HartIPConnect
     /// HART response delayed response failed 
     /// </summary>
     public const byte RSP_DR_DEAD = 35;
+
+    /// <summary>
+    /// HART response delayed response conflict 
+    /// </summary>
+    public const byte RSP_DR_CONFLICT = 36;
 
         /// <summary>
         /// Command not implemented
@@ -638,8 +643,8 @@ namespace FieldCommGroup.HartIPConnect
                 m_HartCmd[j] = inBuffer.ReadByte(); 
             }
             
-            // if the message is the ACK type
-            if (MsgType == HARTIPMessage.HART_ACK)
+            // if the message is the ACK or BACK (notify) type
+            if (MsgType == HARTIPMessage.HART_ACK || MsgType == HARTIPMessage.HART_PUBLISH_NOTIFY)
             {
                 // Check if response is initiate session
                 if (MsgHeader.MsgId == MessageId.SESSION_INITIATE)
@@ -736,9 +741,30 @@ namespace FieldCommGroup.HartIPConnect
 
 
         /// <summary>
-        /// The Message Status
-        /// </summary>
-        public byte Status
+        /// Check if the Response code is is an error code
+        /// </summary>    
+        public bool IsErrorResponse()
+        {
+            int c = this.m_cRspcode;
+
+            bool iserr = (
+                (1 <= c && c<= 7) ||
+                (16 <= c && c <= 23) ||
+                (32 <= c && c <= 64) || 
+                (9 <= c && c <= 13) || 
+                (15 == c) ||
+                (28 == c) || 
+                (29 == c) ||
+                (65 <= c && c <= 95)
+                );
+
+            return iserr;
+    }
+
+    /// <summary>
+    /// The Message Status
+    /// </summary>
+    public byte Status
     {
       get { return ((MsgHeader != null) ? MsgHeader.Status : (byte)0); }
     }

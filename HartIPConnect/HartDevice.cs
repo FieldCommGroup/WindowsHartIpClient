@@ -248,11 +248,11 @@ namespace FieldCommGroup.HartIPConnect
     {
       get
       {
-        return (
-            IsWirelessHIPDevice || 
-            Profile == DeviceProfile.IOSYSTEM ||
-            FlagAssignment == DeviceFlagAssignment.PROTOCOL_BRIDGE_DEVICE
-            );
+        /*
+         * DeviceProfile.WIRELESS_GATEWAY and  DeviceProfile.IOSYSTEM are not checked
+         * here because device profile is not available on HART 5 device
+         */
+        return ((FlagAssignment & DeviceFlagAssignment.PROTOCOL_BRIDGE_DEVICE) > 0);
       }
     }
     /// <summary>

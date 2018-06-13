@@ -1,12 +1,12 @@
-﻿# HART-IP Client
+﻿# Windows HART-IP Client
 
+With an installed base of over 40 million devices, the HART Communication Protocol is the leading protocol for smart process automation field devices.  HART-IP enables the communication of native binary HART data across the Internet allowing access to HART devices.  This complete HART IP Client example simplifies the development of applications using HART-IP to access and utilize HART field devices.
 HART-IP Client is a C# Windows application that uses UDP/TCP to connect to a HART device using the HART-IP protocol.  Devices include: 
-* I/O devices (which may have sub-devices connected)
-* Gateways
-* Multiplexors
+* I/O devices like Gateways and Multiplexers 
 * Native HART-IP field devices
 
 This Client enables the user to send HART commands to the connected HART-IP device and any sub-devices through the network connection.  The Client receives and displays the responses on its user interface.
+This Readme describes how to build, deploy and use this example HART-IP Client.  The Usage subsection includes example HART communications.  The data you actually will receive depends on the connected field device and process conditions captured by that device.
 
 ## Features Included
 
@@ -25,10 +25,18 @@ These instructions describe how to build, deploy and use the client.
 2. Visual Studio 2015 or later.
 ```
 
+### Pre-built Installer
+
+You may avoid building an installer with  Visual Studio by using the pre-built setup program available in this project folder:
+```
+Install/Release
+```
+
+
+
 ### Installing
 
 Development environment
-
 ```
 Install Visual Studio 2015
 ```
@@ -67,7 +75,7 @@ Select one of the device names from the pull-down menu.  To send the "Identity" 
 06/16/2017 11:15:30:485, Rx: Message Header: Ver: 1, MsgType: 1, MsgId: 3, MsgStatus: 0x00, TranId: 13, ByteCount: 33, Data: 86 A6 4E 0B 15 38 00 18 00 D0 FE 26 4E 05 07 04 01 0E 0C 0B 15 38 05 02 00 0F D0 00 26 00 26 84 69 
 ```
 
-To see messages parsed for easier readability, click the Parse HART Responses button, which toggles the parsing on anf off.  It will show a File/Open dialog.  Select the Sample.hdf file that ships with this Client to use its instructions to disassemble the HART response data.
+To see messages parsed for easier readability, click the Parse HART Responses button, which toggles the parsing on and off.  It will show a File/Open dialog.  Select the Sample.hdf file to disassemble the HART response data.
 
 Now click the Send button again.  The Client responds:
 ```
@@ -77,12 +85,12 @@ Now click the Send button again.  The Client responds:
 
 Rx Cmd=0
 Response code=0
-Status Byte=D0
+Device Status Byte=D0
 Expansion Code=254
 Expanded Device Type=9806
 # Request Preambles=5
 Universal Comand Revision Level=7
-Transmitter HART Revision Level=4
+Device Revision Level=4
 Software Revision=1
 Hardware Revision Level / Physical Signaling Code=14
 Flags=0C

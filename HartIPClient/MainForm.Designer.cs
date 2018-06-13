@@ -30,6 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.MenuToolStrip = new System.Windows.Forms.ToolStrip();
             this.ToolBarImageList = new System.Windows.Forms.ImageList(this.components);
             this.NetConnectBtn = new System.Windows.Forms.ToolStripButton();
@@ -57,9 +60,20 @@
             this.SendCmdToAll_btn = new System.Windows.Forms.Button();
             this.GetDeviceList_btn = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.PublishedMsg_Tb = new System.Windows.Forms.RichTextBox();
+            this.checkBoxKeepAlive = new System.Windows.Forms.CheckBox();
+            this.checkBoxSubscribeAll = new System.Windows.Forms.CheckBox();
+            this.PublishedMsg_Lb = new System.Windows.Forms.ListBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabMessages = new System.Windows.Forms.TabPage();
+            this.tabChart = new System.Windows.Forms.TabPage();
+            this.chartCmd9 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.checkBoxPoll = new System.Windows.Forms.CheckBox();
             this.MenuToolStrip.SuspendLayout();
             this.StatusStrip.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabMessages.SuspendLayout();
+            this.tabChart.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartCmd9)).BeginInit();
             this.SuspendLayout();
             // 
             // MenuToolStrip
@@ -259,6 +273,8 @@
             // 
             // OutputMsg_lb
             // 
+            this.OutputMsg_lb.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.OutputMsg_lb.Location = new System.Drawing.Point(10, 169);
             this.OutputMsg_lb.Name = "OutputMsg_lb";
             this.OutputMsg_lb.ReadOnly = true;
@@ -327,28 +343,127 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(571, 88);
+            this.label5.Location = new System.Drawing.Point(571, 147);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(111, 13);
             this.label5.TabIndex = 23;
             this.label5.Text = "Published Commands:";
             // 
-            // PublishedMsg_Tb
+            // checkBoxKeepAlive
             // 
-            this.PublishedMsg_Tb.Location = new System.Drawing.Point(574, 107);
-            this.PublishedMsg_Tb.Name = "PublishedMsg_Tb";
-            this.PublishedMsg_Tb.ReadOnly = true;
-            this.PublishedMsg_Tb.Size = new System.Drawing.Size(401, 457);
-            this.PublishedMsg_Tb.TabIndex = 24;
-            this.PublishedMsg_Tb.TabStop = false;
-            this.PublishedMsg_Tb.Text = "";
+            this.checkBoxKeepAlive.AutoSize = true;
+            this.checkBoxKeepAlive.Checked = true;
+            this.checkBoxKeepAlive.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxKeepAlive.Location = new System.Drawing.Point(264, 143);
+            this.checkBoxKeepAlive.Name = "checkBoxKeepAlive";
+            this.checkBoxKeepAlive.Size = new System.Drawing.Size(161, 17);
+            this.checkBoxKeepAlive.TabIndex = 25;
+            this.checkBoxKeepAlive.Text = "Enable keep-alive messages";
+            this.checkBoxKeepAlive.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxSubscribeAll
+            // 
+            this.checkBoxSubscribeAll.AutoSize = true;
+            this.checkBoxSubscribeAll.Enabled = false;
+            this.checkBoxSubscribeAll.Location = new System.Drawing.Point(759, 146);
+            this.checkBoxSubscribeAll.Name = "checkBoxSubscribeAll";
+            this.checkBoxSubscribeAll.Size = new System.Drawing.Size(203, 17);
+            this.checkBoxSubscribeAll.TabIndex = 26;
+            this.checkBoxSubscribeAll.Text = "Subscribe to All Published Commands";
+            this.checkBoxSubscribeAll.UseVisualStyleBackColor = true;
+            this.checkBoxSubscribeAll.CheckedChanged += new System.EventHandler(this.checkBoxSubscribeAll_CheckedChanged);
+            // 
+            // PublishedMsg_Lb
+            // 
+            this.PublishedMsg_Lb.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PublishedMsg_Lb.FormattingEnabled = true;
+            this.PublishedMsg_Lb.Location = new System.Drawing.Point(3, 0);
+            this.PublishedMsg_Lb.Name = "PublishedMsg_Lb";
+            this.PublishedMsg_Lb.ScrollAlwaysVisible = true;
+            this.PublishedMsg_Lb.Size = new System.Drawing.Size(384, 368);
+            this.PublishedMsg_Lb.TabIndex = 27;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tabMessages);
+            this.tabControl1.Controls.Add(this.tabChart);
+            this.tabControl1.Location = new System.Drawing.Point(574, 170);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(401, 394);
+            this.tabControl1.TabIndex = 28;
+            // 
+            // tabMessages
+            // 
+            this.tabMessages.Controls.Add(this.PublishedMsg_Lb);
+            this.tabMessages.Location = new System.Drawing.Point(4, 22);
+            this.tabMessages.Name = "tabMessages";
+            this.tabMessages.Padding = new System.Windows.Forms.Padding(3);
+            this.tabMessages.Size = new System.Drawing.Size(393, 368);
+            this.tabMessages.TabIndex = 0;
+            this.tabMessages.Text = "Messages";
+            this.tabMessages.UseVisualStyleBackColor = true;
+            // 
+            // tabChart
+            // 
+            this.tabChart.Controls.Add(this.chartCmd9);
+            this.tabChart.Location = new System.Drawing.Point(4, 22);
+            this.tabChart.Name = "tabChart";
+            this.tabChart.Padding = new System.Windows.Forms.Padding(3);
+            this.tabChart.Size = new System.Drawing.Size(393, 368);
+            this.tabChart.TabIndex = 1;
+            this.tabChart.Text = "Chart";
+            this.tabChart.UseVisualStyleBackColor = true;
+            // 
+            // chartCmd9
+            // 
+            this.chartCmd9.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea1.Name = "ChartArea1";
+            this.chartCmd9.ChartAreas.Add(chartArea1);
+            this.chartCmd9.Location = new System.Drawing.Point(7, 7);
+            this.chartCmd9.Name = "chartCmd9";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
+            series1.Name = "Slot0";
+            this.chartCmd9.Series.Add(series1);
+            this.chartCmd9.Size = new System.Drawing.Size(380, 358);
+            this.chartCmd9.TabIndex = 0;
+            this.chartCmd9.Text = "chart1";
+            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title1.Name = "Title1";
+            title1.Text = "Command 9 Slot 0 Data";
+            title1.ToolTip = "This chart will display floating point values retreived from published command 9 " +
+    "responses.";
+            this.chartCmd9.Titles.Add(title1);
+            // 
+            // checkBoxPoll
+            // 
+            this.checkBoxPoll.AutoSize = true;
+            this.checkBoxPoll.Enabled = false;
+            this.checkBoxPoll.Location = new System.Drawing.Point(759, 166);
+            this.checkBoxPoll.Name = "checkBoxPoll";
+            this.checkBoxPoll.Size = new System.Drawing.Size(106, 17);
+            this.checkBoxPoll.TabIndex = 29;
+            this.checkBoxPoll.Text = "Poll Continuously";
+            this.checkBoxPoll.UseVisualStyleBackColor = true;
+            this.checkBoxPoll.CheckedChanged += new System.EventHandler(this.checkBoxPoll_CheckedChanged);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(987, 599);
-            this.Controls.Add(this.PublishedMsg_Tb);
+            this.Controls.Add(this.checkBoxPoll);
+            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.checkBoxSubscribeAll);
+            this.Controls.Add(this.checkBoxKeepAlive);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.GetDeviceList_btn);
             this.Controls.Add(this.SendCmdToAll_btn);
@@ -373,6 +488,10 @@
             this.MenuToolStrip.PerformLayout();
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabMessages.ResumeLayout(false);
+            this.tabChart.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartCmd9)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -407,7 +526,14 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.Button GetDeviceList_btn;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.RichTextBox PublishedMsg_Tb;
+        private System.Windows.Forms.CheckBox checkBoxKeepAlive;
+        private System.Windows.Forms.CheckBox checkBoxSubscribeAll;
+        private System.Windows.Forms.ListBox PublishedMsg_Lb;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabMessages;
+        private System.Windows.Forms.TabPage tabChart;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartCmd9;
+        private System.Windows.Forms.CheckBox checkBoxPoll;
     }
 }
 

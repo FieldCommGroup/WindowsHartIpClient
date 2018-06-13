@@ -63,7 +63,7 @@
             this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.StopBtn);
             this.Name = "ProgressForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TopMost = true;
             this.ResumeLayout(false);
 

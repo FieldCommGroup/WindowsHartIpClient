@@ -80,6 +80,7 @@ namespace FieldCommGroup.HartIPClient
       }
     }
 
+
     /// <summary>
     /// Parse HART Response to readable string.
     /// </summary>
@@ -98,77 +99,85 @@ namespace FieldCommGroup.HartIPClient
       String Data = String.Empty;
       bool bSkipExtendedCmdBtyes = false;
 
-      do
-      {             
-          lock (SyncRoot)
-          {
-            try
-            {              
-              if (m_Commands.Count > 0)
-              {   // parse success and error responses                               
-                  if ((cCmd == HARTIPMessage.CMD_EXTENDED_CMD))
-                  {
-                      usExtendedCmd = (ushort)((Rsp.Data[0] << 8) + (Rsp.Data[1] & 0x0ff));
-                      CmdID = String.Format("{0:000}", usExtendedCmd);
-                      bSuccess = m_Commands.TryGetValue(CmdID, out Outputs);
-                      if (!bSuccess)
-                      {
-                          CmdID = String.Format("031_{0}", usExtendedCmd);
-                          bSuccess = m_Commands.TryGetValue(CmdID, out Outputs);
-                      }
-                      else
-                          bSkipExtendedCmdBtyes = true;
-                  }
-                  else
-                  {
-                      CmdID = String.Format("{0:000}", cCmd);
-                      bSuccess = m_Commands.TryGetValue(CmdID, out Outputs);
-                  }                                                            
-              }
-
-              if (bSuccess)
-              {
-                byte Len;
-                int iIndex = 0;
-                Data = String.Format("Rx Cmd={0}", cCmd);
-                if (bSkipExtendedCmdBtyes)
-                {
-                    Len = (byte)(Rsp.DataCount);
-                    iIndex = 2;
-                    Data = String.Format("Rx Cmd={0}", usExtendedCmd);
-                }
-                else
-                    Len = (byte)(Rsp.DataCount + 2);
-
-                byte[] tmp = new byte[Len];                
-
-                // put the response code and device status values in the data array first
-                tmp[0] = Rsp.ResponseCode;
-                tmp[1] = Rsp.DeviceStatus;
-               
-                for (int i = 2; i < Len; i++)
-                {
-                  tmp[i] = Rsp.Data[iIndex++];
-                }
-                Data += ParseData(tmp, Len, Outputs);               
-              }
-              else
-              {
-                Data += "\r\nData: ";
-                byte[] Temp = Rsp.Data;
-                for (int i = 0; i < Rsp.DataCount; i++)
-                {
-                  Data += (String.Format("{0:X2} ", Temp[i]));
-                }
-              }
-            }
-            catch (Exception ex)
+        do
+        {
+            lock (SyncRoot)
             {
-              Data = ex.Message;
+                try
+                {
+                    if (m_Commands.Count > 0)
+                    {                                 
+                        if ((cCmd == HARTIPMessage.CMD_EXTENDED_CMD))
+                        {
+                            usExtendedCmd = (ushort)((Rsp.Data[0] << 8) + (Rsp.Data[1] & 0x0ff));
+                            CmdID = String.Format("{0:000}", usExtendedCmd);
+                            bSuccess = m_Commands.TryGetValue(CmdID, out Outputs);
+                            if (!bSuccess)
+                            {
+                                CmdID = String.Format("031_{0}", usExtendedCmd);
+                                bSuccess = m_Commands.TryGetValue(CmdID, out Outputs);
+                            }
+                            else
+                                bSkipExtendedCmdBtyes = true;
+                        }
+                        else
+                        {
+                            CmdID = String.Format("{0:000}", cCmd);
+                            bSuccess = m_Commands.TryGetValue(CmdID, out Outputs);
+                        }
+                    }
+
+                    if (bSuccess)
+                    {
+                        byte Len;
+                        int iIndex = 0;
+                        Data = String.Format("Rx Cmd={0}", cCmd);
+
+                        if (Rsp.IsErrorResponse())
+                        {
+                            Data += String.Format("\r\nError Response code={0}", Rsp.ResponseCode);
+                        }
+                        else
+                        {
+	                        if (bSkipExtendedCmdBtyes)
+	                        {
+	                            Len = (byte)(Rsp.DataCount);
+	                            iIndex = 2;
+	                            Data = String.Format("Rx Cmd={0}", usExtendedCmd);
+	                        }
+	                        else
+	                            Len = (byte)(Rsp.DataCount + 2);
+	
+	                        byte[] tmp = new byte[Len];
+	
+	                        // put the response code and device status values in the data array first
+	                        tmp[0] = Rsp.ResponseCode;
+	                        tmp[1] = Rsp.DeviceStatus;
+	
+	                        for (int i = 2; i < Len; i++)
+	                        {
+	                            tmp[i] = Rsp.Data[iIndex++];
+	                        }
+	                        Data += ParseData(tmp, Len, Outputs);
+                        }
+                    }
+                    else
+                    {
+                        Data += "\r\nData: ";
+                        byte[] Temp = Rsp.Data;
+                        for (int i = 0; i < Rsp.DataCount; i++)
+                        {
+                            Data += (String.Format("{0:X2} ", Temp[i]));
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Data = ex.Message;
+                }
             }
-          }
-        
-      } while (false); /* ONCE */
+
+        } while (false); /* ONCE */
 
       return Data;
     }    
@@ -302,7 +311,7 @@ namespace FieldCommGroup.HartIPClient
             int nSize = Convert.ToInt32(Val[1]);
             for (int i = 0; i < nSize; i++)
             {
-              Value += String.Format("{0:X2}", Data[nIndex + i]);
+              Value += String.Format("0x{0:X2}", Data[nIndex + i]);
             }
             nIndex += nSize;
           }
@@ -546,5 +555,34 @@ namespace FieldCommGroup.HartIPClient
       return Outs;
     }
 
-  }
+
+        /// <summary>
+        /// Parse a float from a big-endian array of bytes
+        /// <param name="data">HartIPResponse, an array of bytes</param>
+        /// <param name="pos">0-based index of the float field in the array, </param>
+        /// <returns>String</returns>
+        /// </summary>
+        public static double ParseFloat(byte[] data, int pos)
+        {
+            byte[] arr = new byte[4];
+            int i, j;
+            float fl;
+            double d;
+            if (data.Length < pos + 4)
+            {
+                // buffer too short
+                return 0;
+            }
+            else
+            {
+                for (i = 0, j = 3; i < 4; i++, j--)
+                {
+                    arr[i] = data[pos + j];
+                }
+                fl = BitConverter.ToSingle(arr, 0);
+                d = fl;
+                return d;
+            }
+        }
+    }
 }

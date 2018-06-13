@@ -195,11 +195,11 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(287, 21);
+            this.label5.Location = new System.Drawing.Point(239, 23);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(97, 13);
+            this.label5.Size = new System.Drawing.Size(134, 13);
             this.label5.TabIndex = 3;
-            this.label5.Text = "Timeout (seconds):";
+            this.label5.Text = "Socket Timeout (seconds):";
             // 
             // NetConnect_Form
             // 
@@ -244,5 +244,5 @@
     private System.Windows.Forms.GroupBox groupBox2;
     private System.Windows.Forms.TextBox SocketTimeout_tb;
     private System.Windows.Forms.Label label5;
-  }
+    }
 }

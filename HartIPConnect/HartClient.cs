@@ -170,7 +170,7 @@ namespace FieldCommGroup.HartIPConnect
         /// </summary>
         /// <param name="HandleEvent">EventHandler <see cref="HartIPResponseArg"/> event callback</param>
         /// <returns>bool true if it is success.</returns>
-        /// <remarks> This will not send the wireless HART 219 command to the connected HART-IP device.
+        /// <remarks> This will not send the wireless HART 533 command to the connected HART-IP device.
         /// Client wants to enable the Burst Through Mode in the HART 219 command needs to send one.
         /// After client sent the HART 219 'Write Burst Through Mode' to enable the Burst Through Mode
         /// command to HIPDevice and the it received a broadcast published command from the network, 
@@ -247,8 +247,7 @@ namespace FieldCommGroup.HartIPConnect
                  for (int i = 0; i < HDevices.Length; i++)
                  {
                      // find the network HART device
-                     if (HDevices[i].IsWirelessHIPDevice || (HDevices[i].Profile == DeviceProfile.IOSYSTEM) ||
-                         (HDevices[i].FlagAssignment == DeviceFlagAssignment.PROTOCOL_BRIDGE_DEVICE))
+                     if (HDevices[i].IsBridgeDevice)
                      {
                          Dev = HDevices[i];
                          break;
@@ -409,24 +408,62 @@ namespace FieldCommGroup.HartIPConnect
 
                   bSuccess = m_HartIPConn.Connect(Server, (int)nPort, nTimeout,
                       HARTIPMessage.INACTIVITY_CLOSE_TIME);
+
+                  if (!bSuccess)
+                  {
+                        m_Error = m_HartIPConn.LastError;
+                  }
               }
           } while (false); /* ONCE */
 
           return bSuccess;
       }
 
-      /// <summary>
-      /// Build a HartIP Request using the specified request command, request message,
-      /// device type, and device id. It will have frame, device address, command, byte count, 
-      /// data, and checksum bytes in the returned HartIPRequest.Command.
-      /// </summary>
-      /// <param name="usReqCmd">ushort Request command</param>
-      /// <param name="ReqMsg">String Request message in Hex string</param>
-      /// <param name="usDeviceType">ushort Device Type</param>
-      /// <param name="nDeviceId">uint Device ID</param>
-      /// <returns><see cref="HartIPRequest"/></returns>
-      public HartIPRequest BuildHartIPRequest(ushort usReqCmd, String ReqMsg, ushort usDeviceType,
-          uint nDeviceId)
+        /// <summary>
+        /// Disconnect - end HART-IP session
+        /// </summary>
+        public void Disconnect()
+        {
+            HARTMsgResult Result = new HARTMsgResult();
+            m_HartIPConn.CloseSession(Result);
+        }
+
+        /// <summary>
+        /// Send KeepAlive message
+        /// </summary>
+        public void KeepAlive()
+        {
+            lock (SyncRoot)
+            {
+                if (m_HartIPConn.IsConnected)
+                {
+                    HARTMsgResult Result = new HARTMsgResult();
+                    try
+                    {
+                        m_HartIPConn.SendKeepAlive(Result);
+                    }
+                    catch (Exception e)
+                    {
+                        Result.AddMessage(e.Message, false, true);
+                        m_Error = "KeepAlive: " + e.Message;
+                        Logger.Log("Error, " + m_Error, true);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Build a HartIP Request using the specified request command, request message,
+        /// device type, and device id. It will have frame, device address, command, byte count, 
+        /// data, and checksum bytes in the returned HartIPRequest.Command.
+        /// </summary>
+        /// <param name="usReqCmd">ushort Request command</param>
+        /// <param name="ReqMsg">String Request message in Hex string</param>
+        /// <param name="usDeviceType">ushort Device Type</param>
+        /// <param name="nDeviceId">uint Device ID</param>
+        /// <returns><see cref="HartIPRequest"/></returns>
+        public HartIPRequest BuildHartIPRequest(ushort usReqCmd, String ReqMsg, ushort usDeviceType,
+        uint nDeviceId)
       {
           String Msg;
           HartIPRequest HRequest = null;
@@ -591,6 +628,7 @@ namespace FieldCommGroup.HartIPConnect
 
               if ((Rsp != null) &&
                   ((Rsp.ResponseCode == HARTIPMessage.RSP_DR_INITIATE) ||
+                  (Rsp.ResponseCode == HARTIPMessage.RSP_DR_CONFLICT) ||
                   (Rsp.ResponseCode == HARTIPMessage.RSP_DR_RUNNING) ||
                   (Rsp.ResponseCode == HARTIPMessage.RSP_DEVICE_BUSY)))
               {
@@ -675,6 +713,7 @@ namespace FieldCommGroup.HartIPConnect
               // check if it need retries
               if ((ReqTask.HartIPRsp != null) &&
                   ((ReqTask.HartIPRsp.ResponseCode == HARTIPMessage.RSP_DR_INITIATE) ||
+                   (ReqTask.HartIPRsp.ResponseCode == HARTIPMessage.RSP_DR_CONFLICT) ||
                    (ReqTask.HartIPRsp.ResponseCode == HARTIPMessage.RSP_DR_RUNNING) ||
                    (ReqTask.HartIPRsp.ResponseCode == HARTIPMessage.RSP_DEVICE_BUSY)))
               {                                 
@@ -1054,9 +1093,12 @@ namespace FieldCommGroup.HartIPConnect
       /// method after this to discover devices again.</remarks>
       public bool ReconnectNetwork()
       {
-          bool bSuccess = false;
-          do
-          {
+            bool bSuccess = false;
+
+            Disconnect();
+
+            do
+            {
               lock (SyncRoot)
               {
                   if (m_HartIPConn == null)

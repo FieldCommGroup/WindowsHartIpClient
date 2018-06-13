@@ -140,7 +140,8 @@ namespace FieldCommGroup.HartIPConnect
       private uint m_InactivityCloseTime = 0;
       private bool m_bStopped = true;
       private Thread m_RspMsgReader;
-      private List<MsgRequest> m_Requests = new List<MsgRequest>();    
+      private List<MsgRequest> m_Requests = new List<MsgRequest>();
+      private Dictionary<int, string> m_SessionInitStatusCodes = new Dictionary<int, string>();
 
       /// <summary>
       /// SyncRoot
@@ -353,6 +354,7 @@ namespace FieldCommGroup.HartIPConnect
             if (m_RspMsgReader != null)
             {
                 m_RspMsgReader.Join(WAIT_INTERVAL);
+                m_RspMsgReader.Abort();
                 m_RspMsgReader = null;
             }
         }
@@ -405,7 +407,18 @@ namespace FieldCommGroup.HartIPConnect
                 Close();
                 break;
             }
-            else if (!Response.IsValidResponse)
+            else if (0 != Response.ResponseCode)
+            {
+                    m_Error = "InitSession received an error response code: " +
+                        Response.ResponseCode.ToString() + "  " +
+                        GetSessionInitStatusCode(Response.ResponseCode);
+
+                    LogMsg.Instance.Log("Error, " + m_Error, true);
+                    LogMsg.Instance.Log(Response.ToString());
+                    Close();
+                    break;
+                }
+             else if (!Response.IsValidResponse)
             {
                 m_Error = "InitSession received an invalid response Msg Type.";
                 LogMsg.Instance.Log("Error, " + m_Error, true);
@@ -463,7 +476,13 @@ namespace FieldCommGroup.HartIPConnect
     /// </summary>    
     private void ReceiveMsg()
     {
-        while (!m_bStopped)
+        bool stoploop;
+        lock(SyncRoot)
+        {
+            stoploop = m_bStopped;
+        }
+
+        while (!stoploop)
         {
             try
             {                
@@ -785,7 +804,7 @@ namespace FieldCommGroup.HartIPConnect
     public bool Reconnect()
     {
         if (m_strHost.Length == 0)
-            throw new ArgumentException("Reconnect Error: Host IP is emtpy.");
+            throw new ArgumentException("Reconnect Error: Host IP is empty.");
 
         if (m_nPort == 0)
             throw new ArgumentException("Reconnect Error: Uninitialize Port value.");
@@ -797,6 +816,94 @@ namespace FieldCommGroup.HartIPConnect
             m_InactivityCloseTime);
     }
 
-  }
 
+        /// <summary>
+        /// Create a HART Close Session Request, send it to the Gateway,
+        /// and close the socket.
+        /// </summary>
+        /// <param name="Result"><see cref="HARTMsgResult">HARTMsgResult</see></param>
+        public void CloseSession(HARTMsgResult Result)
+        {
+            HartIPRequest Req = null;
+
+            do
+            {
+                Req = HartIPRequest.CloseSession(TransactionId);
+                MsgResponse MsgRsp = new MsgResponse(HARTIPConnect.USE_SOCKET_TIMEOUT_DEFAULT);
+                if (SendHartRequest(Req, MsgRsp))
+                {
+                    try
+                    {
+                        if (!MsgRsp.ResponseMsg.IsValidResponse)
+                        {
+                            Result.AddMessage("Close Session failed. Receive an invalid response msg type.", false, true);
+                            break;
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+                else
+                {
+                    Result.AddMessage("Failed sending Session Close Command to Gateway.", false, true);
+                    break;
+                }
+            } while (false); /* ONCE */
+
+            Close();
+            Result.AddMessage("Closed the HPort socket.", false, true);
+        }
+
+        /// <summary>
+        /// Send KeepAlive message to the Gateway
+        /// </summary>
+        /// <param name="Result">HARTMsgResult</param>
+        public void SendKeepAlive(HARTMsgResult Result)
+        {
+            HartIPRequest Req = null;
+
+            do
+            {
+                Req = HartIPRequest.KeepAlive(TransactionId);
+                MsgResponse MsgRsp = new MsgResponse(HARTIPConnect.USE_SOCKET_TIMEOUT_DEFAULT);
+                if (SendHartRequest(Req, MsgRsp))
+                {
+                    if (!MsgRsp.ResponseMsg.IsValidResponse)
+                    {
+                        Result.AddMessage("Send KeepAlive failed. Receive an invalid response msg type.", false, true);
+                        break;
+                    }
+                }
+                else
+                {
+                    Result.AddMessage("Failed sending KeepAlive request to Gateway.", false, true);
+                    break;
+                }
+             } while (false); /* ONCE */
+        }
+
+        private string GetSessionInitStatusCode(int ResponseCode)
+        {
+            string s = "Undefined";
+            if (m_SessionInitStatusCodes.Count == 0)
+            {
+                m_SessionInitStatusCodes.Add(0,   "Success No error occurred");
+                m_SessionInitStatusCodes.Add(2,   "Invalid Selection(Invalid Master Type)");
+                m_SessionInitStatusCodes.Add(5,   "Too Few Data Bytes Received");
+                m_SessionInitStatusCodes.Add(6,   "Device Specific Command Error");
+                m_SessionInitStatusCodes.Add(8,   "Set to Nearest Possible Value(Inactivity timer value)");
+                m_SessionInitStatusCodes.Add(14,  "Version not supported");
+                m_SessionInitStatusCodes.Add(15,  "All available sessions in use");
+                m_SessionInitStatusCodes.Add(16,  "Session already established");
+            }
+
+            if (m_SessionInitStatusCodes.ContainsKey(ResponseCode))
+            {
+                s = m_SessionInitStatusCodes[ResponseCode];
+            }
+            return s;
+         }
+
+    }
 }
