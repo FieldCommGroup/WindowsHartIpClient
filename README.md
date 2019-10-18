@@ -10,7 +10,7 @@ This Readme describes how to build, deploy and use this example HART-IP Client. 
 
 ## Features Included
 
-1. Example of TCP and UDP communication with a HART-IP device.
+1. Example of UDP communication with a HART-IP device.
 2. Addressing sub-devices through an I/O device using HART-IP protocol.
 3. A simple method of parsing HART binary messages.
 
