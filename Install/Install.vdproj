@@ -21,12 +21,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_907F5B9CBE69CDFC7AE2DD8EF0CF7617"
-        "OwnerKey" = "8:_85EFD401A8DF4B53BF1577AE9C56CF62"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_D6A928BE13E34C59A54DD6E083619A8C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -35,18 +29,6 @@
         {
         "MsmKey" = "8:_FCABE766AB3B4C03ABA86BF2ECCCE29A"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_85EFD401A8DF4B53BF1577AE9C56CF62"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_907F5B9CBE69CDFC7AE2DD8EF0CF7617"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -161,11 +143,6 @@
             "AssemblyAsmDisplayName" = "8:HartIpClient, Version=1.0.23.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_85EFD401A8DF4B53BF1577AE9C56CF62"
-                    {
-                    "Name" = "8:HartIpClient.exe"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:..\\HartIPClient\\bin\\Release\\HartIpClient.exe"
             "TargetName" = "8:"
@@ -183,37 +160,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_907F5B9CBE69CDFC7AE2DD8EF0CF7617"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:HartIPConnect, Version=1.0.5.0, Culture=neutral, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_907F5B9CBE69CDFC7AE2DD8EF0CF7617"
-                    {
-                    "Name" = "8:HartIPConnect.DLL"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:HartIPConnect.DLL"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7C2B4145F0774B83B2A5DE98ED9DA127"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D6A928BE13E34C59A54DD6E083619A8C"
@@ -334,15 +280,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:HART-IP Client"
-        "ProductCode" = "8:{1CDA938E-12C3-442F-8EC1-2B3D4083317C}"
-        "PackageCode" = "8:{B86B0671-0DFA-45DE-9013-BD5C9E3F827A}"
+        "ProductCode" = "8:{0008DAF4-C388-4C71-99BF-09A7373953DF}"
+        "PackageCode" = "8:{FD51BBC1-80B9-4555-8F13-3F78D5D017A4}"
         "UpgradeCode" = "8:{3A91AB3E-DA55-488F-B5E3-DF3F22DEE090}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.24"
+        "ProductVersion" = "8:1.0.25"
         "Manufacturer" = "8:FieldComm Group"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
