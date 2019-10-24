@@ -206,13 +206,13 @@
             // ConnectStatus
             // 
             this.ConnectStatus.Name = "ConnectStatus";
-            this.ConnectStatus.Size = new System.Drawing.Size(77, 17);
+            this.ConnectStatus.Size = new System.Drawing.Size(88, 17);
             this.ConnectStatus.Text = "No Connection";
             // 
             // LogFileStatus
             // 
             this.LogFileStatus.Name = "LogFileStatus";
-            this.LogFileStatus.Size = new System.Drawing.Size(114, 17);
+            this.LogFileStatus.Size = new System.Drawing.Size(125, 17);
             this.LogFileStatus.Text = "Stopped log Messages";
             // 
             // ParseResponsesStatus
