@@ -46,7 +46,7 @@ namespace FieldCommGroup.HartIPClient
         private LogMsg Logger = LogMsg.Instance;
         private ParseResponses m_ParseRsps = null;
 
-        private int m_nCheckInactivityInterval = 1000;  // check inactivity every second
+        private int m_nCheckInactivityInterval = 60000;  // check inactivity every minute
         private bool m_bParsingRsps = false;
 
         private System.Timers.Timer m_InactivityCloseTimer;
@@ -129,7 +129,7 @@ namespace FieldCommGroup.HartIPClient
         /// <summary>
         /// Disconnect the connection if it passes 
         /// the inactivity close time without send request.
-        /// This method prevents concurrently calls.
+        /// This method prevents concurrent calls.
         /// </summary>
         private void UpdateInactivity()
         {
@@ -152,12 +152,11 @@ namespace FieldCommGroup.HartIPClient
                             LogMessage("Elapsed the Session Inactivity Close Time without activity. Closing the connection.", true);
                             Disconnect(); // disables m_InactivityCloseTimer
                         }
-                        else if (lElapsed >= 0.8 * HARTIPMessage.INACTIVITY_CLOSE_TIME)
+                        //else nothing
+
+                        if (checkBoxKeepAlive.Checked)
                         {
-                            if (checkBoxKeepAlive.Checked)
-                            {
-                                KeepAlive();
-                            }
+                            KeepAlive();
                         }
                         //else nothing
 
@@ -627,10 +626,7 @@ namespace FieldCommGroup.HartIPClient
         {
             lock (SyncRoot)
             {
-                m_HartClient.KeepAlive();
-                OutputMsg_lb.Text += String.Format("{0} Keep alive.\r\n\r\n", HartUtil.GetTimeStamp());
-                OutputMsg_lb.SelectionStart = OutputMsg_lb.Text.Length;
-                OutputMsg_lb.ScrollToCaret();
+                m_HartClient.KeepAlive();   // sends keepalive message
             }
         }
 
