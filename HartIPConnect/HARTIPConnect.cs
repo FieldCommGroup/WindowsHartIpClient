@@ -715,28 +715,7 @@ namespace FieldCommGroup.HartIPConnect
             return m_bConnected;
         }
     }
-
-    /// <summary>
-    /// Send a Hart-IP Request  
-    /// </summary>
-    /// <param name="Command">byte[] request Command byte array
-    /// <para>Array should have frame, device address, command, byte count, 
-    /// data, and checksum bytes.</para>
-    /// <para>device address is the device type and device id 5 bytes with expanded type mask</para>
-    /// <para>Example: Send command 20 to a device that has device address 2658 3B86A3, 
-    /// Command byte[] should have: 82 A6 58 3B 86 A3 14 00 76</para>   
-    /// <remarks>See HART specification 081r8.2.pdf section 5.1, 5.2, and 5.3 for frame, 
-    /// address, expansion, data, and checksum bytes information.
-    /// </remarks>  
-    /// </param>
-    /// <param name="usByteCount">ushort the specified Command array byte count</param> 
-    /// <param name="MsgRsp"><see cref="MsgResponse"></see></param>
-    /// <returns>bool if it is success</returns>    
-    public bool SendHartRequest(byte[] Command, ushort usByteCount, MsgResponse MsgRsp)
-    {
-        HartIPRequest Req = HartIPRequest.HartCommandRequest(TransactionId, Command, usByteCount);
-        return SendHartRequest(Req, MsgRsp);
-    }        
+       
     
     /// <summary>
     /// Send a Hart-IP Request
@@ -845,20 +824,28 @@ namespace FieldCommGroup.HartIPConnect
                 if (SendHartRequest(Req, MsgRsp))
                 {
                     try
-                    {
-                        if (!MsgRsp.ResponseMsg.IsValidResponse)
+                    {   // wait for the object return or timeout
+                        if (MsgRsp.GetResponse() == false)
                         {
-                            Result.AddMessage("Close Session failed. Receive an invalid response msg type.", false, true);
+                            Result.AddMessage("Close Session failed: No response was received.", false, true);
                             break;
                         }
+                        if (!MsgRsp.ResponseMsg.IsValidResponse)
+                        {
+                            Result.AddMessage("Close Session failed: Received an invalid response msg type.", false, true);
+                            break;
+                        }
+                        LogMsg.Instance.Log(MsgRsp.ResponseMsg.ToString());
                     }
                     catch
                     {
+                        Result.AddMessage("Close Session failed.", false, true);
+                        break;
                     }
                 }
                 else
                 {
-                    Result.AddMessage("Failed sending Session Close Command to Gateway.", false, true);
+                    Result.AddMessage("Close Session failed.", false, true);
                     break;
                 }
             } while (false); /* ONCE */
@@ -881,15 +868,29 @@ namespace FieldCommGroup.HartIPConnect
                 MsgResponse MsgRsp = new MsgResponse(HARTIPConnect.USE_SOCKET_TIMEOUT_DEFAULT);
                 if (SendHartRequest(Req, MsgRsp))
                 {
-                    if (!MsgRsp.ResponseMsg.IsValidResponse)
+                    try
+                    {   // wait for the object return or timeout
+                        if (MsgRsp.GetResponse() == false)
+                        {
+                            Result.AddMessage("Keep Alive failed: No response was received.", false, true);
+                            break;
+                        }
+                        if (!MsgRsp.ResponseMsg.IsValidResponse)
+                        {
+                            Result.AddMessage("Keep Alive failed: Received an invalid response msg type.", false, true);
+                            break;
+                        }
+                        LogMsg.Instance.Log(MsgRsp.ResponseMsg.ToString());
+                    }
+                    catch
                     {
-                        Result.AddMessage("Send KeepAlive failed. Receive an invalid response msg type.", false, true);
+                        Result.AddMessage("Failed sending KeepAlive request.", false, true);
                         break;
                     }
                 }
                 else
                 {
-                    Result.AddMessage("Failed sending KeepAlive request to Gateway.", false, true);
+                    Result.AddMessage("Failed sending KeepAlive request.", false, true);
                     break;
                 }
              } while (false); /* ONCE */
