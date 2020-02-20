@@ -56,7 +56,8 @@ Click the Connect to HART-IP Device button.
 ```
 Enter the IP address of the HART-IP device.
 Enter the port on the HART-IP device - 5094 is the default.
-Select UDP or TCP operation.
+Select UDP or TCP operation (note that the flow device supplied in the HART-IP Developer Kit 
+does not support TCP at this time).
 Click Ok
 ```
 Client responds:
