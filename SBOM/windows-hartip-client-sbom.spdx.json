@@ -1,0 +1,414 @@
+{
+  "spdxVersion": "SPDX-2.2",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "documentName": "Windows HART-IP Client SBOM",
+  "documentNamespace": "http://fieldcommgroup.org/ns/2025/sbom/windows-hartip-client/1.0",
+  "creationInfo": {
+    "created": "2025-07-14T00:00:00Z",
+    "creators": ["Tool: SPDX-Generator"],
+    "licenseListVersion": "3.24"
+  },
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Package-WindowsHartIPClient",
+      "name": "Windows HART-IP Client",
+      "versionInfo": "1.0.26.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": true,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "Copyright © FieldComm Group 2017-2019",
+      "supplier": "Organization: FieldComm Group",
+      "originator": "Organization: FieldComm Group",
+      "packageVerificationCode": {
+        "packageVerificationCodeValue": "9048fb95e18a273100d4bf7c675cc2425a3c3442ae0f5290ca6851cf2b901e1b"
+      },
+      "description": "HART-IP Client is a C# Windows application that uses UDP/TCP to connect to a HART device using the HART-IP protocol."
+    },
+    {
+      "SPDXID": "SPDXRef-Package-HartIPConnect",
+      "name": "HartIPConnect",
+      "versionInfo": "1.0.5.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": true,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "Copyright © FieldComm Group. All rights reserved.",
+      "supplier": "Organization: FieldComm Group",
+      "originator": "Organization: FieldComm Group",
+      "packageVerificationCode": {
+        "packageVerificationCodeValue": "2d42598a303f292f77fc33be08e52ae74736162a98eb0d2458393aaa1b550fb3"
+      },
+      "description": "HartIP Connect library providing core HART-IP communication functionality"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-DotNetFramework45",
+      "name": "Microsoft .NET Framework",
+      "versionInfo": "4.5",
+      "downloadLocation": "https://dotnet.microsoft.com/download/dotnet-framework/net45",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "Copyright © Microsoft Corporation",
+      "supplier": "Organization: Microsoft Corporation",
+      "originator": "Organization: Microsoft Corporation",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE_MANAGER",
+          "referenceType": "other",
+          "referenceLocator": "Microsoft.NETFramework.ReferenceAssemblies/4.5"
+        }
+      ],
+      "description": "Microsoft .NET Framework 4.5 runtime and libraries"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SystemCore",
+      "name": "System.Core",
+      "versionInfo": "4.0.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "Copyright © Microsoft Corporation",
+      "supplier": "Organization: Microsoft Corporation",
+      "originator": "Organization: Microsoft Corporation",
+      "description": ".NET Framework System.Core assembly"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SystemWindowsForms",
+      "name": "System.Windows.Forms",
+      "versionInfo": "4.0.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "Copyright © Microsoft Corporation",
+      "supplier": "Organization: Microsoft Corporation",
+      "originator": "Organization: Microsoft Corporation",
+      "description": ".NET Framework Windows Forms library"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SystemDrawing",
+      "name": "System.Drawing",
+      "versionInfo": "4.0.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "Copyright © Microsoft Corporation",
+      "supplier": "Organization: Microsoft Corporation",
+      "originator": "Organization: Microsoft Corporation",
+      "description": ".NET Framework System.Drawing library"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SystemData",
+      "name": "System.Data",
+      "versionInfo": "4.0.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "Copyright © Microsoft Corporation",
+      "supplier": "Organization: Microsoft Corporation",
+      "originator": "Organization: Microsoft Corporation",
+      "description": ".NET Framework System.Data library"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SystemXml",
+      "name": "System.Xml",
+      "versionInfo": "4.0.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "Copyright © Microsoft Corporation",
+      "supplier": "Organization: Microsoft Corporation",
+      "originator": "Organization: Microsoft Corporation",
+      "description": ".NET Framework System.Xml library"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-SystemWindowsFormsDataVisualization",
+      "name": "System.Windows.Forms.DataVisualization",
+      "versionInfo": "4.0.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "Copyright © Microsoft Corporation",
+      "supplier": "Organization: Microsoft Corporation",
+      "originator": "Organization: Microsoft Corporation",
+      "description": ".NET Framework Data Visualization library for charts and graphs"
+    }
+  ],
+  "files": [
+    {
+      "SPDXID": "SPDXRef-File-HartIpClient-exe",
+      "fileName": "./HartIPClient/bin/Release/HartIpClient.exe",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "9048fb95e18a273100d4bf7c675cc2425a3c3442ae0f5290ca6851cf2b901e1b"
+        }
+      ],
+      "licenseConcluded": "Apache-2.0",
+      "licenseInfoInFiles": ["Apache-2.0"],
+      "copyrightText": "Copyright © FieldComm Group 2017-2019"
+    },
+    {
+      "SPDXID": "SPDXRef-File-HartIPConnect-dll",
+      "fileName": "./HartIPConnect/bin/Release/HartIPConnect.dll",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "2d42598a303f292f77fc33be08e52ae74736162a98eb0d2458393aaa1b550fb3"
+        }
+      ],
+      "licenseConcluded": "Apache-2.0",
+      "licenseInfoInFiles": ["Apache-2.0"],
+      "copyrightText": "Copyright © FieldComm Group. All rights reserved."
+    },
+    {
+      "SPDXID": "SPDXRef-File-LICENSE",
+      "fileName": "./LICENSE.md",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "575b6b12ca1888adb4656be6be72f877c72ebd6704d5aa174b496debfc9d74ba"
+        }
+      ],
+      "licenseConcluded": "Apache-2.0",
+      "licenseInfoInFiles": ["Apache-2.0"],
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-File-README",
+      "fileName": "./README.md",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "9c9be70861d6af5436aa3cb3aa4e0e3a0e55b7ac6735e8e800dde7a0da2138d6"
+        }
+      ],
+      "licenseConcluded": "Apache-2.0",
+      "licenseInfoInFiles": ["NOASSERTION"],
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-File-MainForm-cs",
+      "fileName": "./HartIPClient/MainForm.cs",
+      "checksums": [
+        {
+          "algorithm": "SHA1",
+          "checksumValue": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        }
+      ],
+      "licenseConcluded": "Apache-2.0",
+      "licenseInfoInFiles": ["Apache-2.0"],
+      "copyrightText": "Copyright 2019 FieldComm Group, Inc."
+    },
+    {
+      "SPDXID": "SPDXRef-File-HartClient-cs",
+      "fileName": "./HartIPConnect/HartClient.cs",
+      "checksums": [
+        {
+          "algorithm": "SHA1",
+          "checksumValue": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        }
+      ],
+      "licenseConcluded": "Apache-2.0",
+      "licenseInfoInFiles": ["Apache-2.0"],
+      "copyrightText": "Copyright 2019 FieldComm Group, Inc."
+    },
+    {
+      "SPDXID": "SPDXRef-File-HartIPClient-csproj",
+      "fileName": "./HartIPClient/HartIPClient.csproj",
+      "checksums": [
+        {
+          "algorithm": "SHA1",
+          "checksumValue": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "licenseInfoInFiles": ["NOASSERTION"],
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-File-HartIPConnect-csproj",
+      "fileName": "./HartIPConnect/HartIPConnect.csproj",
+      "checksums": [
+        {
+          "algorithm": "SHA1",
+          "checksumValue": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "licenseInfoInFiles": ["NOASSERTION"],
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-File-Solution",
+      "fileName": "./HartIPClient.sln",
+      "checksums": [
+        {
+          "algorithm": "SHA1",
+          "checksumValue": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "licenseInfoInFiles": ["NOASSERTION"],
+      "copyrightText": "NOASSERTION"
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relatedSpdxElement": "SPDXRef-Package-WindowsHartIPClient",
+      "relationshipType": "DESCRIBES"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-WindowsHartIPClient",
+      "relatedSpdxElement": "SPDXRef-Package-HartIPConnect",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-WindowsHartIPClient",
+      "relatedSpdxElement": "SPDXRef-Package-DotNetFramework45",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-WindowsHartIPClient",
+      "relatedSpdxElement": "SPDXRef-Package-SystemWindowsForms",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-WindowsHartIPClient",
+      "relatedSpdxElement": "SPDXRef-Package-SystemDrawing",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-WindowsHartIPClient",
+      "relatedSpdxElement": "SPDXRef-Package-SystemData",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-WindowsHartIPClient",
+      "relatedSpdxElement": "SPDXRef-Package-SystemXml",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-WindowsHartIPClient",
+      "relatedSpdxElement": "SPDXRef-Package-SystemWindowsFormsDataVisualization",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-HartIPConnect",
+      "relatedSpdxElement": "SPDXRef-Package-SystemCore",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-HartIPConnect",
+      "relatedSpdxElement": "SPDXRef-Package-SystemWindowsForms",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-HartIPConnect",
+      "relatedSpdxElement": "SPDXRef-Package-SystemDrawing",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-HartIPConnect",
+      "relatedSpdxElement": "SPDXRef-Package-SystemData",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-HartIPConnect",
+      "relatedSpdxElement": "SPDXRef-Package-SystemXml",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-WindowsHartIPClient",
+      "relatedSpdxElement": "SPDXRef-File-HartIpClient-exe",
+      "relationshipType": "CONTAINS"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-HartIPConnect",
+      "relatedSpdxElement": "SPDXRef-File-HartIPConnect-dll",
+      "relationshipType": "CONTAINS"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-WindowsHartIPClient",
+      "relatedSpdxElement": "SPDXRef-File-LICENSE",
+      "relationshipType": "CONTAINS"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-WindowsHartIPClient",
+      "relatedSpdxElement": "SPDXRef-File-README",
+      "relationshipType": "CONTAINS"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-WindowsHartIPClient",
+      "relatedSpdxElement": "SPDXRef-File-MainForm-cs",
+      "relationshipType": "CONTAINS"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-HartIPConnect",
+      "relatedSpdxElement": "SPDXRef-File-HartClient-cs",
+      "relationshipType": "CONTAINS"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-WindowsHartIPClient",
+      "relatedSpdxElement": "SPDXRef-File-HartIPClient-csproj",
+      "relationshipType": "CONTAINS"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-HartIPConnect",
+      "relatedSpdxElement": "SPDXRef-File-HartIPConnect-csproj",
+      "relationshipType": "CONTAINS"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-WindowsHartIPClient",
+      "relatedSpdxElement": "SPDXRef-File-Solution",
+      "relationshipType": "CONTAINS"
+    },
+    {
+      "spdxElementId": "SPDXRef-File-HartIpClient-exe",
+      "relatedSpdxElement": "SPDXRef-File-HartIPConnect-dll",
+      "relationshipType": "DEPENDS_ON"
+    },
+    {
+      "spdxElementId": "SPDXRef-File-HartIpClient-exe",
+      "relatedSpdxElement": "SPDXRef-File-HartIPClient-csproj",
+      "relationshipType": "GENERATED_FROM"
+    },
+    {
+      "spdxElementId": "SPDXRef-File-HartIPConnect-dll",
+      "relatedSpdxElement": "SPDXRef-File-HartIPConnect-csproj",
+      "relationshipType": "GENERATED_FROM"
+    }
+  ],
+  "extractedLicensingInfo": [
+    {
+      "licenseId": "LicenseRef-Apache-2.0-FieldComm",
+      "name": "Apache License 2.0 with FieldComm Group Attribution",
+      "extractedText": "Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.",
+      "comment": "Apache 2.0 license as used by FieldComm Group in source files"
+    }
+  ],
+  "annotations": [
+    {
+      "annotationType": "REVIEW",
+      "annotator": "Tool: SPDX-Generator",
+      "annotationDate": "2025-07-14T00:00:00Z",
+      "annotationComment": "This SBOM was automatically generated for the Windows HART-IP Client project. The project consists of a main Windows Forms application (HartIPClient) and a supporting library (HartIPConnect) for HART-IP protocol communication.",
+      "annotationSPDXRef": "SPDXRef-DOCUMENT"
+    },
+    {
+      "annotationType": "OTHER",
+      "annotator": "Tool: SPDX-Generator",
+      "annotationDate": "2025-07-14T00:00:00Z",
+      "annotationComment": "Project uses .NET Framework 4.5 and various system assemblies. All source code is licensed under Apache 2.0 by FieldComm Group.",
+      "annotationSPDXRef": "SPDXRef-Package-WindowsHartIPClient"
+    }
+  ]
+}
