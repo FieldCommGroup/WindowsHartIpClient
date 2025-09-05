@@ -13,6 +13,31 @@ This Readme describes how to build, deploy and use this example HART-IP Client. 
 1. Example of UDP communication with a HART-IP device.
 2. Addressing sub-devices through an I/O device using HART-IP protocol.
 3. A simple method of parsing HART binary messages.
+4. **NEW: GitHub MCP Server** - Model Context Protocol server with Server-Sent Events for GitHub API integration.
+
+## Components
+
+This solution now includes two main components:
+
+### 1. HART-IP Client (Windows Forms)
+The original Windows Forms application for HART device communication.
+
+### 2. GitHub MCP Server (ASP.NET Core)
+A new web-based Model Context Protocol (MCP) server that provides GitHub API functionality via Server-Sent Events (SSE). See [HartMcpServer/README.md](HartMcpServer/README.md) for detailed documentation.
+
+**Key Features:**
+- Real-time GitHub API integration via MCP protocol
+- Server-Sent Events for streaming responses
+- Interactive web interface for testing
+- RESTful API endpoints
+- Swagger/OpenAPI documentation
+
+**Quick Start:**
+```bash
+cd HartMcpServer
+dotnet run
+# Open browser to http://localhost:5129/test.html
+```
 
 ## Getting Started
 
@@ -22,7 +47,8 @@ These instructions describe how to build, deploy and use the client.
 
 ```
 1. A HART-IP device or server that supports the HART-IP protocol.
-2. Visual Studio 2015 or later.
+2. Visual Studio 2015 or later (for Windows Forms client).
+3. .NET 8.0 SDK (for GitHub MCP Server).
 ```
 
 ### Pre-built Installer
@@ -43,8 +69,21 @@ Install Visual Studio 2015
 
 Building
 
+**Windows Forms Client:**
 ```
 Visual Studio: HartIpClient.Sln
+```
+
+**Or with Mono (Linux):**
+```
+xbuild HartIpClient.sln
+```
+
+**GitHub MCP Server:**
+```
+cd HartMcpServer
+dotnet build
+dotnet run
 ```
 
 

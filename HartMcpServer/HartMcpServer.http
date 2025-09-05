@@ -1,0 +1,6 @@
+@HartMcpServer_HostAddress = http://localhost:5129
+
+GET {{HartMcpServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

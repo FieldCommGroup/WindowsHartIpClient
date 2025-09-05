@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HART GitHub MCP Server - SSE Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .section h2 {
+            color: #34495e;
+            margin-top: 0;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        .disconnect {
+            background-color: #e74c3c;
+        }
+        .disconnect:hover {
+            background-color: #c0392b;
+        }
+        #status {
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .connected {
+            color: #27ae60;
+        }
+        .disconnected {
+            color: #e74c3c;
+        }
+        #events {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+        }
+        .tool-form {
+            display: grid;
+            gap: 10px;
+            max-width: 500px;
+        }
+        .tool-form input, .tool-form select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .event-entry {
+            margin-bottom: 5px;
+            padding: 5px;
+            border-left: 3px solid #3498db;
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        .event-timestamp {
+            color: #95a5a6;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 HART GitHub MCP Server</h1>
+        <p style="text-align: center; color: #7f8c8d;">
+            Model Context Protocol Server with Server-Sent Events for GitHub API integration
+        </p>
+
+        <div class="section">
+            <h2>📡 Server-Sent Events Connection</h2>
+            <div id="status" class="disconnected">Disconnected</div>
+            <button id="connectBtn" onclick="connectSSE()">Connect to SSE</button>
+            <button id="disconnectBtn" onclick="disconnectSSE()" disabled class="disconnect">Disconnect</button>
+            <button onclick="clearEvents()">Clear Events</button>
+        </div>
+
+        <div class="section">
+            <h2>🛠️ GitHub MCP Tools</h2>
+            
+            <h3>Get Repository Info</h3>
+            <div class="tool-form">
+                <input type="text" id="repo-owner" placeholder="Repository owner (e.g., microsoft)" value="microsoft">
+                <input type="text" id="repo-name" placeholder="Repository name (e.g., vscode)" value="vscode">
+                <button onclick="callGetRepository()">Get Repository</button>
+            </div>
+
+            <h3>List Issues</h3>
+            <div class="tool-form">
+                <input type="text" id="issues-owner" placeholder="Repository owner" value="microsoft">
+                <input type="text" id="issues-repo" placeholder="Repository name" value="vscode">
+                <select id="issues-state">
+                    <option value="open">Open</option>
+                    <option value="closed">Closed</option>
+                    <option value="all">All</option>
+                </select>
+                <button onclick="callListIssues()">List Issues</button>
+            </div>
+
+            <h3>Get File Contents</h3>
+            <div class="tool-form">
+                <input type="text" id="file-owner" placeholder="Repository owner" value="microsoft">
+                <input type="text" id="file-repo" placeholder="Repository name" value="vscode">
+                <input type="text" id="file-path" placeholder="File path (e.g., README.md)" value="README.md">
+                <input type="text" id="file-ref" placeholder="Branch/tag/SHA (optional)" value="main">
+                <button onclick="callGetFileContents()">Get File Contents</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📊 Events Log</h2>
+            <div id="events"></div>
+        </div>
+    </div>
+
+    <script>
+        let eventSource = null;
+        const eventsDiv = document.getElementById('events');
+        const statusDiv = document.getElementById('status');
+        const connectBtn = document.getElementById('connectBtn');
+        const disconnectBtn = document.getElementById('disconnectBtn');
+
+        function addEvent(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            const eventElement = document.createElement('div');
+            eventElement.className = 'event-entry';
+            eventElement.innerHTML = `
+                <div class="event-timestamp">[${timestamp}]</div>
+                <div>${message}</div>
+            `;
+            eventsDiv.appendChild(eventElement);
+            eventsDiv.scrollTop = eventsDiv.scrollHeight;
+        }
+
+        function connectSSE() {
+            if (eventSource) {
+                eventSource.close();
+            }
+
+            eventSource = new EventSource('/api/mcp/sse');
+            
+            eventSource.onopen = function() {
+                statusDiv.textContent = 'Connected';
+                statusDiv.className = 'connected';
+                connectBtn.disabled = true;
+                disconnectBtn.disabled = false;
+                addEvent('🔗 Connected to MCP Server via SSE');
+            };
+
+            eventSource.onerror = function() {
+                statusDiv.textContent = 'Connection Error';
+                statusDiv.className = 'disconnected';
+                connectBtn.disabled = false;
+                disconnectBtn.disabled = true;
+                addEvent('❌ SSE Connection Error');
+            };
+
+            eventSource.addEventListener('server-info', function(e) {
+                const data = JSON.parse(e.data);
+                addEvent(`ℹ️ Server Info: ${data.name} v${data.version}`);
+            });
+
+            eventSource.addEventListener('tools', function(e) {
+                const data = JSON.parse(e.data);
+                addEvent(`🛠️ Available tools: ${data.tools.length} tools loaded`);
+            });
+
+            eventSource.addEventListener('heartbeat', function(e) {
+                const data = JSON.parse(e.data);
+                addEvent(`💓 Heartbeat: ${data.timestamp}`);
+            });
+
+            eventSource.addEventListener('progress', function(e) {
+                const data = JSON.parse(e.data);
+                addEvent(`⏳ Tool execution: ${data.tool} (${data.status})`);
+            });
+
+            eventSource.addEventListener('result', function(e) {
+                const data = JSON.parse(e.data);
+                addEvent(`✅ Tool result: ${JSON.stringify(data.result, null, 2)}`);
+            });
+
+            eventSource.addEventListener('error', function(e) {
+                const data = JSON.parse(e.data);
+                addEvent(`❌ Tool error: ${data.error.message}`);
+            });
+        }
+
+        function disconnectSSE() {
+            if (eventSource) {
+                eventSource.close();
+                eventSource = null;
+            }
+            statusDiv.textContent = 'Disconnected';
+            statusDiv.className = 'disconnected';
+            connectBtn.disabled = false;
+            disconnectBtn.disabled = true;
+            addEvent('🔌 Disconnected from MCP Server');
+        }
+
+        function clearEvents() {
+            eventsDiv.innerHTML = '';
+        }
+
+        async function callMcpTool(toolName, arguments) {
+            const request = {
+                jsonrpc: "2.0",
+                id: Date.now().toString(),
+                method: "tools/call",
+                params: {
+                    name: toolName,
+                    arguments: arguments
+                }
+            };
+
+            try {
+                const response = await fetch('/api/mcp/call-tool', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(request)
+                });
+
+                const result = await response.json();
+                addEvent(`🔧 ${toolName} result: ${JSON.stringify(result.result, null, 2)}`);
+            } catch (error) {
+                addEvent(`❌ Error calling ${toolName}: ${error.message}`);
+            }
+        }
+
+        function callGetRepository() {
+            const owner = document.getElementById('repo-owner').value;
+            const repo = document.getElementById('repo-name').value;
+            callMcpTool('github-get-repository', { owner, repo });
+        }
+
+        function callListIssues() {
+            const owner = document.getElementById('issues-owner').value;
+            const repo = document.getElementById('issues-repo').value;
+            const state = document.getElementById('issues-state').value;
+            callMcpTool('github-list-issues', { owner, repo, state });
+        }
+
+        function callGetFileContents() {
+            const owner = document.getElementById('file-owner').value;
+            const repo = document.getElementById('file-repo').value;
+            const path = document.getElementById('file-path').value;
+            const ref = document.getElementById('file-ref').value || 'main';
+            callMcpTool('github-get-file-contents', { owner, repo, path, ref });
+        }
+
+        // Add initial welcome message
+        addEvent('🚀 HART GitHub MCP Server Test Page loaded. Click "Connect to SSE" to start.');
+    </script>
+</body>
+</html>
