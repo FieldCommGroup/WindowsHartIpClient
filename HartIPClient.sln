@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HartIPConnect", "HartIPConn
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Install", "Install\Install.vdproj", "{F197EE6C-156E-4117-8047-5C5FB96BDB4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HartMcpServer", "HartMcpServer\HartMcpServer.csproj", "{F8230FB1-E465-4F9A-B592-D65FA55446D4}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,18 +44,6 @@ Global
 		{F197EE6C-156E-4117-8047-5C5FB96BDB4F}.Release|Any CPU.ActiveCfg = Release
 		{F197EE6C-156E-4117-8047-5C5FB96BDB4F}.Release|Mixed Platforms.ActiveCfg = Release
 		{F197EE6C-156E-4117-8047-5C5FB96BDB4F}.Release|x86.ActiveCfg = Release
-		{F8230FB1-E465-4F9A-B592-D65FA55446D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8230FB1-E465-4F9A-B592-D65FA55446D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8230FB1-E465-4F9A-B592-D65FA55446D4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{F8230FB1-E465-4F9A-B592-D65FA55446D4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{F8230FB1-E465-4F9A-B592-D65FA55446D4}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F8230FB1-E465-4F9A-B592-D65FA55446D4}.Debug|x86.Build.0 = Debug|Any CPU
-		{F8230FB1-E465-4F9A-B592-D65FA55446D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8230FB1-E465-4F9A-B592-D65FA55446D4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F8230FB1-E465-4F9A-B592-D65FA55446D4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{F8230FB1-E465-4F9A-B592-D65FA55446D4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{F8230FB1-E465-4F9A-B592-D65FA55446D4}.Release|x86.ActiveCfg = Release|Any CPU
-		{F8230FB1-E465-4F9A-B592-D65FA55446D4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
